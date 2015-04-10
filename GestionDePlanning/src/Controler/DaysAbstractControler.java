@@ -5,14 +5,17 @@ import Model.CalendarObject.Calendar;
 
 public abstract class DaysAbstractControler {
 	  protected DaysAbstractModel daysModel;
+	  protected int index = 0;
 	  
 	  public DaysAbstractControler(DaysAbstractModel daysModel){
 	    this.daysModel = daysModel;
 	  }
-	  abstract void control();
+	  protected abstract void control();
+	  public abstract void nextWeek();
+	  public abstract void afterWeek();
 
 		public void initData(Calendar c){
 			daysModel.setCalendar(c);
-			daysModel.getWeek();
+			daysModel.getWeek(index);
 		}
 }

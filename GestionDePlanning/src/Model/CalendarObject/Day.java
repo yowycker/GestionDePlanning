@@ -31,20 +31,21 @@ public class Day {
 	}
 	
 	
-	public void setMatin(Seance seance){
+	public void setMorning(Seance seance){
 		dayPlanning[0]=seance;
 	}
-	public void setApresMidi(Seance seance){
+	public void setAfternoon(Seance seance){
 		dayPlanning[1]=seance;
 	}
 
-	public Seance getMatin(){
+	public Seance getMorning(){
 		return dayPlanning[0];
 	}
-	public Seance getApresMidi(){
+	public Seance getAfternoon(){
 		return dayPlanning[1];
 	}
-	public boolean getFerie(){
+	
+	public boolean getHoliday(){
 		return holiday;
 	}
 	

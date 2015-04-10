@@ -16,35 +16,30 @@ public class DaysModel extends DaysAbstractModel{
 	
 	
 	@Override
-	public void getWeek() {
+	public void getWeek(int index) {
 		days = new ArrayList<Day>();
 
-    	for(int i = 0; i < getNumDays(); i++){
+    	for(int i = 0; i < getNumDaysWeek(); i++){
     		if(index == 0 && i < calendar.getIDay())
     			days.add(null);
-    		else if( (index + i) > calendar.getDays().size())
+    		else if( (index + i) >= calendar.getDays().size())
     			days.add(null);
     		else
     			days.add(calendar.getDays().get(index + i));
     	}
-    	notifyObserver(days,getNumDays());
+    	
+    	if(index == 0) after = false;
+    	else after = true;
+    	
+    	if((index + getNumDaysWeek()) > calendar.getDays().size() ) next = false;
+    	else next = true;
+    	
+    	notifyObserver(days,getNumDaysWeek(),after,next);
 	}
 
 	@Override
-	public void getNextWeek() {
-		index += numWeekDays;
-		getWeek();
-	}
-
-	@Override
-	public void getAfterWeek() {
-		index -= numWeekDays;
-		getWeek();
-	}
-
-	@Override
-	public int getNumDays() {
-		int numDays = numWeekDays;
+	public int getNumDaysWeek() {
+		int numDays = numDaysWeek;
 		if(calendar.getSunday()){
 			numDays--;
 			if(calendar.getSaturday())

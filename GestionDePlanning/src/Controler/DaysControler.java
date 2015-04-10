@@ -1,13 +1,24 @@
 package Controler;
 
 import Model.DaysAbstractModel;
-import Model.CalendarObject.Calendar;
 
 public class DaysControler extends DaysAbstractControler {	
 	public DaysControler(DaysAbstractModel daysModel) {
 		super(daysModel);
 	}
-	  public void control(){
-	  }
+	  
+	protected void control(){
+
+	}
+	
+	
+	public void nextWeek() {
+		index += daysModel.getNumDaysWeek();
+		daysModel.getWeek(index);
+	}
+	public void afterWeek() {
+		index -= daysModel.getNumDaysWeek();
+		daysModel.getWeek(index);
+	}
 
 }

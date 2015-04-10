@@ -11,14 +11,15 @@ public class Calendar{
 	private boolean saturday; 
 	private boolean sunday;
 	
-	// premier jours dans la semaine
+	// premier jours dans la premiere semaine
 	private int iDay;
+	// premiere semaine dans l'année
 	private int iWeek;
 	
 	public Calendar(int firstDay, int firstMonth, int firstYear,int lastDay,  int lastMonth, int lastYear){
 		holiday = false; 
 		saturday = false; 
-		sunday = true;
+		sunday = false;
 		init(firstDay, firstMonth, firstYear);
 		generateJours(firstDay, firstMonth, firstYear,lastDay,  lastMonth, lastYear);
 	}
@@ -77,6 +78,7 @@ public class Calendar{
 		int sous = 0;
 		int maxDaysMonth = numberJourMonth(firstMonth,firstYear);
 		int fDay = iDay;
+		int fWeek = iWeek;
 
 		for(int a = firstYear; a <= lastYear; a++){
 			for(int m = 1; m <= 12; m++){
@@ -94,17 +96,17 @@ public class Calendar{
 				for(int j = fDay; j <= maxDaysMonth; j++){
 
 					switch(fDay-sous){ 
-			        case 1 : { listDays.add(new Day("Lundi",j,iWeek,m,a));break; } 
-			        case 2 : { listDays.add(new Day("Mardi",j,iWeek,m,a));break; } 
-			        case 3 : { listDays.add(new Day("Mercredi",iWeek,j,m,a));break; } 
-			        case 4 : { listDays.add(new Day("Jeudi",j,iWeek,m,a));break; } 
-			        case 5 : { listDays.add(new Day("Vendredi",iWeek,j,m,a));break; } 
-			        case 6 : { listDays.add(new Day("Samedi",j,iWeek,m,a));break; }
-		        	case 7 : { listDays.add(new Day("Dimanche",j,iWeek,m,a));break; } 
+			        case 1 : { listDays.add(new Day("Lundi",j,fWeek,m,a));break; } 
+			        case 2 : { listDays.add(new Day("Mardi",j,fWeek,m,a));break; } 
+			        case 3 : { listDays.add(new Day("Mercredi",fWeek,j,m,a));break; } 
+			        case 4 : { listDays.add(new Day("Jeudi",j,fWeek,m,a));break; } 
+			        case 5 : { listDays.add(new Day("Vendredi",fWeek,j,m,a));break; } 
+			        case 6 : { listDays.add(new Day("Samedi",j,fWeek,m,a));break; }
+		        	case 7 : { listDays.add(new Day("Dimanche",j,fWeek,m,a));break; } 
 			    	}
 			    	if((fDay-sous)==7){
 			    		sous+=fDay-sous;
-			    		iWeek++;
+			    		fWeek++;
 			    	}
 			    	fDay++;
 				}
@@ -113,7 +115,7 @@ public class Calendar{
 				}
 			}
 			
-			iWeek = 1;
+			fWeek = 1;
 	    }
 	}
 

@@ -5,9 +5,10 @@ public class Seance {
 	private Module module;
 	private int numSeance;
 
-	public Seance(Module module,int numSeance){
+	public Seance(Module module){
 		this.module=module;
-		this.numSeance = numSeance;
+		this.module.instantiateISeance();
+		this.numSeance = module.getISeance();
 	}
 
 	public Module getModule(){
