@@ -20,7 +20,6 @@ import View.Elements.SeancePanel;
 public class PanelWeek extends JPanel implements DaysObserver, ActionListener{
 	private DaysAbstractControler daysControler;
 	// change ici setSemaine et l'iteration de Index (celui n'a pas à être modifié)
-	private int nbJour = 7;
     
     private SLabel monday = new SLabel("Lundi");
     private SLabel tuesday = new SLabel("Mardi");
@@ -39,19 +38,21 @@ public class PanelWeek extends JPanel implements DaysObserver, ActionListener{
     
 
 // receptacles :
-    // panneau recevant le tableau de la semaine
-    private JPanel planning = new JPanel();
-    private JPanel headers = new JPanel();
-    private JPanel seances = new JPanel();
-    // panneau recevant les horaires d'une journée
-    private JPanel timeTable = new JPanel();
-    // bar de menu
-    private JPanel toolbar = new JPanel();
-    // bar permettant de passer d'un jour à l'autre ET avec les information sur la semaine
-    private JPanel actionBar = new JPanel();
-    private JPanel actionChange = new JPanel();
-    // panneau d'edition du planning
+    // panneau contenant au moin le titre du planning
+    private JPanel headerInfo = new JPanel();
+    // panneau d'edition du planning : inserer seances ...
     private JPanel modulesTab = new JPanel();
+    // panneau recevant : les entetes, les horaires, les Cours ET la barre
+    private JPanel planning = new JPanel();
+	    // panneau recevant : les entetes, les horaires, les Cours ET la barre
+	    private JPanel table = new JPanel();
+		    private JPanel headers = new JPanel();
+		    private JPanel seances = new JPanel();
+	    // panneau recevant les horaires d'une journée
+	    private JPanel timeTable = new JPanel();
+	    // bar permettant de passer d'un jour à l'autre ET avec les information sur la semaine
+	    private JPanel actionBar = new JPanel();
+	    private JPanel actionChange = new JPanel();
 
 // Layout
     private GridLayout headersLayout;
@@ -62,10 +63,8 @@ public class PanelWeek extends JPanel implements DaysObserver, ActionListener{
     
     public PanelWeek(DaysAbstractControler daysControler){
     	this.daysControler = daysControler;
-    	initPosition();
-    	initElements();
     }
-    private void initPosition(){    	
+    public void initPlanning(){    	
         // Entete
     	headersLayout = new GridLayout(1, 1);
     	headersLayout.setHgap(5); //Cinq pixels d'espace entre les colonnes (H comme Horizontal)
@@ -79,9 +78,9 @@ public class PanelWeek extends JPanel implements DaysObserver, ActionListener{
         seances.setLayout(seancesLayout);
         
         // le planning qui va contenir les deux precedants
-        planning.setLayout(new BorderLayout());
-        planning.add(headers, BorderLayout.NORTH);
-        planning.add(seances, BorderLayout.CENTER);
+        table.setLayout(new BorderLayout());
+        table.add(headers, BorderLayout.NORTH);
+        table.add(seances, BorderLayout.CENTER);
         
         // les horaires sur le coté
         timeTableLayout = new BorderLayout();
@@ -98,58 +97,62 @@ public class PanelWeek extends JPanel implements DaysObserver, ActionListener{
         actionChange.add(prec);
         actionChange.add(new JPanel());
         actionChange.add(suiv);
-
+        
         // Barre d'outils
         actionBar.setLayout(new BorderLayout());
         actionBar.add(actionChange, BorderLayout.CENTER);
+        
+        //planning 
+        planning.setLayout(new BorderLayout());
+        planning.add(table, BorderLayout.CENTER); 
+        planning.add(timeTable, BorderLayout.WEST);   
+        planning.add(actionBar, BorderLayout.SOUTH);
 
-        // le tout
+// le tout
         this.setLayout(new BorderLayout());
         this.add(planning, BorderLayout.CENTER); 
-        this.add(timeTable, BorderLayout.WEST);   
-        this.add(actionBar, BorderLayout.SOUTH);  
+        this.add(headerInfo, BorderLayout.NORTH);
 
-        
-///// Manipulation de l'onglet de gestion de modules
-        this.add(modulesTab, BorderLayout.EAST);
-        this.remove(modulesTab);
-    }
-    private void initElements(){
+
+// Modif elements :
         prec.addActionListener(this); 
         suiv.addActionListener(this);
-
         timeTable.setBackground(Color.LIGHT_GRAY);
-        modulesTab.setBackground(Color.LIGHT_GRAY);
+        headerInfo.setBackground(Color.BLUE);
+
+
+///// Manipulation de l'onglet de gestion de modules
+   //     this.add(modulesTab, BorderLayout.EAST);
+   //     this.remove(modulesTab);
+   //     modulesTab.setBackground(Color.LIGHT_GRAY);
     }
     
 // appeler dans le model
-    public void update(ArrayList<Day> days, int numDays){
+    public void update(ArrayList<Day> days, int numDays, boolean after, boolean next){
+		prec.setEnabled(after);
+		suiv.setEnabled(next);
 		this.showWeek(days,numDays);
+		this.updateUI();
 	}
     private void showWeek(ArrayList<Day> days, int numDays){
     	loadPlanningLayout(numDays);
     	seances.removeAll();    	
     	for(int i = 0; i < seancesLayout.getRows(); i++){
     		for(int j = 0; j < seancesLayout.getColumns(); j++)
-    			if(days.get(j) == null || days.get(j).getFerie())
+    			if(days.get(j) == null || days.get(j).getHoliday())
     				seances.add(new JPanel(),(i*numDays + j));
     			else if(this.getSeance(days.get(j), i) == null)
         			seances.add(new SeancePanel(),(i*numDays + j));
     			else
     	    		seances.add(new SeancePanel(this.getSeance(days.get(j), i)),(i*numDays + j));
     	}
-///// changer le contenu d'un panel dans un gridLayout (seulement add sur index suffit, il faudra toutefois recuperer le bon index pour drag'n drop
-/*        seances.remove(2);
-        seances.add(new JPanel(),2);
-        seances.remove(0);
-        seances.add(new JPanel(),0);*/
     }
     private Seance getSeance(Day day, int position){
     	Seance seance = null;
     	if(position==0)
-    		seance = day.getMatin();
+    		seance = day.getMorning();
     	else if(position==1)
-    		seance = day.getApresMidi();
+    		seance = day.getAfternoon();
     	return seance;
     }
     private void loadPlanningLayout(int numDays){
@@ -171,12 +174,10 @@ public class PanelWeek extends JPanel implements DaysObserver, ActionListener{
 // Passer à la semaine suivante 
     public void actionPerformed(ActionEvent e){
         if(e.getSource() == suiv){
-        	//PanelSemaine.setIndex(nbJour);
-        	//setSemaine();
+        	daysControler.nextWeek();
         } 
         if(e.getSource() == prec){ 
-        	//PanelSemaine.setIndex(-nbJour);
-        	//setSemaine();
+        	daysControler.afterWeek();
         } 
     }
 

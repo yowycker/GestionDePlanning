@@ -3,8 +3,12 @@ package View;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JToolBar;
 
 import Controler.DaysAbstractControler;
 import Controler.DaysControler;
@@ -14,7 +18,17 @@ import Model.CalendarObject.Calendar;
 import Model.CalendarObject.Module;
 import Model.CalendarObject.Seance;
 
-public class MainFrame extends JFrame{
+public class MainFrame extends JFrame implements ActionListener{
+
+    private JButton newFile = new JButton("Nouveau");
+    private JButton openFile = new JButton("Ouvrir");
+    private JButton saveFile = new JButton("Sauvegarder");
+    private JButton gestion1 = new JButton("");
+    private JButton gestion2 = new JButton("");
+    private JButton gestion3 = new JButton("");
+    private JButton plannification1 = new JButton("");
+    private JButton plannification2 = new JButton("");
+    
 	  public MainFrame(){
 		    this.setTitle("Planning");
 		    this.setSize(1200, 800);
@@ -52,21 +66,32 @@ public class MainFrame extends JFrame{
 		    this.setLayout(new BorderLayout());
 		    this.getContentPane().add(planning, BorderLayout.CENTER);
 		    
-// Exemple de toolBar
-		    /*
+// Exemple de toolBar		    
 		    JToolBar toolbar = new JToolBar();
 		    toolbar.setRollover(true);
-		    JButton button = new JButton("button");
-		    toolbar.add(button);
+		    toolbar.add(newFile);
+		    toolbar.add(openFile);
+		    toolbar.add(saveFile);
 		    toolbar.addSeparator();
-		    toolbar.add(new JButton("button 2"));
+		    toolbar.add(gestion1);
+		    toolbar.add(gestion2);
+		    toolbar.add(gestion3);
 		    toolbar.addSeparator();
-		    toolbar.add(new JComboBox(new String[]{"A","B","C"}));
-		    this.getContentPane().add(toolbar, BorderLayout.NORTH);*/
+		    toolbar.add(plannification1);
+		    toolbar.add(plannification2);
+		    this.getContentPane().add(toolbar, BorderLayout.NORTH);
 		    
 		    this.setVisible(true);
 	  }
 	public static void main(String[] args){
 		new MainFrame();
 	}
+	
+// nouveau calendrier
+    public void actionPerformed(ActionEvent e){
+        if(e.getSource() == newFile){
+        } 
+        if(e.getSource() == openFile){ 
+        } 
+    }
 }
