@@ -2,12 +2,17 @@ package Model.CalendarObject;
 
 import java.util.ArrayList;
 
+import Exceptions.FunctionException;
+import Exceptions.dateException;
+
 public class Calendar{
 
 	private ArrayList<Day> listDays = new ArrayList<Day>();
 // pas encore sur pour les modules
 	private ArrayList<Module> listModules = new ArrayList<Module>();
-	private boolean holiday; 
+////// pour plus tard		
+	private boolean holiday;
+	
 	private boolean saturday; 
 	private boolean sunday;
 	
@@ -16,12 +21,19 @@ public class Calendar{
 	// premiere semaine dans l'année
 	private int iWeek;
 	
-	public Calendar(int firstDay, int firstMonth, int firstYear,int lastDay,  int lastMonth, int lastYear){
-		holiday = false; 
-		saturday = false; 
-		sunday = false;
-		init(firstDay, firstMonth, firstYear);
-		generateJours(firstDay, firstMonth, firstYear,lastDay,  lastMonth, lastYear);
+	public Calendar(int firstDay, int firstMonth, int firstYear,int lastDay,  int lastMonth, int lastYear, boolean holiday, boolean saturday, boolean sunday) throws dateException{
+		// fonction static qui retourne un message d'erreur si les date de fin et de début sont hors scope
+		if(FunctionException.erreurDate("début",firstDay,firstMonth,firstYear) != "")
+			throw new dateException(FunctionException.erreurDate("début",firstDay,firstMonth,firstYear));
+		else if(FunctionException.erreurDate("début",lastDay,lastMonth,lastYear) != "")
+			throw new dateException(FunctionException.erreurDate("fin",lastDay,lastMonth,lastYear));
+		else{
+			this.holiday = holiday; 
+			this.saturday = saturday; 
+			this.sunday = sunday;
+			init(firstDay, firstMonth, firstYear);
+			generateJours(firstDay, firstMonth, firstYear,lastDay,  lastMonth, lastYear);
+		}
 	}
 
 // Accesseurs :
@@ -75,9 +87,9 @@ public class Calendar{
 		iWeek = week(firstDay,firstMonth,firstYear);
 	}
 	private void generateJours(int firstDay, int firstMonth, int firstYear,int lastDay,  int lastMonth, int lastYear){
-		int sous = 0;
 		int maxDaysMonth = numberJourMonth(firstMonth,firstYear);
-		int fDay = iDay;
+		int namedDay = iDay;
+		int fDay = firstDay;
 		int fWeek = iWeek;
 
 		for(int a = firstYear; a <= lastYear; a++){
@@ -95,20 +107,20 @@ public class Calendar{
 
 				for(int j = fDay; j <= maxDaysMonth; j++){
 
-					switch(fDay-sous){ 
-			        case 1 : { listDays.add(new Day("Lundi",j,fWeek,m,a));break; } 
-			        case 2 : { listDays.add(new Day("Mardi",j,fWeek,m,a));break; } 
-			        case 3 : { listDays.add(new Day("Mercredi",fWeek,j,m,a));break; } 
-			        case 4 : { listDays.add(new Day("Jeudi",j,fWeek,m,a));break; } 
-			        case 5 : { listDays.add(new Day("Vendredi",fWeek,j,m,a));break; } 
-			        case 6 : { listDays.add(new Day("Samedi",j,fWeek,m,a));break; }
-		        	case 7 : { listDays.add(new Day("Dimanche",j,fWeek,m,a));break; } 
+					switch(namedDay){ 
+			        case 1 : { listDays.add(new Day("Lundi",j,fWeek,m,a,false));break; } 
+			        case 2 : { listDays.add(new Day("Mardi",j,fWeek,m,a,false));break; } 
+			        case 3 : { listDays.add(new Day("Mercredi",j,fWeek,m,a,false));break; } 
+			        case 4 : { listDays.add(new Day("Jeudi",j,fWeek,m,a,false));break; } 
+			        case 5 : { listDays.add(new Day("Vendredi",j,fWeek,m,a,false));break; } 
+			        case 6 : { listDays.add(new Day("Samedi",j,fWeek,m,a,saturday));break; }
+		        	case 7 : { listDays.add(new Day("Dimanche",j,fWeek,m,a,sunday));break; } 
 			    	}
-			    	if((fDay-sous)==7){
-			    		sous+=fDay-sous;
+			    	if((namedDay)==7){
+			    		namedDay = 0;
 			    		fWeek++;
 			    	}
-			    	fDay++;
+			    	namedDay++;
 				}
 				if (a == lastYear && m == lastMonth){
 					m = 12;
@@ -167,5 +179,5 @@ public class Calendar{
 		        case 12: { retour =31;break; } 
 		    } 
 		    return retour; 
-		} 
+		}
 }

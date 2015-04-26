@@ -9,15 +9,21 @@ import Obs.DaysObserver;
 
 public abstract class DaysAbstractModel implements DaysObservable{
 	protected Calendar calendar;
+	
+	protected boolean init;
 	protected ArrayList<Day> days;
 	protected boolean after;
 	protected boolean next;
 	
 	protected final int numDaysWeek = 7;
+	protected int firstDaysLoad = 0;
 	
-	/*protected int annee;
-	protected int mois;
-	protected int semaine;*/
+	public ArrayList<Day> getDays(){
+		return days;
+	}
+	public int getFirstDaysLoad(){
+		return firstDaysLoad;
+	}
 	
 	private ArrayList<DaysObserver> listObserver = new ArrayList<DaysObserver>();
 
@@ -25,13 +31,14 @@ public abstract class DaysAbstractModel implements DaysObservable{
 
 	public abstract int getNumDaysWeek();
 	public abstract void setCalendar(Calendar c);
+	public abstract void setInit(boolean init);
 	  
 	public void addObserver(DaysObserver obs) {
 	    this.listObserver.add(obs);
 	}
-	public void notifyObserver(ArrayList<Day> days, int numDays, boolean after, boolean next) {
+	public void notifyObserver(boolean init, ArrayList<Day> days, int numDays, boolean after, boolean next) {
 	    for(DaysObserver obs : listObserver)
-	      obs.update(days, numDays,after,next);
+	      obs.update(init, days, numDays,after,next);
 	}
 	public void removeObserver() {
 	    listObserver = new ArrayList<DaysObserver>();

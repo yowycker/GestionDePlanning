@@ -6,39 +6,47 @@ import Model.CalendarObject.Calendar;
 import Model.CalendarObject.Day;
 
 public class DaysModel extends DaysAbstractModel{
-
-	/*
-	 on va devoir recuperer pour les test/ controles du controler :
-	 -	Le jours de la semaine de commencement
-	 
-	 Ajouter JourFin ???? Erreur si plus de valeurs dans la liste ... Avec longueur de la liste = index + 7
-	 */	
-	
 	
 	@Override
-	public void getWeek(int index) {
+	public void getWeek(int index){
 		days = new ArrayList<Day>();
-
-    	for(int i = 0; i < getNumDaysWeek(); i++){
-    		if(index == 0 && i < calendar.getIDay())
+System.out.println("IDay : " + calendar.getIDay());
+System.out.println("getNumDaysWeek : " + getNumDaysWeek());
+System.out.println("Date : " + calendar.getDays().get(0).getDate());
+		int j = 0;
+		if(index == 0)
+			firstDaysLoad=0;
+    	for(int i = 1; i <= getNumDaysWeek(); i++){
+    		if(index == 0 && i < (calendar.getIDay())){
     			days.add(null);
-    		else if( (index + i) >= calendar.getDays().size())
+    			firstDaysLoad++;
+    		}
+    		else if( (index + j - firstDaysLoad) >= calendar.getDays().size()){
     			days.add(null);
+    		}
+    		
     		else
-    			days.add(calendar.getDays().get(index + i));
+    		{
+        		if(index == 0){
+        			days.add(calendar.getDays().get(index + j));
+        		}
+        		else
+        			days.add(calendar.getDays().get(index + j - firstDaysLoad));
+        		j++;
+    		}
     	}
     	
     	if(index == 0) after = false;
     	else after = true;
     	
-    	if((index + getNumDaysWeek()) > calendar.getDays().size() ) next = false;
+    	if((index + getNumDaysWeek() - firstDaysLoad) > calendar.getDays().size() ) next = false;
     	else next = true;
     	
-    	notifyObserver(days,getNumDaysWeek(),after,next);
+    	notifyObserver(init, days,getNumDaysWeek(),after,next);
 	}
 
 	@Override
-	public int getNumDaysWeek() {
+	public int getNumDaysWeek(){
 		int numDays = numDaysWeek;
 		if(calendar.getSunday()){
 			numDays--;
@@ -48,8 +56,12 @@ public class DaysModel extends DaysAbstractModel{
 		return numDays;
 	}
 
-	@Override
-	public void setCalendar(Calendar c) {
-		calendar = c;
+
+	
+	public void setCalendar(Calendar c){
+		this.calendar = c;
+	}
+	public void setInit(boolean init){
+		this.init = init;
 	}
 }

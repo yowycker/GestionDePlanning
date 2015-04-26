@@ -2,19 +2,23 @@ package Model.CalendarObject;
 
 public class Day {
 	private Seance[] dayPlanning = new Seance[2];
+	
 	private String dayName;
 	//private Date date;
 	private int numDay, numWeek, numMonth, numYear;
 	private boolean holiday;
 	
-	public Day(String dayName, int numDay, int numWeek, int numMonth, int numYear){
+	public Day(String dayName, int numDay, int numWeek, int numMonth, int numYear, boolean holiday){
+		dayPlanning[0]=null;
+		dayPlanning[1]=null;
+		
 		this.dayName = dayName;
 		this.numDay = numDay;
 		this.numWeek = numWeek;
 		this.numMonth = numMonth;
 		this.numYear = numYear;
 		
-		this.holiday = false;
+		this.holiday = holiday;
 	}
 	public String getDate(){
 		String j,m,a;

@@ -14,6 +14,7 @@ import Controler.DaysAbstractControler;
 import Model.CalendarObject.Day;
 import Model.CalendarObject.Seance;
 import Obs.DaysObserver;
+import View.Elements.DayPanel;
 import View.Elements.SLabel;
 import View.Elements.SeancePanel;
 
@@ -59,12 +60,18 @@ public class PanelWeek extends JPanel implements DaysObserver, ActionListener{
     private GridLayout seancesLayout;
     private BorderLayout timeTableLayout;
     private GridLayout actionChangeLayout;
+    private BorderLayout tableLayout;
+    private BorderLayout actionBarLayout;
+    private BorderLayout planningLayout;
+    private BorderLayout panelWeekLayout;
+    
+    private JPanel separationLayout;
 
     
     public PanelWeek(DaysAbstractControler daysControler){
     	this.daysControler = daysControler;
     }
-    public void initPlanning(){    	
+    private void initPlanning(){    	
         // Entete
     	headersLayout = new GridLayout(1, 1);
     	headersLayout.setHgap(5); //Cinq pixels d'espace entre les colonnes (H comme Horizontal)
@@ -72,13 +79,14 @@ public class PanelWeek extends JPanel implements DaysObserver, ActionListener{
         headers.setLayout(headersLayout);
         
         // Seances : 2 par journee
-        seancesLayout = new GridLayout(2, 1);
+        seancesLayout = new GridLayout(1, 1);
         seancesLayout.setHgap(5); //Cinq pixels d'espace entre les colonnes (H comme Horizontal)
         seancesLayout.setVgap(5); //Cinq pixels d'espace entre les lignes (V comme Vertical)
         seances.setLayout(seancesLayout);
         
         // le planning qui va contenir les deux precedants
-        table.setLayout(new BorderLayout());
+        tableLayout = new BorderLayout();
+        table.setLayout(tableLayout);
         table.add(headers, BorderLayout.NORTH);
         table.add(seances, BorderLayout.CENTER);
         
@@ -92,24 +100,29 @@ public class PanelWeek extends JPanel implements DaysObserver, ActionListener{
 
         // la barre de "navigation"
         actionChangeLayout = new GridLayout(1, 3);
+        actionChange.removeAll();
         actionChange.setLayout(actionChangeLayout);
         actionChange.setAlignmentY(CENTER_ALIGNMENT);
         actionChange.add(prec);
-        actionChange.add(new JPanel());
+        separationLayout = new JPanel();
+        actionChange.add(separationLayout);
         actionChange.add(suiv);
         
         // Barre d'outils
-        actionBar.setLayout(new BorderLayout());
+        actionBarLayout = new BorderLayout();
+        actionBar.setLayout(actionBarLayout);
         actionBar.add(actionChange, BorderLayout.CENTER);
         
         //planning 
-        planning.setLayout(new BorderLayout());
+        planningLayout = new BorderLayout();
+        planning.setLayout(planningLayout);
         planning.add(table, BorderLayout.CENTER); 
         planning.add(timeTable, BorderLayout.WEST);   
         planning.add(actionBar, BorderLayout.SOUTH);
 
 // le tout
-        this.setLayout(new BorderLayout());
+        panelWeekLayout = new BorderLayout();
+        this.setLayout(panelWeekLayout);
         this.add(planning, BorderLayout.CENTER); 
         this.add(headerInfo, BorderLayout.NORTH);
 
@@ -119,16 +132,12 @@ public class PanelWeek extends JPanel implements DaysObserver, ActionListener{
         suiv.addActionListener(this);
         timeTable.setBackground(Color.LIGHT_GRAY);
         headerInfo.setBackground(Color.BLUE);
-
-
-///// Manipulation de l'onglet de gestion de modules
-   //     this.add(modulesTab, BorderLayout.EAST);
-   //     this.remove(modulesTab);
-   //     modulesTab.setBackground(Color.LIGHT_GRAY);
     }
     
 // appeler dans le model
-    public void update(ArrayList<Day> days, int numDays, boolean after, boolean next){
+    public void update(boolean init, ArrayList<Day> days, int numDays, boolean after, boolean next){
+    	if(init) initPlanning();
+    	
 		prec.setEnabled(after);
 		suiv.setEnabled(next);
 		this.showWeek(days,numDays);
@@ -136,28 +145,27 @@ public class PanelWeek extends JPanel implements DaysObserver, ActionListener{
 	}
     private void showWeek(ArrayList<Day> days, int numDays){
     	loadPlanningLayout(numDays);
-    	seances.removeAll();    	
-    	for(int i = 0; i < seancesLayout.getRows(); i++){
-    		for(int j = 0; j < seancesLayout.getColumns(); j++)
-    			if(days.get(j) == null || days.get(j).getHoliday())
-    				seances.add(new JPanel(),(i*numDays + j));
-    			else if(this.getSeance(days.get(j), i) == null)
-        			seances.add(new SeancePanel(),(i*numDays + j));
-    			else
-    	    		seances.add(new SeancePanel(this.getSeance(days.get(j), i)),(i*numDays + j));
+        seancesLayout = new GridLayout(1, numDays);
+    	seances.removeAll();
+    	for(int i = 0; i < numDays; i++){
+    		if(days.get(i) == null)
+    			seances.add(new JPanel(),(i));
+    		else{
+    	    	seances.add(new DayPanel(days.get(i),5,5),i);
+    	    	System.out.println(days.get(i).getName() + " " + days.get(i).getDate());
+    		    	if(days.get(i).getMorning() != null)
+    		    		System.out.println("    Module Matin : " + days.get(i).getMorning().getModule().getName());
+    		    	else
+    		    		System.out.println("    Module Matin : NULL");
+    		    	if(days.get(i).getAfternoon() != null)
+    		    		System.out.println("    Module Aprem : " + days.get(i).getAfternoon().getModule().getName());
+    		    	else
+    		    		System.out.println("    Module Aprem : NULL");
+    		    }
     	}
-    }
-    private Seance getSeance(Day day, int position){
-    	Seance seance = null;
-    	if(position==0)
-    		seance = day.getMorning();
-    	else if(position==1)
-    		seance = day.getAfternoon();
-    	return seance;
     }
     private void loadPlanningLayout(int numDays){
     	headersLayout = new GridLayout(1, numDays);
-        seancesLayout = new GridLayout(2, numDays);
         headers.removeAll();
         headers.add(monday);
         headers.add(tuesday);
@@ -180,6 +188,4 @@ public class PanelWeek extends JPanel implements DaysObserver, ActionListener{
         	daysControler.afterWeek();
         } 
     }
-
-    
 }
