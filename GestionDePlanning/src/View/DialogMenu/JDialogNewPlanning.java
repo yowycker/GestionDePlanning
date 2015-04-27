@@ -1,4 +1,4 @@
-package View.Elements;
+package View.DialogMenu;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
@@ -12,6 +12,7 @@ import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 
+import View.Elements.SLabel;
 import Controler.DaysAbstractControler;
 
 public class JDialogNewPlanning extends JDialog implements ActionListener{

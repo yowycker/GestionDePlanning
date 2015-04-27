@@ -24,9 +24,9 @@ public class Calendar{
 	public Calendar(int firstDay, int firstMonth, int firstYear,int lastDay,  int lastMonth, int lastYear, boolean holiday, boolean saturday, boolean sunday) throws dateException{
 		// fonction static qui retourne un message d'erreur si les date de fin et de début sont hors scope
 		if(FunctionException.erreurDate("début",firstDay,firstMonth,firstYear) != "")
-			throw new dateException(FunctionException.erreurDate("début",firstDay,firstMonth,firstYear));
-		else if(FunctionException.erreurDate("début",lastDay,lastMonth,lastYear) != "")
-			throw new dateException(FunctionException.erreurDate("fin",lastDay,lastMonth,lastYear));
+			throw new dateException("Erreur",FunctionException.erreurDate("début",firstDay,firstMonth,firstYear));
+		else if(FunctionException.erreurDate("fin",lastDay,lastMonth,lastYear) != "")
+			throw new dateException("Erreur",FunctionException.erreurDate("fin",lastDay,lastMonth,lastYear));
 		else{
 			this.holiday = holiday; 
 			this.saturday = saturday; 
@@ -87,7 +87,7 @@ public class Calendar{
 		iWeek = week(firstDay,firstMonth,firstYear);
 	}
 	private void generateJours(int firstDay, int firstMonth, int firstYear,int lastDay,  int lastMonth, int lastYear){
-		int maxDaysMonth = numberJourMonth(firstMonth,firstYear);
+		int maxDaysMonth = numberDayMonth(firstMonth,firstYear);
 		int namedDay = iDay;
 		int fDay = firstDay;
 		int fWeek = iWeek;
@@ -101,7 +101,7 @@ public class Calendar{
 					maxDaysMonth = lastDay;
 				}
 				else{
-					maxDaysMonth = numberJourMonth(m,a);
+					maxDaysMonth = numberDayMonth(m,a);
 					fDay = 1;
 				}
 
@@ -135,7 +135,7 @@ public class Calendar{
 		private int week(int day, int month, int year){
 			int retour = day(1,1,year);
 		    for(int i=1;i<month;i++){ 
-		    	retour += numberJourMonth(month,year);
+		    	retour += numberDayMonth(month,year);
 		    }
 		    for(int i=1;i<day;i++) 
 		        retour+=1; 
@@ -149,7 +149,7 @@ public class Calendar{
 		        if(i%4 == 0)retour+=366;
 		        else retour+=365;
 		    for(int m=1;m<month;m++)
-		    	retour += numberJourMonth(m,year);
+		    	retour += numberDayMonth(m,year);
 		    for(int j=1;j<day;j++)
 		        retour+=1;
 		    if(retour%7==0) retour = 7;
@@ -158,7 +158,7 @@ public class Calendar{
 		}
 		
 //Exception sur le numero de mois et le jour
-	private int numberJourMonth(int month,int year){
+	private int numberDayMonth(int month,int year){
 		    int retour = 0; 
 		     
 		    switch(month){ 

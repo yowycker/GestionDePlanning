@@ -6,17 +6,25 @@ import junit.framework.TestCase;
 
 public class testCalendarContent extends TestCase{
 	public void testNbDays() throws Exception {
-		assertTrue("Le nombre de jour est compris entre 0 et 7",this.isWeek(this.getCalendar(1,2,2035,2,2,2036,true,true,true).getDays().size()));
+		assertTrue("Le nombre de jour dans l'année est compris entre 365 et 366",this.isYear(this.getCalendar(1,1,2035,1,1,2036,true,true,true).getDays().size()));
 	}
 	public void testPositionFirstDay() throws Exception {
-		assertTrue("Le nombre de jour est compris entre 0 et 7", this.isWeek(this.getCalendar(1,2,2035,2,2,2036,true,true,true).getIDay()));
+		assertTrue("Le numéro de jour de la semaine est compris entre 0 et 7", this.isWeek(this.getCalendar(1,2,2035,2,2,2036,true,true,true).getIDay()));
 	}
 	private boolean isWeek(int nbDays){
-		boolean isW = false;
-		if(nbDays < 7)
-			isW = true;
-		if(nbDays >= 0)
-			isW = true;
+		boolean isW = true;
+		if(nbDays > 7)
+			isW = false;
+		if(nbDays <= 0)
+			isW = false;
+		return isW;
+	}
+	private boolean isYear(int nbDays){
+		boolean isW = true;
+		if(nbDays > 366)
+			isW = false;
+		if(nbDays <= 365)
+			isW = false;
 		return isW;
 	}
 	

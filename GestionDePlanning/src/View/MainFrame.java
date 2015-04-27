@@ -14,7 +14,7 @@ import Controler.DaysAbstractControler;
 import Controler.DaysControler;
 import Model.DaysAbstractModel;
 import Model.DaysModel;
-import View.Elements.JDialogNewPlanning;
+import View.DialogMenu.JDialogNewPlanning;
 
 public class MainFrame extends JFrame implements ActionListener{
 

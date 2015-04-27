@@ -8,7 +8,7 @@ import Model.CalendarObject.Calendar;
 import Model.CalendarObject.Day;
 import Model.CalendarObject.Module;
 import Model.CalendarObject.Seance;
-import View.Elements.JDialogNewPlanning;
+import View.DialogMenu.JDialogNewPlanning;
 
 public class DaysControler extends DaysAbstractControler {	
 	public DaysControler(DaysAbstractModel daysModel){
@@ -75,7 +75,8 @@ System.out.println("Index : " + index);
 		    initData(c);
 		}
 		catch(dateException e){
-			new JDialogNewPlanning(this);
+			e.showDialogMessage();
+			//new JDialogNewPlanning(this);
 		}
 	}
 
