@@ -16,7 +16,7 @@ System.out.println("Date : " + calendar.getDays().get(0).getDate());
 		int j = 0;
 		if(index == 0)
 			firstDaysLoad=0;
-    	for(int i = 1; i <= numDaysWeek; i++){
+    	for(int i = 1; i <= getNumDaysWeek(); i++){
     		if(index == 0 && i < (calendar.getIDay())){
     			days.add(null);
     			firstDaysLoad++;
@@ -45,6 +45,7 @@ System.out.println("Date : " + calendar.getDays().get(0).getDate());
     	notifyObserver(init, days,getNumDaysWeek(),after,next);
 	}
 
+	@Override
 	public int getNumDaysWeek(){
 		int numDays = numDaysWeek;
 		if(calendar.getSunday()){
@@ -53,9 +54,6 @@ System.out.println("Date : " + calendar.getDays().get(0).getDate());
 				numDays--;
 		}
 		return numDays;
-	}
-	public int getFinalNumDaysWeek(){
-		return numDaysWeek;
 	}
 
 

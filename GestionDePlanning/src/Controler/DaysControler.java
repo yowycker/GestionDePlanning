@@ -22,13 +22,13 @@ public class DaysControler extends DaysAbstractControler {
 	
 	public void nextWeek(){
 		daysModel.setInit(false);
-		index += daysModel.getFinalNumDaysWeek();
+		index += daysModel.getNumDaysWeek();
 System.out.println("Index : " + index);
 		daysModel.getWeek(index);
 	}
 	public void afterWeek(){
 		daysModel.setInit(false);
-		index -= daysModel.getFinalNumDaysWeek();
+		index -= daysModel.getNumDaysWeek();
 System.out.println("Index : " + index);
 		daysModel.getWeek(index);
 	}
