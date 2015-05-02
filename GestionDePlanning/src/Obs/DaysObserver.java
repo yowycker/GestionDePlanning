@@ -3,7 +3,9 @@ package Obs;
 import java.util.ArrayList;
 
 import Model.CalendarObject.Day;
+import Model.CalendarObject.Formation;
 
 public interface DaysObserver {
-	  public void update(boolean init, ArrayList<Day> days, int numDays, boolean after, boolean next);
+	  public void update(Formation formation,boolean init, ArrayList<Day> days, int numDays, boolean after, boolean next);
+	  public void update(ArrayList<Formation> formations);
 }

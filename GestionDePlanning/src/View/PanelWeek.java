@@ -12,11 +12,10 @@ import javax.swing.JPanel;
 
 import Controler.DaysAbstractControler;
 import Model.CalendarObject.Day;
-import Model.CalendarObject.Seance;
+import Model.CalendarObject.Formation;
 import Obs.DaysObserver;
 import View.Elements.DayPanel;
 import View.Elements.SLabel;
-import View.Elements.SeancePanel;
 
 public class PanelWeek extends JPanel implements DaysObserver, ActionListener{
 	private DaysAbstractControler daysControler;
@@ -135,15 +134,15 @@ public class PanelWeek extends JPanel implements DaysObserver, ActionListener{
     }
     
 // appeler dans le model
-    public void update(boolean init, ArrayList<Day> days, int numDays, boolean after, boolean next){
+    public void update(Formation formation, boolean init, ArrayList<Day> days, int numDays, boolean after, boolean next){
     	if(init) initPlanning();
     	
 		prec.setEnabled(after);
 		suiv.setEnabled(next);
-		this.showWeek(days,numDays);
+		this.showWeek(formation,days,numDays);
 		this.updateUI();
 	}
-    private void showWeek(ArrayList<Day> days, int numDays){
+    private void showWeek(Formation formation,ArrayList<Day> days, int numDays){
     	loadPlanningLayout(numDays);
         seancesLayout = new GridLayout(1, numDays);
     	seances.removeAll();
@@ -151,8 +150,9 @@ public class PanelWeek extends JPanel implements DaysObserver, ActionListener{
     		if(days.get(i) == null)
     			seances.add(new JPanel(),(i));
     		else{
-    	    	seances.add(new DayPanel(days.get(i),5,5),i);
-    	    	System.out.println(days.get(i).getName() + " " + days.get(i).getDate());
+    	    	seances.add(new DayPanel(days.get(i),5,5,formation),i);
+System.out.println(days.get(i).getName() + " " + days.get(i).getDate());
+/*
     		    	if(days.get(i).getMorning() != null)
     		    		System.out.println("    Module Matin : " + days.get(i).getMorning().getModule().getName());
     		    	else
@@ -161,6 +161,7 @@ public class PanelWeek extends JPanel implements DaysObserver, ActionListener{
     		    		System.out.println("    Module Aprem : " + days.get(i).getAfternoon().getModule().getName());
     		    	else
     		    		System.out.println("    Module Aprem : NULL");
+*/
     		    }
     	}
     }
@@ -188,4 +189,11 @@ public class PanelWeek extends JPanel implements DaysObserver, ActionListener{
         	daysControler.afterWeek();
         } 
     }
+    
+    
+    
+    
+
+    public void update(ArrayList<Formation> formations){
+	}
 }

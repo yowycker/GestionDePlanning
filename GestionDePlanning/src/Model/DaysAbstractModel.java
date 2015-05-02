@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import Model.CalendarObject.Calendar;
 import Model.CalendarObject.Day;
+import Model.CalendarObject.Formation;
 import Obs.DaysObservable;
 import Obs.DaysObserver;
 
@@ -17,7 +18,8 @@ public abstract class DaysAbstractModel implements DaysObservable{
 	
 	protected final int numDaysWeek = 7;
 	protected int firstDaysLoad = 0;
-	
+
+// Affichage de calendrier
 	public ArrayList<Day> getDays(){
 		return days;
 	}
@@ -30,15 +32,25 @@ public abstract class DaysAbstractModel implements DaysObservable{
 	public abstract void getWeek(int index);
 
 	public abstract int getNumDaysWeek();
+	public abstract int getFinalNumDaysWeek();
 	public abstract void setCalendar(Calendar c);
 	public abstract void setInit(boolean init);
 	  
+// Affichage de menus
+	public abstract void getFormations();
+	public abstract void setFormations(Formation formation);
+	
+// Fonctions Observable
 	public void addObserver(DaysObserver obs) {
 	    this.listObserver.add(obs);
 	}
-	public void notifyObserver(boolean init, ArrayList<Day> days, int numDays, boolean after, boolean next) {
+	public void notifyObserver(Formation formation,boolean init, ArrayList<Day> days, int numDays, boolean after, boolean next) {
 	    for(DaysObserver obs : listObserver)
-	      obs.update(init, days, numDays,after,next);
+	      obs.update(formation,init, days, numDays,after,next);
+	}
+	public void notifyObserver(ArrayList<Formation> formations) {
+	    for(DaysObserver obs : listObserver)
+	      obs.update(formations);
 	}
 	public void removeObserver() {
 	    listObserver = new ArrayList<DaysObserver>();

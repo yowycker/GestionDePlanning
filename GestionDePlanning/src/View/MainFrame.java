@@ -14,26 +14,34 @@ import Controler.DaysAbstractControler;
 import Controler.DaysControler;
 import Model.DaysAbstractModel;
 import Model.DaysModel;
+import View.DialogMenu.JDialogManage;
 import View.DialogMenu.JDialogNewPlanning;
+import View.DialogMenu.JPanelManageFormation;
 
 public class MainFrame extends JFrame implements ActionListener{
 
     private JButton newFile = new JButton("Nouveau");
     private JButton openFile = new JButton("Ouvrir");
     private JButton saveFile = new JButton("Sauvegarder");
-    private JButton gestion1 = new JButton("");
-    private JButton gestion2 = new JButton("");
-    private JButton gestion3 = new JButton("");
-    private JButton plannification1 = new JButton("");
-    private JButton plannification2 = new JButton("");
+    
+    // listes
+    private JButton manageFormation = new JButton("Formations");
+    private JButton manageModule = new JButton("Modules");
+    private JButton manageTeacher = new JButton("Formateurs");
+    
+    // agi sur l'affichage du calendrier
+    private JButton manageHoliday = new JButton("Jours non-ouvré");
+    private JButton manageSeances = new JButton("Scéances");
+    private JButton manageSeancesDragNDrop = new JButton("Drag'n Drop");
 
 // Lier le Modele, le controlleur et la vue ensemble
  		    //Instanciation de notre modèle
- 		    DaysAbstractModel model = new DaysModel();
+    private DaysAbstractModel model = new DaysModel();
  		    //Création du contrôleur
- 		    DaysAbstractControler controler = new DaysControler(model);
+    private DaysAbstractControler controler = new DaysControler(model);
  		    //Création de notre fenêtre avec le contrôleur en paramètre
- 		    PanelWeek planning = new PanelWeek(controler); 		    
+    private PanelWeek planning = new PanelWeek(controler);
+    private JPanelManageFormation manageFormationPanel = new JPanelManageFormation(controler); 		    
  		    
 	  public MainFrame(){
 		    this.setTitle("Planning");
@@ -43,6 +51,7 @@ public class MainFrame extends JFrame implements ActionListener{
 
 	//Ajout de la fenêtre comme observer de notre modèle
  		    model.addObserver(planning);
+ 		    model.addObserver(manageFormationPanel);
 
 		    this.setLayout(new BorderLayout());
 		    this.getContentPane().add(planning, BorderLayout.CENTER);
@@ -54,16 +63,20 @@ public class MainFrame extends JFrame implements ActionListener{
 		    toolbar.add(openFile);
 		    toolbar.add(saveFile);
 		    toolbar.addSeparator();
-		    toolbar.add(gestion1);
-		    toolbar.add(gestion2);
-		    toolbar.add(gestion3);
+		    toolbar.add(manageFormation);
+		    toolbar.add(manageModule);
+		    toolbar.add(manageTeacher);
 		    toolbar.addSeparator();
-		    toolbar.add(plannification1);
-		    toolbar.add(plannification2);
+		    toolbar.add(manageHoliday);
+		    toolbar.add(manageSeances);
+		    toolbar.add(manageSeancesDragNDrop);
 		    this.getContentPane().add(toolbar, BorderLayout.NORTH);
 
 		    newFile.addActionListener(this); 
 		    openFile.addActionListener(this);
+		    
+		    manageFormation.addActionListener(this);
+		    manageModule.addActionListener(this);
 		    
 		    this.setVisible(true);
 	  }
@@ -78,6 +91,14 @@ public class MainFrame extends JFrame implements ActionListener{
         	new JDialogNewPlanning(controler);
         }
         if(e.getSource() == openFile){
+        }
+        
+
+        if(e.getSource() == manageFormation){
+        	manageFormationPanel.initListFormation();
+        	new JDialogManage(manageFormationPanel);
+        }
+        if(e.getSource() == manageModule){
         }
     }
 }

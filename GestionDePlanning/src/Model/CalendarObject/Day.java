@@ -1,7 +1,12 @@
 package Model.CalendarObject;
 
+import java.util.ArrayList;
+
 public class Day {
-	private Seance[] dayPlanning = new Seance[2];
+// A supprimer
+private Seance[] dayPlanning = new Seance[2];
+
+	private ArrayList<DayFormationSeances> formationsSeances = new ArrayList<DayFormationSeances>();
 	
 	private String dayName;
 	//private Date date;
@@ -34,25 +39,41 @@ public class Day {
 		return j + "/" + m + "/" + a;
 	}
 	
-	
-	public void setMorning(Seance seance){
-		dayPlanning[0]=seance;
+
+	public void setMorning(Formation currentFormation, String nameModule){
+		this.getFormationSeances(currentFormation.getTitle()).setSeance(0, new Seance(currentFormation.getModule(nameModule)));
 	}
-	public void setAfternoon(Seance seance){
-		dayPlanning[1]=seance;
+	public void setAfternoon(Formation currentFormation, String nameModule){
+		this.getFormationSeances(currentFormation.getTitle()).setSeance(1, new Seance(currentFormation.getModule(nameModule)));
 	}
 
-	public Seance getMorning(){
-		return dayPlanning[0];
+	public Seance getMorning(Formation currentFormation){
+		return this.getFormationSeances(currentFormation.getTitle()).getSeance(0);
 	}
-	public Seance getAfternoon(){
-		return dayPlanning[1];
+	public Seance getAfternoon(Formation currentFormation){
+		return this.getFormationSeances(currentFormation.getTitle()).getSeance(1);
 	}
+	private DayFormationSeances getFormationSeances(String formation){
+		DayFormationSeances fSeances = null;
+		for(DayFormationSeances s : formationsSeances){
+			if(s.getFormation().equals(formation)){
+				fSeances=s;
+			}
+		}
+		return fSeances;
+	}
+	public void addFormationSeances(String formation){
+		if(this.getFormationSeances(formation) == null)
+			formationsSeances.add(new DayFormationSeances(formation));
+	}
+	public void removeFormationSeances(String formation){
+		formationsSeances.remove(this.getFormationSeances(formation));
+	}
+	
 	
 	public boolean getHoliday(){
 		return holiday;
 	}
-	
 	public String getName(){
 		return dayName;
 	}
@@ -67,5 +88,14 @@ public class Day {
 	}
 	public int getYear(){
 		return numYear;
+	}
+	
+	
+	
+	public boolean equals(Day day){
+		if(this.numDay == day.getNumDay() && this.numMonth == day.getNumMonth() && this.numYear == day.getYear())
+			return true;
+		else
+			return false;
 	}
 }

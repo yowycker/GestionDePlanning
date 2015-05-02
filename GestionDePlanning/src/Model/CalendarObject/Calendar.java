@@ -6,7 +6,9 @@ import Exceptions.FunctionException;
 import Exceptions.dateException;
 
 public class Calendar{
+	private String currentFormation;
 
+	private ArrayList<Formation> formations = new ArrayList<Formation>(); 
 	private ArrayList<Day> listDays = new ArrayList<Day>();
 // pas encore sur pour les modules
 	private ArrayList<Module> listModules = new ArrayList<Module>();
@@ -36,7 +38,7 @@ public class Calendar{
 		}
 	}
 
-// Accesseurs :
+	
 	public ArrayList<Day> getDays(){
 		return listDays;
 	}
@@ -79,7 +81,70 @@ public class Calendar{
 	return month; 
 	} 
 	
-	// ---------------- Fonction de Calcule des Jours ------------------- //
+	
+	// -------------- Fonctions de Gestion des Formations --------------- //
+	// ------------------------------------------------------------------ //
+
+	
+	public void setCurrentFormation(Formation formation){
+		this.currentFormation = formation.getTitle();
+	}
+	public Formation getCurrentFormation(){
+		Formation cformation = null;
+		for(Formation f : formations){
+			if(f.getTitle().equals(currentFormation)){
+				cformation=f;
+			}
+		}
+		return cformation;
+	}
+	
+
+	public void addFormation(Formation formation){
+//tester si la formation existe deja
+		formations.add(formation);
+		for(Day d : listDays){
+			d.addFormationSeances(formation.getTitle());
+		}
+	}
+	public void removeFormation(Formation formation){
+//tester si la formation existe deja
+		formations.remove(formation);
+		for(Day d : listDays){
+			d.removeFormationSeances(formation.getTitle());
+		}
+	}
+	
+	
+	public ArrayList<Formation> getFormations(){
+		return formations;
+	}
+	
+	// --------------- Fonctions de Gestion des Seances ----------------- //
+	// ------------------------------------------------------------------ //
+	
+	public void setMorningSeance(Day day, Module module){
+		for(Day d : listDays){
+// modifier le rend des seances du meme module : matin et soir
+			if(d.equals(day)){
+				getCurrentFormation().addSeance(module.getName());
+				d.setMorning(getCurrentFormation(), module.getName());
+// modifier le rend de la seance
+			}
+		}
+	}
+	public void setAfternoonSeance(Day day, Module module){
+		for(Day d : listDays){
+// modifier le rend des seances du meme module : matin et soir
+			if(d.equals(day)){
+				getCurrentFormation().addSeance(module.getName());
+				d.setAfternoon(getCurrentFormation(), module.getName());
+// modifier le rend de la seance
+			}
+		}
+	}
+	
+	// ---------------- Fonctions de Calcule des Jours ------------------ //
 	// ------------------------------------------------------------------ //
 		
 	private void init(int firstDay, int firstMonth, int firstYear){
@@ -156,8 +221,7 @@ public class Calendar{
 		    else retour = retour%7;
 		    return (retour); 
 		}
-		
-//Exception sur le numero de mois et le jour
+
 	private int numberDayMonth(int month,int year){
 		    int retour = 0; 
 		     

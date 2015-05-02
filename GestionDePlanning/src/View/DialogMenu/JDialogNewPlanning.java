@@ -62,13 +62,10 @@ public class JDialogNewPlanning extends JDialog implements ActionListener{
 		 yearLabelPanel.add(year);
 		 yearsPanel.add(yearLabelPanel, 0);
 		 //centrer comboBox
-		 combo.addItem("1899-1900");
-		 combo.addItem("2014-2015");
-		 combo.addItem("2015-2016");
-		 combo.addItem("2016-2017");
-		 combo.addItem("2017-2018");
-		 combo.addItem("2018-2019");
-		 combo.addItem("2019-2020");
+combo.addItem("1899-1900");
+		 for(String s : daysControler.getListYears()){
+			 combo.addItem(s);
+		 }
 		 yearsComboPanel.add(combo);
 		 yearsPanel.add(yearsComboPanel, 1);
 		 

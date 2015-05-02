@@ -4,10 +4,14 @@ import java.util.ArrayList;
 
 import Model.CalendarObject.Calendar;
 import Model.CalendarObject.Day;
+import Model.CalendarObject.Formation;
 
 public class DaysModel extends DaysAbstractModel{
 	
-	@Override
+
+	// -------------- Fonctions de l'affichage du calendrier --------------- //
+	// --------------------------------------------------------------------- //
+	
 	public void getWeek(int index){
 		days = new ArrayList<Day>();
 System.out.println("IDay : " + calendar.getIDay());
@@ -16,7 +20,7 @@ System.out.println("Date : " + calendar.getDays().get(0).getDate());
 		int j = 0;
 		if(index == 0)
 			firstDaysLoad=0;
-    	for(int i = 1; i <= getNumDaysWeek(); i++){
+    	for(int i = 1; i <= numDaysWeek; i++){
     		if(index == 0 && i < (calendar.getIDay())){
     			days.add(null);
     			firstDaysLoad++;
@@ -42,10 +46,9 @@ System.out.println("Date : " + calendar.getDays().get(0).getDate());
     	if((index + getNumDaysWeek() - firstDaysLoad) > calendar.getDays().size() ) next = false;
     	else next = true;
     	
-    	notifyObserver(init, days,getNumDaysWeek(),after,next);
+    	notifyObserver(calendar.getCurrentFormation() ,init, days, getNumDaysWeek(),after,next);
 	}
 
-	@Override
 	public int getNumDaysWeek(){
 		int numDays = numDaysWeek;
 		if(calendar.getSunday()){
@@ -54,6 +57,9 @@ System.out.println("Date : " + calendar.getDays().get(0).getDate());
 				numDays--;
 		}
 		return numDays;
+	}
+	public int getFinalNumDaysWeek(){
+		return numDaysWeek;
 	}
 
 
@@ -64,4 +70,17 @@ System.out.println("Date : " + calendar.getDays().get(0).getDate());
 	public void setInit(boolean init){
 		this.init = init;
 	}
+	
+	
+	// -------------- Gestion d'affichage des menus  --------------- //
+	// ------------------------------------------------------------- //
+	
+	public void getFormations(){
+// Gerer le cas ou aucune formation existe (entrer quand même dans la fenetre)
+		notifyObserver(calendar.getFormations());
+	}
+	public void setFormations(Formation formation){
+		this.calendar.addFormation(formation);
+	}
+
 }
