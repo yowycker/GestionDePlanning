@@ -45,6 +45,9 @@ public class Formation{
 		}
 		return module;
 	}
+	public ArrayList<Module> getModules(){
+		return modules;
+	}
 	
 	public void addSeance(String nameModule){
 // Tester si le module existe

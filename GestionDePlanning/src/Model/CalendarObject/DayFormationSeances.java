@@ -1,7 +1,5 @@
 package Model.CalendarObject;
 
-import java.util.ArrayList;
-
 public class DayFormationSeances {
 	private String formation;
 	

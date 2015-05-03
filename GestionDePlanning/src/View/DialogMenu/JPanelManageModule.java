@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.Box;
+import javax.swing.JComboBox;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -14,12 +15,22 @@ import javax.swing.JScrollPane;
 import Controler.DaysAbstractControler;
 import Model.CalendarObject.Day;
 import Model.CalendarObject.Formation;
+import Model.CalendarObject.Module;
 import Obs.DaysObserver;
 
-public class JPanelManageFormation extends JPanelManage implements DaysObserver, ActionListener{
-
-private JList listFormation = new JList();
+public class JPanelManageModule extends JPanelManage implements DaysObserver, ActionListener{
 	
+private DaysAbstractControler daysControler;
+
+private String title = "Gestion des modules de cours";
+public String getTitle(){
+	return title;
+}
+
+private JList listModule = new JList();
+private JComboBox formationComboBox = new JComboBox();
+	
+
 	private JPanel centerPanel = new JPanel();
 		//private JPanel yearsPanel = new JPanel();
 			//private JPanel yearLabelPanel = new JPanel();
@@ -30,9 +41,11 @@ private JList listFormation = new JList();
 		//private JPanel daysPanel = new JPanel();
 			//private JPanel dayPanel = new JPanel();
 	private JPanel westPanel = new JPanel();
+		private JPanel formationComboPanel = new JPanel();
+		private JPanel moduleListePanel = new JPanel();
 	private JPanel bottomPanel = new JPanel();
 	
-
+	
 	private BorderLayout mainLayout;
 	
 		//private Box centerLayout;
@@ -40,17 +53,25 @@ private JList listFormation = new JList();
 			//private GridLayout advanceLayout;
 			//private Box daysLayout;
 		//private Box bottomLayout;
-		
-		private GridLayout westLayout;
+	
+	private BorderLayout westLayout;
+		//private GridLayout formationLayout;
+		private GridLayout moduleLayout;
 
 	
-	 public JPanelManageFormation(DaysAbstractControler daysControler){
-		 super(daysControler,"Gestion des formations");
+	 public JPanelManageModule(DaysAbstractControler daysControler){
+		 super(daysControler,"Gestion de modules de cours");
 		 
-		 westLayout = new GridLayout(1,2);
-		    westPanel.setLayout(westLayout);
-		    westPanel.add(listFormation);
-		    westPanel.add(new JScrollPane(listFormation));
+		 formationComboPanel.add(formationComboBox);
+		 		 
+		 moduleLayout = new GridLayout(1,2);
+		 moduleListePanel.setLayout(moduleLayout);
+		 moduleListePanel.add(listModule);
+		 moduleListePanel.add(new JScrollPane(listModule));
+		 	
+		 westLayout = new BorderLayout();
+		 westPanel.add(formationComboPanel, BorderLayout.NORTH);
+		 westPanel.add(moduleListePanel, BorderLayout.CENTER);
 		 
 		 mainLayout = new BorderLayout();
 	     this.setLayout(mainLayout);
@@ -67,15 +88,20 @@ private JList listFormation = new JList();
 		
 	}
 
-	public void update(ArrayList<Formation> formations, Formation currentFormation) {
-		ArrayList<String> selections = new ArrayList<String>();
+	
+	public void update(ArrayList<Formation> formations, Formation currentFormation){
 		for(Formation f :formations){
-			selections.add(f.getTitle());
-			System.out.println(f.getTitle());
+			formationComboBox.addItem(f.getTitle());
 		}
-		listFormation.setListData(selections.toArray());
-		System.out.println(listFormation.getSelectedValue());
-		//listFormation.setSelectedIndex(1);
+		formationComboBox.setSelectedItem(currentFormation.getTitle());
+		
+		ArrayList<String> selections = new ArrayList<String>();
+		for(Module m :currentFormation.getModules()){
+			selections.add(m.getName());
+			System.out.println(m.getName());
+		}
+		listModule.setListData(selections.toArray());
+		System.out.println(listModule.getSelectedValue());
 		this.updateUI();
 	}
 

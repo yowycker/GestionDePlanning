@@ -48,9 +48,9 @@ public abstract class DaysAbstractModel implements DaysObservable{
 	    for(DaysObserver obs : listObserver)
 	      obs.update(formation,init, days, numDays,after,next);
 	}
-	public void notifyObserver(ArrayList<Formation> formations) {
+	public void notifyObserver(ArrayList<Formation> formations, Formation currentFormation) {
 	    for(DaysObserver obs : listObserver)
-	      obs.update(formations);
+	      obs.update(formations,currentFormation);
 	}
 	public void removeObserver() {
 	    listObserver = new ArrayList<DaysObserver>();

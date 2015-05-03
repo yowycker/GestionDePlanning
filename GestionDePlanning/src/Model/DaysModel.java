@@ -77,7 +77,7 @@ System.out.println("Date : " + calendar.getDays().get(0).getDate());
 	
 	public void getFormations(){
 // Gerer le cas ou aucune formation existe (entrer quand même dans la fenetre)
-		notifyObserver(calendar.getFormations());
+		notifyObserver(calendar.getFormations(), calendar.getCurrentFormation());
 	}
 	public void setFormations(Formation formation){
 		this.calendar.addFormation(formation);

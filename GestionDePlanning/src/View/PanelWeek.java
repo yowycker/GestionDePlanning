@@ -194,6 +194,6 @@ System.out.println(days.get(i).getName() + " " + days.get(i).getDate());
     
     
 
-    public void update(ArrayList<Formation> formations){
+    public void update(ArrayList<Formation> formations, Formation currentFormation){
 	}
 }

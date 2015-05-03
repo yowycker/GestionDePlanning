@@ -17,6 +17,7 @@ import Model.DaysModel;
 import View.DialogMenu.JDialogManage;
 import View.DialogMenu.JDialogNewPlanning;
 import View.DialogMenu.JPanelManageFormation;
+import View.DialogMenu.JPanelManageModule;
 
 public class MainFrame extends JFrame implements ActionListener{
 
@@ -24,12 +25,12 @@ public class MainFrame extends JFrame implements ActionListener{
     private JButton openFile = new JButton("Ouvrir");
     private JButton saveFile = new JButton("Sauvegarder");
     
-    // listes
+    // listes menus
     private JButton manageFormation = new JButton("Formations");
     private JButton manageModule = new JButton("Modules");
     private JButton manageTeacher = new JButton("Formateurs");
     
-    // agi sur l'affichage du calendrier
+    // affichage du calendrier
     private JButton manageHoliday = new JButton("Jours non-ouvré");
     private JButton manageSeances = new JButton("Scéances");
     private JButton manageSeancesDragNDrop = new JButton("Drag'n Drop");
@@ -41,7 +42,8 @@ public class MainFrame extends JFrame implements ActionListener{
     private DaysAbstractControler controler = new DaysControler(model);
  		    //Création de notre fenêtre avec le contrôleur en paramètre
     private PanelWeek planning = new PanelWeek(controler);
-    private JPanelManageFormation manageFormationPanel = new JPanelManageFormation(controler); 		    
+    private JPanelManageFormation manageFormationPanel = new JPanelManageFormation(controler);
+    private JPanelManageModule manageModulePanel = new JPanelManageModule(controler);	    
  		    
 	  public MainFrame(){
 		    this.setTitle("Planning");
@@ -49,9 +51,10 @@ public class MainFrame extends JFrame implements ActionListener{
 		    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		    this.setLocationRelativeTo(null);
 
-	//Ajout de la fenêtre comme observer de notre modèle
+//Ajout de la fenêtre comme observer de notre modèle
  		    model.addObserver(planning);
  		    model.addObserver(manageFormationPanel);
+ 		    model.addObserver(manageModulePanel);
 
 		    this.setLayout(new BorderLayout());
 		    this.getContentPane().add(planning, BorderLayout.CENTER);
@@ -99,6 +102,8 @@ public class MainFrame extends JFrame implements ActionListener{
         	new JDialogManage(manageFormationPanel);
         }
         if(e.getSource() == manageModule){
+        	manageModulePanel.initListFormation();
+        	new JDialogManage(manageModulePanel);
         }
     }
 }
