@@ -2,28 +2,54 @@ package Model.CalendarObject;
 
 import java.util.ArrayList;
 
+/**
+ *Classe permettant de définir une Formation
+ * @param title, @param nbDays
+ * @param nbHours, @param nbHoursSeances
+ * @param modules //Liste des modules de la formation
+ */
 public class Formation{
+	
 	private String title;
-	private double nbHoursSeances;
+	
 	private ArrayList<Module> modules = new ArrayList<Module>();
 	
 	private int nbDays = 0;
 	private double nbHours = 0;
+	private double nbHoursSeances;
 	
+	/**
+	 * Constructeur de la classe Formation
+	 * @param title
+	 * @param nbHoursSeances
+	 */
 	public Formation(String title, double nbHoursSeances){
 // tester si nb H bien < à 5 ou 6 ...
 		this.title = title;
 		this.nbHoursSeances = nbHoursSeances;
 	}
 	
+	/**
+	 * Ascesseur retournant ???
+	 * @return
+	 */
 	public double getHoursModule(){
-		return (nbDays*24 + nbHours);
+		return (nbDays*24 + nbHours); //???
 	}
+	
+	/**
+	 * Ascesseur retournant le titre de la formation
+	 * @param title
+	 * @return
+	 */
 	public String getTitle(){
 		return title;
 	}
 	
-	
+	/**
+	 * Méthode d'ajout d'un module
+	 * @param module
+	 */
 	public void addModule(Module module){
 // tester si le module existe deja dans la formation (nom, couleur ... etc)
 		/*
@@ -33,10 +59,21 @@ public class Formation{
 		}*/
 		this.modules.add(module);
 	}
+	
+	/**
+	 * Méthode pour soustraire un module
+	 * @param module
+	 */
 // Exception : Si seance existe, ne pas supprimer module ? ou alors supprimer tous les modules ?
 	public void removeModule(Module module){
 		modules.remove(module);
 	}
+	
+	/**
+	 * Ascesseur retournant le nom du module en cours
+	 * @param nameModule, @param module
+	 * @return
+	 */
 	public Module getModule(String nameModule){
 		Module module = null;
 		for(Module m : modules){
@@ -45,29 +82,52 @@ public class Formation{
 		}
 		return module;
 	}
+	
+	/**
+	 * Ascesseur retournant la liste des modules
+	 * @param modules
+	 * @return
+	 */
 	public ArrayList<Module> getModules(){
 		return modules;
 	}
 	
+	/**
+	 * Méthode d'ajout d'une séance
+	 * @param nameModule
+	 */
 	public void addSeance(String nameModule){
 // Tester si le module existe
 // Tester si le nombre de modules max n'est pas déja à son max : ici ou dans module ?
 		getModule(nameModule).instantiateISeance();
 		this.instantiateNbHours();
 	}
+	
+	/**
+	 * Méthode de suppression d'une séance
+	 * @param nameModule
+	 */
 	public void removeSeance(String nameModule){
 // Tester si le module existe
 // Tester si le nombre de modules max n'est pas déja à son max : ici ou dans module ?
 		getModule(nameModule).dropInstantiateISeance();
 		this.dropInstantiateNbHours();
 	}
+	
+	/**
+	 * Méthode permettant de changer de jour ???
+	 */
 	private void instantiateNbHours(){
 		nbHours+=nbHoursSeances;
 		if(nbHours >= 24){
 			nbHours -= 24;
-			nbDays++;
+			nbDays++;	//??? Changement de jour ???
 		}
 	}
+	
+	/**
+	 * Méthode permettant de
+	 */
 // exception si le nombre d'heure et de jours < 0
 	private void dropInstantiateNbHours(){
 		nbHours-=nbHoursSeances;

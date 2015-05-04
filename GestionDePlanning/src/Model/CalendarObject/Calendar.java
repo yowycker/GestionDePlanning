@@ -4,12 +4,20 @@ import java.util.ArrayList;
 
 import Exceptions.FunctionException;
 import Exceptions.dateException;
-
+/**
+ * Classe permettant de générer le Calendrier
+ * @param currentFormation, @param iDay, @param iWeek
+ * @param holiday, @param saturday, @param sunday
+ * @param formations //Liste des formations
+ * @param listDays //Liste des jours
+ */
 public class Calendar{
+	
 	private String currentFormation;
 
 	private ArrayList<Formation> formations = new ArrayList<Formation>(); 
 	private ArrayList<Day> listDays = new ArrayList<Day>();
+	
 ////// pour plus tard		
 	private boolean holiday;
 	
@@ -21,6 +29,19 @@ public class Calendar{
 	// premiere semaine dans l'année
 	private int iWeek;
 	
+	/**
+	 * Constructeur de la classe Calendar
+	 * @param firstDay
+	 * @param firstMonth
+	 * @param firstYear
+	 * @param lastDay
+	 * @param lastMonth
+	 * @param lastYear
+	 * @param holiday
+	 * @param saturday
+	 * @param sunday
+	 * @throws dateException - retourne un message d'erreur si les date de fin et de début sont hors-scope
+	 */
 	public Calendar(int firstDay, int firstMonth, int firstYear,int lastDay,  int lastMonth, int lastYear, boolean holiday, boolean saturday, boolean sunday) throws dateException{
 		// fonction static qui retourne un message d'erreur si les date de fin et de début sont hors scope
 		if(FunctionException.erreurDate("début",firstDay,firstMonth,firstYear) != "")
@@ -36,22 +57,56 @@ public class Calendar{
 		}
 	}
 
-	
+	/**
+	 * Ascesseur retournant la liste des jours
+	 * @param listDays
+	 * @return
+	 */
 	public ArrayList<Day> getDays(){
 		return listDays;
 	}
+	
+	/**
+	 * Ascesseur retournant la position du jour
+	 * @param iDay
+	 * @return
+	 */
 	public int getIDay(){
 		return iDay;
 	}
+	
+	/**
+	 * Ascesseur retournant la position de la semaine
+	 * @param iWeek
+	 * @return
+	 */
 	public int getIWeek(){
 		return iWeek;
 	}
+	
+	/**
+	 * Ascesseur retournant la postion des vacances scolaires
+	 * @param holiday
+	 * @return
+	 */
 	public boolean getHoliday(){
 		return holiday;
 	}
+	
+	/**
+	 * Ascesseur retournant la position du samedi
+	 * @param saturday
+	 * @return
+	 */
 	public boolean getSaturday(){
 		return saturday;
 	}
+	
+	/**
+	 * Ascesseur retournant la position du dimanche
+	 * @param sunday
+	 * @return
+	 */
 	public boolean getSunday(){
 		return sunday;
 	}
