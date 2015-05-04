@@ -32,7 +32,7 @@ public class MainFrame extends JFrame implements ActionListener{
     
     // affichage du calendrier
     private JButton manageHoliday = new JButton("Jours non-ouvré");
-    private JButton manageSeances = new JButton("Scéances");
+    private JButton manageSeances = new JButton("Séances");
     private JButton manageSeancesDragNDrop = new JButton("Drag'n Drop");
 
 // Lier le Modele, le controlleur et la vue ensemble

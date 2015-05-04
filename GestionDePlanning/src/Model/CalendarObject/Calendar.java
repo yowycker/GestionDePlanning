@@ -10,8 +10,6 @@ public class Calendar{
 
 	private ArrayList<Formation> formations = new ArrayList<Formation>(); 
 	private ArrayList<Day> listDays = new ArrayList<Day>();
-// pas encore sur pour les modules
-	private ArrayList<Module> listModules = new ArrayList<Module>();
 ////// pour plus tard		
 	private boolean holiday;
 	
@@ -57,9 +55,6 @@ public class Calendar{
 	public boolean getSunday(){
 		return sunday;
 	}
-	public ArrayList<Module> getModules(){
-		return listModules;
-	}	
 
 	public static String getMonthString(int i){ 
 		String month = new String(); 
