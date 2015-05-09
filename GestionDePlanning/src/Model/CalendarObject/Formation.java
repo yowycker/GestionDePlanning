@@ -30,11 +30,11 @@ public class Formation{
 	}
 	
 	/**
-	 * Ascesseur retournant ???
+	 * Ascesseur retournant le nombre d'heures du module en heures
 	 * @return
 	 */
 	public double getHoursModule(){
-		return (nbDays*24 + nbHours); //???
+		return (nbDays*24 + nbHours); 
 	}
 	
 	/**
@@ -115,18 +115,20 @@ public class Formation{
 	}
 	
 	/**
-	 * Méthode permettant de changer de jour ???
+	 * Méthode permettant d'instantier le nombre d'heures
+	 * si le nombre d’heure dépasse 24 alors on ajoute une journée
 	 */
 	private void instantiateNbHours(){
 		nbHours+=nbHoursSeances;
 		if(nbHours >= 24){
 			nbHours -= 24;
-			nbDays++;	//??? Changement de jour ???
+			nbDays++;	
 		}
 	}
 	
 	/**
-	 * Méthode permettant de
+	 * Méthode permettant d'instantier le nombre d'heures
+	 * suppression d'une journée
 	 */
 // exception si le nombre d'heure et de jours < 0
 	private void dropInstantiateNbHours(){
