@@ -88,7 +88,10 @@ public class MainFrame extends JFrame implements ActionListener{
 		new MainFrame();
 	}
 	
-// nouveau calendrier
+
+	/**
+	 * Nouveau Calendrier
+	 */
     public void actionPerformed(ActionEvent e){
         if(e.getSource() == newFile){
         	new JDialogNewPlanning(controler);
