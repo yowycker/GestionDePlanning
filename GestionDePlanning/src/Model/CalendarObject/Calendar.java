@@ -298,7 +298,7 @@ public class Calendar{
 	}
 
 		/**
-		 * 
+		 * retourne le numéro de la semaine 
 		 * @param day
 		 * @param month
 		 * @param year
@@ -317,7 +317,7 @@ public class Calendar{
 		}
 		
 		/**
-		 * 
+		 * retourne le numéro du jour
 		 * @param day
 		 * @param month
 		 * @param year
@@ -338,7 +338,7 @@ public class Calendar{
 		}
 
 	/**
-	 * 	
+	 * 	 retourne le nombre de jour dans le mois 
 	 * @param month
 	 * @param year
 	 * @return

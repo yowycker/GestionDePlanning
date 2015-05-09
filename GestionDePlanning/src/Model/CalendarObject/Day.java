@@ -90,7 +90,7 @@ private Seance[] dayPlanning = new Seance[2];
 	}
 	
 	/**
-	 * 
+	 * retourne l'objet contenant les séances suivant la formation
 	 * @param formation
 	 * @return
 	 */
