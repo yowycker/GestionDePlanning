@@ -110,7 +110,12 @@ public class Calendar{
 	public boolean getSunday(){
 		return sunday;
 	}
-
+	
+	/**
+	 * Retourne le mois
+	 * @param i
+	 * @return
+	 */
 	public static String getMonthString(int i){ 
 		String month = new String(); 
 		     
@@ -135,10 +140,18 @@ public class Calendar{
 	// -------------- Fonctions de Gestion des Formations --------------- //
 	// ------------------------------------------------------------------ //
 
-	
+	/**
+	 * Mutateur permettant de modifier la formation en cours
+	 * @param formation
+	 */
 	public void setCurrentFormation(Formation formation){
 		this.currentFormation = formation.getTitle();
 	}
+	
+	/**
+	 * Ascesseur retournant la formation en cours
+	 * @return
+	 */
 	public Formation getCurrentFormation(){
 		Formation cformation = null;
 		for(Formation f : formations){
@@ -149,7 +162,10 @@ public class Calendar{
 		return cformation;
 	}
 	
-
+	/**
+	 * Méthode permettant d'ajouter une formation au calendrier
+	 * @param formation
+	 */
 	public void addFormation(Formation formation){
 //tester si la formation existe deja
 		formations.add(formation);
@@ -157,6 +173,11 @@ public class Calendar{
 			d.addFormationSeances(formation.getTitle());
 		}
 	}
+	
+	/**
+	 * Méthode permettant de supprimer une formation du calendrier
+	 * @param formation
+	 */
 	public void removeFormation(Formation formation){
 //tester si la formation existe deja
 		formations.remove(formation);
@@ -165,7 +186,10 @@ public class Calendar{
 		}
 	}
 	
-	
+	/**
+	 * Retourne la liste des formations existantes
+	 * @return
+	 */
 	public ArrayList<Formation> getFormations(){
 		return formations;
 	}
@@ -173,6 +197,11 @@ public class Calendar{
 	// --------------- Fonctions de Gestion des Seances ----------------- //
 	// ------------------------------------------------------------------ //
 	
+	/**
+	 * Méthode permettant de fixer un cours à la matinée du jour en cours
+	 * @param day
+	 * @param module
+	 */
 	public void setMorningSeance(Day day, Module module){
 		for(Day d : listDays){
 // modifier le rend des seances du meme module : matin et soir
@@ -183,6 +212,12 @@ public class Calendar{
 			}
 		}
 	}
+	
+	/**
+	 * Méthode permettant de fixer un cours à l'après-midi du jour en cours
+	 * @param day
+	 * @param module
+	 */
 	public void setAfternoonSeance(Day day, Module module){
 		for(Day d : listDays){
 // modifier le rend des seances du meme module : matin et soir
@@ -196,11 +231,27 @@ public class Calendar{
 	
 	// ---------------- Fonctions de Calcule des Jours ------------------ //
 	// ------------------------------------------------------------------ //
-		
+	
+	/**
+	 * Méthode d'initialisation du jour, mois et de l'année
+	 * @param firstDay
+	 * @param firstMonth
+	 * @param firstYear
+	 */
 	private void init(int firstDay, int firstMonth, int firstYear){
 		iDay = day(firstDay,firstMonth,firstYear);
 		iWeek = week(firstDay,firstMonth,firstYear);
 	}
+	
+	/**
+	 * Méthode de génération d'une année
+	 * @param firstDay
+	 * @param firstMonth
+	 * @param firstYear
+	 * @param lastDay
+	 * @param lastMonth
+	 * @param lastYear
+	 */
 	private void generateJours(int firstDay, int firstMonth, int firstYear,int lastDay,  int lastMonth, int lastYear){
 		int maxDaysMonth = numberDayMonth(firstMonth,firstYear);
 		int namedDay = iDay;
@@ -246,7 +297,13 @@ public class Calendar{
 	    }
 	}
 
-		
+		/**
+		 * 
+		 * @param day
+		 * @param month
+		 * @param year
+		 * @return
+		 */
 		private int week(int day, int month, int year){
 			int retour = day(1,1,year);
 		    for(int i=1;i<month;i++){ 
@@ -258,6 +315,14 @@ public class Calendar{
 		    else retour = (retour+retour%7)/7; 
 		    return (retour + 1); 
 		}
+		
+		/**
+		 * 
+		 * @param day
+		 * @param month
+		 * @param year
+		 * @return
+		 */
 		private int day(int day, int month, int year){
 		    int retour = 0;
 		    for(int i=1900;i<year;i++)
@@ -272,6 +337,12 @@ public class Calendar{
 		    return (retour); 
 		}
 
+	/**
+	 * 	
+	 * @param month
+	 * @param year
+	 * @return
+	 */
 	private int numberDayMonth(int month,int year){
 		    int retour = 0; 
 		     
