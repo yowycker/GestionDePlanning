@@ -13,7 +13,11 @@ import Model.CalendarObject.Day;
 import Model.CalendarObject.Formation;
 import Model.CalendarObject.Module;
 
-public class DaysControler extends DaysAbstractControler {	
+public class DaysControler extends DaysAbstractControler {
+	/**
+	 * Constructeur de la classe DaysControler
+	 * @param daysModel
+	 */
 	public DaysControler(DaysAbstractModel daysModel){
 		super(daysModel);
 	}
@@ -22,18 +26,29 @@ public class DaysControler extends DaysAbstractControler {
 	// -------------- Fonctions de l'affichage du calendrier --------------- //
 	// --------------------------------------------------------------------- //
 	
+	/**
+	 * Méthode d'affichage de la semaine suivante
+	 */
 	public void nextWeek(){
 		daysModel.setInit(false);
 		index += daysModel.getFinalNumDaysWeek();
 System.out.println("Index : " + index);
 		daysModel.getWeek(index);
 	}
+	
+	/**
+	 * Méthode d'affichage de la semaine précédente
+	 */
 	public void afterWeek(){
 		daysModel.setInit(false);
 		index -= daysModel.getFinalNumDaysWeek();
 System.out.println("Index : " + index);
 		daysModel.getWeek(index);
 	}
+	
+	/**
+	 * Initialisation des données
+	 */
 	public void initData(Calendar c){
 		index = 0;
 		if(isInit == false){
@@ -45,6 +60,10 @@ System.out.println("Index : " + index);
 		daysModel.setCalendar(c);
 		daysModel.getWeek(index);
 	}
+	
+	/**
+	 * Méthode d'affichage du nouveau calendrier
+	 */
 	public void newCalendar(String years, boolean holiday, boolean saturday, boolean sunday){
 		int firstYear = Integer.parseInt(years.substring(0, 4));
 		int lastYear = Integer.parseInt(years.substring(5, 9));
