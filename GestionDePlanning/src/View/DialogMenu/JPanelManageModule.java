@@ -6,7 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-import javax.swing.Box;
 import javax.swing.JComboBox;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -19,13 +18,7 @@ import Model.CalendarObject.Module;
 import Obs.DaysObserver;
 
 public class JPanelManageModule extends JPanelManage implements DaysObserver, ActionListener{
-	
-private DaysAbstractControler daysControler;
-
-private String title = "Gestion des modules de cours";
-public String getTitle(){
-	return title;
-}
+//// ajouter un bouton "Enregistrer" qui permet, soit de créer un nouveau module, soit de le modifier. Et un bouton "Supprimer" pour supprimer l'élément selectionné
 
 private JList listModule = new JList();
 private JComboBox formationComboBox = new JComboBox();
@@ -70,6 +63,9 @@ private JComboBox formationComboBox = new JComboBox();
 		 moduleListePanel.add(new JScrollPane(listModule));
 		 	
 		 westLayout = new BorderLayout();
+		 westPanel.setLayout(westLayout);
+		 //westPanel.add(formationComboPanel);
+		 //westPanel.add(moduleListePanel);
 		 westPanel.add(formationComboPanel, BorderLayout.NORTH);
 		 westPanel.add(moduleListePanel, BorderLayout.CENTER);
 		 
@@ -89,28 +85,19 @@ private JComboBox formationComboBox = new JComboBox();
 	}
 
 	
-	public void update(ArrayList<Formation> formations, Formation currentFormation){
+	public void update(ArrayList<Formation> formations, Formation currentFormation,boolean init, ArrayList<Day> days, int numWeekDays, boolean after, boolean next){
+		formationComboBox.removeAll();
 		for(Formation f :formations){
 			formationComboBox.addItem(f.getTitle());
+			System.out.println(f.getTitle());
 		}
 		formationComboBox.setSelectedItem(currentFormation.getTitle());
 		
 		ArrayList<String> selections = new ArrayList<String>();
 		for(Module m :currentFormation.getModules()){
 			selections.add(m.getName());
-			System.out.println(m.getName());
 		}
 		listModule.setListData(selections.toArray());
-		System.out.println(listModule.getSelectedValue());
 		this.updateUI();
-	}
-
-	
-	
-	
-	
-	
-	public void update(Formation formation, boolean init, ArrayList<Day> days,
-			int numDays, boolean after, boolean next) {
 	}
 }

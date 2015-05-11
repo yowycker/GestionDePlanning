@@ -46,7 +46,7 @@ System.out.println("Date : " + calendar.getDays().get(0).getDate());
     	if((index + getNumDaysWeek() - firstDaysLoad) > calendar.getDays().size() ) next = false;
     	else next = true;
     	
-    	notifyObserver(calendar.getCurrentFormation() ,init, days, getNumDaysWeek(),after,next);
+    	notifyObserver(calendar.getFormations(), calendar.getCurrentFormation() ,init, days, getNumDaysWeek(),after,next);
 	}
 
 	public int getNumDaysWeek(){
@@ -77,7 +77,7 @@ System.out.println("Date : " + calendar.getDays().get(0).getDate());
 	
 	public void getFormations(){
 // Gerer le cas ou aucune formation existe (entrer quand même dans la fenetre)
-		notifyObserver(calendar.getFormations(), calendar.getCurrentFormation());
+		notifyObserver(calendar.getFormations(), calendar.getCurrentFormation() ,init, days, getNumDaysWeek(),after,next);
 	}
 	public void setFormations(Formation formation){
 		this.calendar.addFormation(formation);

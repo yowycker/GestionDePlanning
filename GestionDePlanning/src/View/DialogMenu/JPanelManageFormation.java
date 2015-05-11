@@ -34,8 +34,7 @@ private JList listFormation = new JList();
 	
 
 	private BorderLayout mainLayout;
-	
-		//private Box centerLayout;
+		private Box centerLayout;
 			//private GridLayout yearsLayout;
 			//private GridLayout advanceLayout;
 			//private Box daysLayout;
@@ -51,6 +50,8 @@ private JList listFormation = new JList();
 		    westPanel.setLayout(westLayout);
 		    westPanel.add(listFormation);
 		    westPanel.add(new JScrollPane(listFormation));
+		    
+		 //centerLayout = new GridLayout(1,2);
 		 
 		 mainLayout = new BorderLayout();
 	     this.setLayout(mainLayout);
@@ -67,7 +68,7 @@ private JList listFormation = new JList();
 		
 	}
 
-	public void update(ArrayList<Formation> formations, Formation currentFormation) {
+	public void update(ArrayList<Formation> formations, Formation currentFormation,boolean init, ArrayList<Day> days, int numDays, boolean after, boolean next){
 		ArrayList<String> selections = new ArrayList<String>();
 		for(Formation f :formations){
 			selections.add(f.getTitle());
@@ -77,14 +78,5 @@ private JList listFormation = new JList();
 		System.out.println(listFormation.getSelectedValue());
 		//listFormation.setSelectedIndex(1);
 		this.updateUI();
-	}
-
-	
-	
-	
-	
-	
-	public void update(Formation formation, boolean init, ArrayList<Day> days,
-			int numDays, boolean after, boolean next) {
 	}
 }

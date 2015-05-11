@@ -18,5 +18,6 @@ public class JPanelManage extends JPanel{
 	 public JPanelManage(DaysAbstractControler daysControler, String title){
 		 this.daysControler=daysControler;
 		 this.title = title;
+		 
 	 }
 }

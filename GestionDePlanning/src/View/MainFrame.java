@@ -59,7 +59,7 @@ public class MainFrame extends JFrame implements ActionListener{
 		    this.setLayout(new BorderLayout());
 		    this.getContentPane().add(planning, BorderLayout.CENTER);
 		    
-// Exemple de toolBar		    
+// Exemple de toolBar
 		    JToolBar toolbar = new JToolBar();
 		    toolbar.setRollover(true);
 		    toolbar.add(newFile);

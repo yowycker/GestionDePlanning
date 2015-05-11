@@ -134,12 +134,12 @@ public class PanelWeek extends JPanel implements DaysObserver, ActionListener{
     }
     
 // appeler dans le model
-    public void update(Formation formation, boolean init, ArrayList<Day> days, int numDays, boolean after, boolean next){
+    public void update(ArrayList<Formation> formations, Formation currentFormation,boolean init, ArrayList<Day> days, int numDays, boolean after, boolean next){
     	if(init) initPlanning();
     	
 		prec.setEnabled(after);
 		suiv.setEnabled(next);
-		this.showWeek(formation,days,numDays);
+		this.showWeek(currentFormation,days,numDays);
 		this.updateUI();
 	}
     private void showWeek(Formation formation,ArrayList<Day> days, int numDays){
@@ -189,11 +189,4 @@ System.out.println(days.get(i).getName() + " " + days.get(i).getDate());
         	daysControler.afterWeek();
         } 
     }
-    
-    
-    
-    
-
-    public void update(ArrayList<Formation> formations, Formation currentFormation){
-	}
 }
