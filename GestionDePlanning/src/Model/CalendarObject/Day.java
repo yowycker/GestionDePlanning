@@ -94,7 +94,7 @@ private Seance[] dayPlanning = new Seance[2];
 	 * @param formation
 	 * @return
 	 */
-	private DayFormationSeances getFormationSeances(String formation){
+	public DayFormationSeances getFormationSeances(String formation){
 		DayFormationSeances fSeances = null;
 		for(DayFormationSeances s : formationsSeances){
 			if(s.getFormation().equals(formation)){

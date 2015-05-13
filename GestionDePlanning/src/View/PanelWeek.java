@@ -133,14 +133,16 @@ public class PanelWeek extends JPanel implements DaysObserver, ActionListener{
         headerInfo.setBackground(Color.BLUE);
     }
     
-// appeler dans le model
-    public void update(ArrayList<Formation> formations, Formation currentFormation,boolean init, ArrayList<Day> days, int numDays, boolean after, boolean next){
+// appelé dans le model par la méthode "notifyObserver"
+    public void update(Formation currentFormation,boolean init, ArrayList<Day> days, int numDays, boolean after, boolean next){
     	if(init) initPlanning();
     	
 		prec.setEnabled(after);
 		suiv.setEnabled(next);
 		this.showWeek(currentFormation,days,numDays);
 		this.updateUI();
+	}
+	public void update(ArrayList<Formation> formations,	Formation currentFormation) {
 	}
     private void showWeek(Formation formation,ArrayList<Day> days, int numDays){
     	loadPlanningLayout(numDays);
@@ -152,19 +154,23 @@ public class PanelWeek extends JPanel implements DaysObserver, ActionListener{
     		else{
     	    	seances.add(new DayPanel(days.get(i),5,5,formation),i);
 System.out.println(days.get(i).getName() + " " + days.get(i).getDate());
-/*
-    		    	if(days.get(i).getMorning() != null)
-    		    		System.out.println("    Module Matin : " + days.get(i).getMorning().getModule().getName());
-    		    	else
-    		    		System.out.println("    Module Matin : NULL");
-    		    	if(days.get(i).getAfternoon() != null)
-    		    		System.out.println("    Module Aprem : " + days.get(i).getAfternoon().getModule().getName());
-    		    	else
-    		    		System.out.println("    Module Aprem : NULL");
-*/
     		    }
     	}
     }
+/*    private void showMonth(Formation formation,ArrayList<Day> days, int numDays){
+    	loadPlanningLayout(numDays);
+        seancesLayout = new GridLayout(1, numDays);
+    	seances.removeAll();
+    	for(int i = 0; i < numDays; i++){
+    		if(days.get(i) == null)
+    			seances.add(new JPanel(),(i));
+    		else{
+    	    	seances.add(new DayPanel(days.get(i),5,5,formation),i);
+    		    }
+    	}
+    }
+*/
+    
     private void loadPlanningLayout(int numDays){
     	headersLayout = new GridLayout(1, numDays);
         headers.removeAll();

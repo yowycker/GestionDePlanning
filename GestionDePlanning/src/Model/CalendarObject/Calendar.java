@@ -167,11 +167,22 @@ public class Calendar{
 	 * @param formation
 	 */
 	public void addFormation(Formation formation){
-//tester si la formation existe deja
-		formations.add(formation);
 		for(Day d : listDays){
 			d.addFormationSeances(formation.getTitle());
 		}
+		formations.add(formation);
+	}
+	
+	/**
+	 * Méthode permettant d'ajouter une formation au calendrier
+	 * @param formation
+	 */
+	public void modifyFormation(Formation formation, Formation newformation){
+		for(Day d : listDays){
+			d.getFormationSeances(formation.getTitle()).setFormation(newformation.getTitle());
+		}
+		formations.remove(formation);
+		formations.add(newformation);
 	}
 	
 	/**
@@ -179,11 +190,10 @@ public class Calendar{
 	 * @param formation
 	 */
 	public void removeFormation(Formation formation){
-//tester si la formation existe deja
-		formations.remove(formation);
 		for(Day d : listDays){
 			d.removeFormationSeances(formation.getTitle());
 		}
+		formations.remove(formation);
 	}
 	
 	/**
@@ -193,6 +203,7 @@ public class Calendar{
 	public ArrayList<Formation> getFormations(){
 		return formations;
 	}
+	
 	
 	// --------------- Fonctions de Gestion des Seances ----------------- //
 	// ------------------------------------------------------------------ //

@@ -30,11 +30,32 @@ public class Formation{
 	}
 	
 	/**
-	 * Ascesseur retournant le nombre d'heures du module en heures
-	 * @return
+	 * Ascesseur retournant le nombre d'heures de toutes les seances
+	 * @return (nbDays*24 + nbHours)
 	 */
-	public double getHoursModule(){
+	public double getHoursFormation(){
 		return (nbDays*24 + nbHours); 
+	}
+	/**
+	 * Ascesseur retournant le nombre d'heures de toutes les seances
+	 * @return (nbDays*24 + nbHours)
+	 */
+	public double getHoursSeances(){
+		return nbHoursSeances; 
+	}
+	/**
+	 * Ascesseur retournant le nombre de jours des seances
+	 * @return nbDays
+	 */
+	public int getNbDays(){
+		return nbDays; 
+	}
+	/**
+	 * Ascesseur retournant le nombre d'heures des seances
+	 * @return nbHours
+	 */
+	public double getNbHours(){
+		return nbHours; 
 	}
 	
 	/**
@@ -45,6 +66,27 @@ public class Formation{
 	public String getTitle(){
 		return title;
 	}
+	
+	/**
+	 * Mutateur qui permet de modifier le titre de la formation
+	 * @param title
+	 * @return
+	 */
+	public void setTitle(String title){
+		this.title = title;
+	}
+
+	/**
+	 * Mutateur qui permet de modifier le nb d'heure type pour une seance dans la formation et recalcule les jours et heures comptées des seances programmées
+	 * @param nbHoursSeances
+	 * @return
+	 */
+	public void setNbHoursSeances(double nbHoursSeances){
+		nbDays = (int) ((((nbDays*24 + nbHours)/this.nbHoursSeances)*nbHoursSeances) / 24);
+		nbHours = (((nbDays*24 + nbHours)/this.nbHoursSeances)*nbHoursSeances) % 24;
+		this.nbHoursSeances = nbHoursSeances;
+	}
+	
 	
 	/**
 	 * Méthode d'ajout d'un module
@@ -137,5 +179,19 @@ public class Formation{
 			nbHours += ( 24 + nbHours);
 			nbDays--;
 		}
+	}
+	
+	
+
+	/**
+	 * Méthode permettant d'instantier le nombre d'heures
+	 * suppression d'une journée
+	 */
+	private boolean equals(Formation formation){
+		if(this.title.equals(formation.getTitle())){
+			return true;
+		}
+		else
+			return false;
 	}
 }

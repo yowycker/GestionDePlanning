@@ -93,7 +93,7 @@ System.out.println("Index : " + index);
 		    c.setAfternoonSeance(c.getDays().get(24), m1);
 		    c.setAfternoonSeance(c.getDays().get(25), m1);
 
-System.out.println("                                 NB H Formation : " + f.getHoursModule());
+System.out.println("                                 NB H Formation : " + f.getHoursFormation());
 		    
 		    for(Day d : c.getDays()){
 		    	System.out.println(d.getDate());
@@ -118,12 +118,60 @@ System.out.println("                                 NB H Formation : " + f.getH
 	// ------------------------------------------------------------- //
 	
 	
-	public void newFormations(String title, double nbHoursSeances){
-		daysModel.setFormations(new Formation(title, nbHoursSeances));
-		daysModel.getFormations();
+	public void initFormation(){
+		daysModel.initFormations();
 	}
-	public void initFormations(){
-		daysModel.getFormations();
+	public void selectFormation(Formation formation){
+		daysModel.initFormations(formation);
+	}
+	public void addFormation(String title, double nbHoursSeances){
+		if(formationExist(new Formation(title, nbHoursSeances))){
+// Exception : Exist
+		}
+		else{
+// Controle si title et nbHoursSeances sont dans la norme ...
+			daysModel.addFormation(new Formation(title, nbHoursSeances));
+		}
+		this.initFormation();
+	} 
+	public void modifyFormation(String title, String newtitle, double newNbHoursSeances) {
+		Formation fe = null;
+		boolean formationExist = false;
+		for(Formation f : daysModel.getFormations()){
+			if((new Formation(title, 0)).equals(f))
+			{
+				formationExist = true;
+				fe = f;
+			}
+		}
+		
+		if(formationExist){
+			daysModel.modifyFormation(fe, new Formation(newtitle, newNbHoursSeances));
+		}
+		else{
+// Exception : N'existe pas
+		}
+		this.initFormation();
+	}
+	public void deleteFormation(String title, double nbHoursSeances){
+		if(formationExist(new Formation(title, nbHoursSeances))){
+// Controle quel formation on supprime (si il existe plus de formation, faire... sinon faire ...
+			daysModel.deleteFormation(new Formation(title, nbHoursSeances));
+		}
+		else{
+// Exception : N'existe pas
+		}
+		this.initFormation();
+	}
+	private boolean formationExist(Formation fe){
+		boolean formationExist = false;
+		for(Formation f : daysModel.getFormations()){
+			if(fe.equals(f))
+			{
+				formationExist = true;
+			}
+		}
+		return formationExist;
 	}
 
 	

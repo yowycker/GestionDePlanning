@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import Model.DaysAbstractModel;
 import Model.CalendarObject.Calendar;
+import Model.CalendarObject.Formation;
 
 public abstract class DaysAbstractControler {
 	  protected DaysAbstractModel daysModel;
@@ -53,12 +54,32 @@ public abstract class DaysAbstractControler {
 	   * @param title
 	   * @param nbHoursSeances
 	   */
-	  public abstract void newFormations(String title, double nbHoursSeances);
+	  public abstract void addFormation(String title, double nbHoursSeances);
+
+	  /**
+	   * Méthode de modification d'une formation
+	   * @param title
+	   * @param nbHoursSeances
+	   */
+	  public abstract void modifyFormation(String title, String newtitle, double newNbHoursSeances);
+
+
+	  /**
+	   * Méthode de suppression d'une formation
+	   * @param title
+	   * @param nbHoursSeances
+	   */
+	  public abstract void deleteFormation(String title, double nbHoursSeances);
 	  
 	  /**
-	   * Méthode d'initialisation des formations
+	   * Méthode d'initialisation de l'affichage
 	   */
-	  public abstract void initFormations();
+	  public abstract void initFormation();
+
+	  /**
+	   * Méthode d'initialisation de l'affichage lors d'une selection
+	   */
+	  public abstract void selectFormation(Formation formation);
 	  
 // recup de listes
 	  /**

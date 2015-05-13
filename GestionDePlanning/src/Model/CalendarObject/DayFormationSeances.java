@@ -31,6 +31,15 @@ public class DayFormationSeances {
 	}
 	
 	/**
+	 * Mutateur retournant la formation
+	 * @param formation
+	 * @return
+	 */
+	public void setFormation(String formation){
+		this.formation=formation;
+	}
+	
+	/**
 	 * Ascesseur retournant la position de la séance (1-->Matin ou 2-->Après-midi)
 	 * @param index
 	 * @return

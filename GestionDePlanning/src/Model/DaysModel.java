@@ -46,7 +46,7 @@ System.out.println("Date : " + calendar.getDays().get(0).getDate());
     	if((index + getNumDaysWeek() - firstDaysLoad) > calendar.getDays().size() ) next = false;
     	else next = true;
     	
-    	notifyObserver(calendar.getFormations(), calendar.getCurrentFormation() ,init, days, getNumDaysWeek(),after,next);
+    	notifyObserver(calendar.getCurrentFormation() ,init, days, getNumDaysWeek(),after,next);
 	}
 
 	public int getNumDaysWeek(){
@@ -75,12 +75,30 @@ System.out.println("Date : " + calendar.getDays().get(0).getDate());
 	// -------------- Gestion d'affichage des menus  --------------- //
 	// ------------------------------------------------------------- //
 	
-	public void getFormations(){
-// Gerer le cas ou aucune formation existe (entrer quand même dans la fenetre)
-		notifyObserver(calendar.getFormations(), calendar.getCurrentFormation() ,init, days, getNumDaysWeek(),after,next);
+	public void initFormations(){
+// Exception : cas ou aucune formation existe (entrer quand même dans la fenetre)
+		notifyObserver(calendar.getFormations(), calendar.getCurrentFormation());
 	}
-	public void setFormations(Formation formation){
+	public void initFormations(Formation formation){
+		notifyObserver(calendar.getFormations(), formation);
+	}
+	public void addFormation(Formation formation){
 		this.calendar.addFormation(formation);
 	}
-
+	public void modifyFormation(Formation formation, Formation newformation){
+		this.calendar.modifyFormation(formation,newformation);
+	}
+	public void deleteFormation(Formation formation){
+		this.calendar.removeFormation(formation);
+	}
+	public ArrayList<Formation> getFormations(){
+		return calendar.getFormations();
+	}
+	
+	public Formation getCurrentFormation(){
+		return calendar.getCurrentFormation();
+	}
+	public void setCurrentFormation(Formation formation){
+		this.calendar.setCurrentFormation(formation);
+	}
 }

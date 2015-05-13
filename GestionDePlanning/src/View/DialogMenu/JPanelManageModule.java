@@ -53,7 +53,7 @@ private JComboBox formationComboBox = new JComboBox();
 
 	
 	 public JPanelManageModule(DaysAbstractControler daysControler){
-		 super(daysControler,"Gestion de modules de cours");
+		 super(daysControler,"Gestion des modules de cours");
 		 
 		 formationComboPanel.add(formationComboBox);
 		 		 
@@ -76,7 +76,7 @@ private JComboBox formationComboBox = new JComboBox();
 	     this.add(bottomPanel, BorderLayout.SOUTH);
 	 }
 	 public void initListFormation(){
-	     daysControler.initFormations();
+	     daysControler.initFormation();
 	 }
 	 
 
@@ -85,7 +85,12 @@ private JComboBox formationComboBox = new JComboBox();
 	}
 
 	
-	public void update(ArrayList<Formation> formations, Formation currentFormation,boolean init, ArrayList<Day> days, int numWeekDays, boolean after, boolean next){
+	
+	public void update(Formation currentFormation, boolean init,ArrayList<Day> days, int numDays, boolean after, boolean next) {
+		
+	}
+	
+	public void update(ArrayList<Formation> formations,	Formation currentFormation) {
 		formationComboBox.removeAll();
 		for(Formation f :formations){
 			formationComboBox.addItem(f.getTitle());

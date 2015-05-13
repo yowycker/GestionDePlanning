@@ -8,8 +8,9 @@ import Controler.DaysAbstractControler;
 public class JPanelManage extends JPanel{
 
 	protected DaysAbstractControler daysControler;
-	
 	protected String title;
+	
+	
 	public String getTitle(){
 		return title;
 	}

@@ -43,7 +43,7 @@ public class MainFrame extends JFrame implements ActionListener{
  		    //Création de notre fenêtre avec le contrôleur en paramètre
     private PanelWeek planning = new PanelWeek(controler);
     private JPanelManageFormation manageFormationPanel = new JPanelManageFormation(controler);
-    private JPanelManageModule manageModulePanel = new JPanelManageModule(controler);	    
+    private JPanelManageModule manageModulePanel = new JPanelManageModule(controler);
  		    
 	  public MainFrame(){
 		    this.setTitle("Planning");

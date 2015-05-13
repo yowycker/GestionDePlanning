@@ -43,13 +43,11 @@ public class JDialogNewPlanning extends JDialog implements ActionListener{
 	private JPanel bottomPanel = new JPanel();
 
 	private BorderLayout mainLayout;
-		private Box centerLayout;
+		private GridLayout centerLayout;
 			private GridLayout yearsLayout;
 			private GridLayout advanceLayout;
 			private Box daysLayout;
 		private Box bottomLayout;
-
-		private GridLayout test;
 
 	 public JDialogNewPlanning(DaysAbstractControler daysControler){
 		 this.daysControler=daysControler;
@@ -83,9 +81,8 @@ combo.addItem("1899-1900");
 		 daysPanel.add(saturdayCheck,daysLayout);
 		 daysPanel.add(sundayCheck,daysLayout);
 		 
-		 test = new GridLayout(3,1);
-		 centerLayout = Box.createHorizontalBox();
-		 centerPanel.setLayout(test);
+		 centerLayout = new GridLayout(3,1);
+		 centerPanel.setLayout(centerLayout);
 		 centerPanel.add(yearsPanel,0);
 		 centerPanel.add(advancePanel,1);
 		 centerPanel.add(daysPanel,2);

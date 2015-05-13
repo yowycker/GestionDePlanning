@@ -37,16 +37,24 @@ public abstract class DaysAbstractModel implements DaysObservable{
 	public abstract void setInit(boolean init);
 	  
 // Affichage de menus
-	public abstract void getFormations();
-	public abstract void setFormations(Formation formation);
+	public abstract void initFormations();
+	public abstract void initFormations(Formation formation);
+	public abstract void addFormation(Formation formation);
+	public abstract void modifyFormation(Formation formation, Formation newformation);
+	public abstract void deleteFormation(Formation formation);
+	public abstract ArrayList<Formation> getFormations();
 	
 // Fonctions Observable
 	public void addObserver(DaysObserver obs) {
 	    this.listObserver.add(obs);
 	}
-	public void notifyObserver(ArrayList<Formation> formations, Formation currentFormation,boolean init, ArrayList<Day> days, int numDays, boolean after, boolean next){
+	public void notifyObserver(Formation currentFormation,boolean init, ArrayList<Day> days, int numDays, boolean after, boolean next){
 	    for(DaysObserver obs : listObserver)
-	      obs.update(formations, currentFormation, init, days, numDays, after, next);
+	      obs.update(currentFormation, init, days, numDays, after, next);
+	}
+	public void notifyObserver(ArrayList<Formation> formations, Formation currentFormation){
+	    for(DaysObserver obs : listObserver)
+	      obs.update(formations, currentFormation);
 	}
 	public void removeObserver() {
 	    listObserver = new ArrayList<DaysObserver>();
