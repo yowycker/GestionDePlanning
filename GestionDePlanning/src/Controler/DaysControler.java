@@ -121,9 +121,6 @@ System.out.println("                                 NB H Formation : " + f.getH
 	public void initFormation(){
 		daysModel.initFormations();
 	}
-	public void selectFormation(Formation formation){
-		daysModel.initFormations(formation);
-	}
 	public void addFormation(String title, double nbHoursSeances){
 		if(formationExist(new Formation(title, nbHoursSeances))){
 // Exception : Exist
@@ -132,26 +129,23 @@ System.out.println("                                 NB H Formation : " + f.getH
 // Controle si title et nbHoursSeances sont dans la norme ...
 			daysModel.addFormation(new Formation(title, nbHoursSeances));
 		}
-		this.initFormation();
+		daysModel.initFormations(title);
 	} 
-	public void modifyFormation(String title, String newtitle, double newNbHoursSeances) {
-		Formation fe = null;
+	public void modifyFormation(String title, String newtitle, double newNbHoursSeances){
+// Pas encore fonctionnelle
 		boolean formationExist = false;
 		for(Formation f : daysModel.getFormations()){
-			if((new Formation(title, 0)).equals(f))
+			if(f.equals(new Formation(title, 0)))
 			{
 				formationExist = true;
-				fe = f;
+				daysModel.modifyFormation(title, new Formation(newtitle, newNbHoursSeances));
+			}
+			else
+			{
+// Exception : N'existe pas
 			}
 		}
-		
-		if(formationExist){
-			daysModel.modifyFormation(fe, new Formation(newtitle, newNbHoursSeances));
-		}
-		else{
-// Exception : N'existe pas
-		}
-		this.initFormation();
+		daysModel.initFormations(title);
 	}
 	public void deleteFormation(String title, double nbHoursSeances){
 		if(formationExist(new Formation(title, nbHoursSeances))){

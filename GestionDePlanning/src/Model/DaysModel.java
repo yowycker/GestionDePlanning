@@ -79,13 +79,15 @@ System.out.println("Date : " + calendar.getDays().get(0).getDate());
 // Exception : cas ou aucune formation existe (entrer quand même dans la fenetre)
 		notifyObserver(calendar.getFormations(), calendar.getCurrentFormation());
 	}
-	public void initFormations(Formation formation){
-		notifyObserver(calendar.getFormations(), formation);
+	public void initFormations(String formation){
+		notifyObserver(calendar.getFormations(), calendar.getFormation(formation));
 	}
+	
 	public void addFormation(Formation formation){
 		this.calendar.addFormation(formation);
 	}
-	public void modifyFormation(Formation formation, Formation newformation){
+	public void modifyFormation(String formation, Formation newformation){
+// Pas encore fonctionnelle
 		this.calendar.modifyFormation(formation,newformation);
 	}
 	public void deleteFormation(Formation formation){

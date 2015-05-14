@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.Box;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -23,7 +24,9 @@ import Obs.DaysObserver;
 
 public class JPanelManageFormation extends JPanelManage implements DaysObserver, ActionListener, ListSelectionListener{
 
-private JList listFormation = new JList();
+private ArrayList<Formation> formations = new ArrayList<Formation>();
+private DefaultListModel dlm = new DefaultListModel();
+private JList listFormation = new JList(dlm);
 
 private JLabel titleLabel = new JLabel("Titre");
 private JLabel nbHoursLabel = new JLabel("Nombre d'heure par séance");
@@ -105,20 +108,16 @@ private JButton delete = new JButton("Supprimer");
 	 
 
 	public void actionPerformed(ActionEvent evt) {
-		/*double nbHours = 0;
-		if(nbHoursTextField.getText().length() != 0){
-			for(int i = 0; i < nbHoursTextField.getText().length(); i++)
-				nbHoursTextField.getText().charAt(i).matches("[0-9]")
-				testString += "[0-9]";
-		}
-		for(char c : nbHoursTextField.getText().chars())
-		Double.
-		nbHoursTextField.getText());*/
 		if(evt.getSource() == add){
 			daysControler.addFormation(titleTextField.getText(), Double.parseDouble(nbHoursTextField.getText()));
 		}
 		else if(evt.getSource() == modify){
-			daysControler.modifyFormation(listFormation.getSelectedValue().toString(),titleTextField.getText(), Double.parseDouble(nbHoursTextField.getText()));
+// Pas encore fonctionnelle
+			for(int i = 0; i < this.formations.size(); i++){
+    			if(this.formations.get(i).getTitle().equals(listFormation.getSelectedValue())){
+    				daysControler.modifyFormation(this.formations.get(i).getTitle(),titleTextField.getText(), Double.parseDouble(nbHoursTextField.getText()));
+    			}
+    		}
 		}
 		else if(evt.getSource() == delete){
 			daysControler.deleteFormation(titleTextField.getText(), Double.parseDouble(nbHoursTextField.getText()));
@@ -127,27 +126,24 @@ private JButton delete = new JButton("Supprimer");
 	}
     public void valueChanged(ListSelectionEvent evt) {
     	if (!evt.getValueIsAdjusting()){
-            JList source = (JList)evt.getSource();
-            String selected = source.getSelectedValue().toString();
-        	System.out.println(listFormation.getSelectedValuesList().get(listFormation.getSelectedIndex()));
+    		for(int i = 0; i < this.formations.size(); i++){
+    			if(this.formations.get(i).getTitle() == listFormation.getSelectedValue()){
+    				titleTextField.setText(this.formations.get(i).getTitle());
+    				nbHoursTextField.setText(Double.toString(this.formations.get(i).getHoursSeances()));
+    			}
+    		}
         }
-    	//daysControler.selectFormation(new Formation(listFormation.getSelectedValue().toString(),0));
     }
 
-
 	public void update(ArrayList<Formation> formations,	Formation currentFormation) {
-		ArrayList<String> selections = new ArrayList<String>();
-		for(Formation f : formations){
-			selections.add(f.getTitle());
-			//System.out.println(f.getTitle());
+		this.formations = formations;
+		
+		dlm.removeAllElements();
+	System.out.println("lenth list : " + this.formations.size());
+		for(int i = 0; i < this.formations.size(); i++){
+			dlm.addElement(this.formations.get(i).getTitle());
 		}
-		listFormation.setListData(selections.toArray());
 		listFormation.setSelectedValue(currentFormation.getTitle(), true);
-		titleTextField.setText(currentFormation.getTitle());
-		nbHoursTextField.setText(Double.toString(currentFormation.getHoursSeances()));
-		//System.out.println(listFormation.getSelectedValue());
-		System.out.println(listFormation.getSelectedValuesList().get(listFormation.getSelectedIndex()));
-		//listFormation.setSelectedIndex(1);
 		this.updateUI();
 		
 	}

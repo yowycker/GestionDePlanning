@@ -180,18 +180,4 @@ public class Formation{
 			nbDays--;
 		}
 	}
-	
-	
-
-	/**
-	 * Méthode permettant d'instantier le nombre d'heures
-	 * suppression d'une journée
-	 */
-	private boolean equals(Formation formation){
-		if(this.title.equals(formation.getTitle())){
-			return true;
-		}
-		else
-			return false;
-	}
 }

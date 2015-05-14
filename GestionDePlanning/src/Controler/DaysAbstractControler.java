@@ -75,11 +75,6 @@ public abstract class DaysAbstractControler {
 	   * Méthode d'initialisation de l'affichage
 	   */
 	  public abstract void initFormation();
-
-	  /**
-	   * Méthode d'initialisation de l'affichage lors d'une selection
-	   */
-	  public abstract void selectFormation(Formation formation);
 	  
 // recup de listes
 	  /**

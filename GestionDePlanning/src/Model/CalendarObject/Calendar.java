@@ -177,12 +177,21 @@ public class Calendar{
 	 * Méthode permettant d'ajouter une formation au calendrier
 	 * @param formation
 	 */
-	public void modifyFormation(Formation formation, Formation newformation){
+// Pas encore fonctionnelle
+	public void modifyFormation(String formation, Formation newformation){
 		for(Day d : listDays){
-			d.getFormationSeances(formation.getTitle()).setFormation(newformation.getTitle());
+			d.getFormationSeances(formation).setFormation(newformation.getTitle());
+			System.out.println(newformation.getTitle());
 		}
-		formations.remove(formation);
-		formations.add(newformation);
+		for(Formation f : formations){
+			if(f.equals(new Formation(formation,0))){
+				f.setTitle(newformation.getTitle());
+				f.setNbHoursSeances(newformation.getHoursSeances());
+
+				System.out.println(newformation.getTitle());
+				System.out.println(newformation.getHoursSeances());
+			}
+		}
 	}
 	
 	/**
@@ -202,6 +211,19 @@ public class Calendar{
 	 */
 	public ArrayList<Formation> getFormations(){
 		return formations;
+	}
+	
+	/**
+	 * Retourne la formation ayant le même titre mis en parametre
+	 * @return
+	 */
+	public Formation getFormation(String title){
+		Formation fe = null;
+		for(Formation f : formations){
+			if(f.getTitle().equals(title))
+				fe = f;
+		}
+		return fe;
 	}
 	
 	

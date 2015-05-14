@@ -38,9 +38,9 @@ public abstract class DaysAbstractModel implements DaysObservable{
 	  
 // Affichage de menus
 	public abstract void initFormations();
-	public abstract void initFormations(Formation formation);
+	public abstract void initFormations(String formation);
 	public abstract void addFormation(Formation formation);
-	public abstract void modifyFormation(Formation formation, Formation newformation);
+	public abstract void modifyFormation(String formation, Formation newformation);
 	public abstract void deleteFormation(Formation formation);
 	public abstract ArrayList<Formation> getFormations();
 	
