@@ -2,13 +2,24 @@ package test;
 
 import static org.junit.Assert.*;
 
+import java.awt.Color;
+
+import junit.framework.TestCase;
+
 import org.junit.Test;
 
-public class testModule {
+import Model.CalendarObject.Module;
 
-	@Test
-	public void test() {
-		fail("Not yet implemented");
+public class testModule extends TestCase{
+
+	public void testgetName() {
+		Module n = new Module("Anglais", "AN", Color.white, "Champroux", 10 );
+		assertTrue("Le module doit avoir un nom", n.getName() == "Anglais" );
+	}
+	
+	public void testgetAbbreviation() {
+		Module n = new Module("Anglais", "AN", Color.white, "Champroux", 10 );
+		assertTrue("Le module doit avoir une abbreviation", n.getAbbreviation() == "AN" );
 	}
 
 }
