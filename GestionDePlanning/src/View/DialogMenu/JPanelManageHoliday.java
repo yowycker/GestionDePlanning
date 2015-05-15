@@ -23,7 +23,7 @@ import Model.CalendarObject.Formation;
 import Model.CalendarObject.Module;
 import Obs.DaysObserver;
 
-public class JPanelManageFormation extends JPanelManage implements DaysObserver, ActionListener, ListSelectionListener{
+public class JPanelManageHoliday extends JPanelManage implements DaysObserver, ActionListener, ListSelectionListener{
 
 private ArrayList<Formation> formations = new ArrayList<Formation>();
 private DefaultListModel dlm = new DefaultListModel();
@@ -59,7 +59,7 @@ private JButton delete = new JButton("Supprimer");
 		private GridLayout westLayout;
 
 	
-	 public JPanelManageFormation(DaysAbstractControler daysControler){
+	 public JPanelManageHoliday(DaysAbstractControler daysControler){
 		 super(daysControler,"Gestion des formations");
 		 
 		 westLayout = new GridLayout(1,2);

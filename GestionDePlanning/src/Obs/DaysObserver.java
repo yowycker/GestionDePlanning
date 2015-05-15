@@ -4,8 +4,10 @@ import java.util.ArrayList;
 
 import Model.CalendarObject.Day;
 import Model.CalendarObject.Formation;
+import Model.CalendarObject.Module;
 
 public interface DaysObserver {
 	  public void update(Formation currentFormation,boolean init, ArrayList<Day> days, int numDays, boolean after, boolean next);
 	  public void update(ArrayList<Formation> formations, Formation currentFormation);
+	  public void update(Formation currentFormation, Module currentModule, boolean isInit);
 }

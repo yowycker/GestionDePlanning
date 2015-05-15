@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import Model.CalendarObject.Calendar;
 import Model.CalendarObject.Day;
 import Model.CalendarObject.Formation;
+import Model.CalendarObject.Module;
 
 public class DaysModel extends DaysAbstractModel{
 	
@@ -70,6 +71,17 @@ System.out.println("Date : " + calendar.getDays().get(0).getDate());
 	public void setInit(boolean init){
 		this.init = init;
 	}
+
+	
+	// ------------- Gestion de la formation courante  --------------- //
+	// --------------------------------------------------------------- //
+
+	public Formation getCurrentFormation(){
+		return calendar.getCurrentFormation();
+	}
+	public void setCurrentFormation(Formation formation){
+		this.calendar.setCurrentFormation(formation);
+	}
 	
 	
 	// -------------- Gestion d'affichage des menus  --------------- //
@@ -97,10 +109,23 @@ System.out.println("Date : " + calendar.getDays().get(0).getDate());
 		return calendar.getFormations();
 	}
 	
-	public Formation getCurrentFormation(){
-		return calendar.getCurrentFormation();
+	
+	public void initModules(){
+		notifyObserver(calendar.getCurrentFormation(), calendar.getCurrentFormation().getModules().get(0),true);
 	}
-	public void setCurrentFormation(Formation formation){
-		this.calendar.setCurrentFormation(formation);
+	public void initModules(String nameModule){
+		notifyObserver(calendar.getCurrentFormation(), calendar.getCurrentFormation().getModule(nameModule),false);
+	}
+	public void addModule(Module newModule){
+		this.calendar.getCurrentFormation().addModule(newModule);
+	}
+	public void modifyModule(String nameModule, Module newModule){
+		this.calendar.getCurrentFormation().getModule(nameModule).setAbbreviation(newModule.getAbbreviation());
+		this.calendar.getCurrentFormation().getModule(nameModule).setName(newModule.getName());
+		this.calendar.getCurrentFormation().getModule(nameModule).setColor(newModule.getColor());
+		this.calendar.getCurrentFormation().getModule(nameModule).setMaxSeances(newModule.getMaxSeances());
+	}
+	public void deleteModule(String nameModule){
+		this.calendar.getCurrentFormation().removeModule(calendar.getCurrentFormation().getModule(nameModule));
 	}
 }

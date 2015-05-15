@@ -1,10 +1,12 @@
 package Controler;
 
+import java.awt.Color;
 import java.util.ArrayList;
 
 import Model.DaysAbstractModel;
 import Model.CalendarObject.Calendar;
 import Model.CalendarObject.Formation;
+import Model.CalendarObject.Module;
 
 public abstract class DaysAbstractControler {
 	  protected DaysAbstractModel daysModel;
@@ -72,7 +74,7 @@ public abstract class DaysAbstractControler {
 	  public abstract void deleteFormation(String title, double nbHoursSeances);
 	  
 	  /**
-	   * Méthode d'initialisation de l'affichage
+	   * Méthode d'initialisation de l'affichage des formations
 	   */
 	  public abstract void initFormation();
 	  
@@ -82,4 +84,25 @@ public abstract class DaysAbstractControler {
 	   * @return
 	   */
 	  public abstract ArrayList<String> getListYears();
+
+	  /**
+	   * Méthode d'initialisation de l'affichage des modules
+	   */
+	  public abstract void initModules();
+	  /**
+	   * Méthode d'initialisation de l'affichage des modules lors d'un selection
+	   */
+	  public abstract void selectModule(String nameModule);
+	  /**
+	   * Méthode permettant d'ajouter un module et de mettre a jour l'affichage
+	   */
+	  public abstract void addModule(String newName, String newAbbreviation, String newMaxSeances, Color newColor);
+	  /**
+	   * Méthode permettant de modifier un module et de mettre a jour l'affichage
+	   */
+	  public abstract void modifyModule(String nameModule, String newName, String newAbbreviation, String newMaxSeances, Color newColor);
+	  /**
+	   * Méthode permettant de supprimer un module et de mettre a jour l'affichage
+	   */
+	  public abstract void removeModule(String nameModule);
 }

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import Model.CalendarObject.Calendar;
 import Model.CalendarObject.Day;
 import Model.CalendarObject.Formation;
+import Model.CalendarObject.Module;
 import Obs.DaysObservable;
 import Obs.DaysObserver;
 
@@ -36,13 +37,19 @@ public abstract class DaysAbstractModel implements DaysObservable{
 	public abstract void setCalendar(Calendar c);
 	public abstract void setInit(boolean init);
 	  
-// Affichage de menus
+// Affichage de menu de formations
 	public abstract void initFormations();
 	public abstract void initFormations(String formation);
 	public abstract void addFormation(Formation formation);
 	public abstract void modifyFormation(String formation, Formation newformation);
 	public abstract void deleteFormation(Formation formation);
 	public abstract ArrayList<Formation> getFormations();
+// Affichage de menu de formations
+	public abstract void initModules();
+	public abstract void initModules(String nameModule);
+	public abstract void addModule(Module newModule);
+	public abstract void modifyModule(String nameModule, Module newModule);
+	public abstract void deleteModule(String nameModule);
 	
 // Fonctions Observable
 	public void addObserver(DaysObserver obs) {
@@ -55,6 +62,10 @@ public abstract class DaysAbstractModel implements DaysObservable{
 	public void notifyObserver(ArrayList<Formation> formations, Formation currentFormation){
 	    for(DaysObserver obs : listObserver)
 	      obs.update(formations, currentFormation);
+	}
+	public void notifyObserver(Formation currentFormation, Module currentModule, boolean isInit){
+	    for(DaysObserver obs : listObserver)
+	      obs.update(currentFormation,currentModule, isInit);
 	}
 	public void removeObserver() {
 	    listObserver = new ArrayList<DaysObserver>();

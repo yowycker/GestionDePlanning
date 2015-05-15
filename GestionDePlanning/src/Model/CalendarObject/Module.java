@@ -10,11 +10,10 @@ import java.awt.Color;
 public class Module {
 	
 	private int iSeance = 0;
-	private final int maxSeances; // peut-être modifié ?
+	private int maxSeances; // peut-être modifié ?
 	
 	private String abbreviation;
 	private String name;
-	private String teacher;
 	
 	private Color color;
 	
@@ -26,11 +25,10 @@ public class Module {
 	 * @param teacher
 	 * @param maxSeances
 	 */
-	public Module(String name, String abbreviation,Color color,String teacher,int maxSeances){
+	public Module(String name, String abbreviation,Color color,int maxSeances){
 		this.name=name;
 		this.abbreviation = abbreviation;
 		this.color=color;
-		this.teacher=teacher;
 		this.maxSeances=maxSeances;
 	}
 
@@ -87,21 +85,48 @@ public class Module {
 	}
 	
 	/**
-	 * Ascesseur retournant l'enseignant de la séance
-	 * @param teacher
-	 * @return
-	 */
-	public String getTeacher(){
-		return teacher;
-	}
-	
-	/**
 	 * Ascesseur retournant le nb max séance prévu
 	 * @param maxSeances
 	 * @return
 	 */
 	public int getMaxSeances(){
 		return maxSeances;
+	}
+	
+	/**
+	 * Mutateur modifiant le nom du module
+	 * @param name
+	 * @return
+	 */
+	public void setName(String name){
+		this.name=name;
+	}
+	
+	/**
+	 * Mutateur modifiant l'abbréviation du module
+	 * @param abbreviation
+	 * @return
+	 */
+	public void setAbbreviation(String abbreviation){
+		this.abbreviation = abbreviation;
+	}
+	
+	/**
+	 * Mutateur modifiant la couleur du module
+	 * @param color
+	 * @return
+	 */
+	public void setColor(Color color){
+		this.color=color;
+	}
+	
+	/**
+	 * Mutateur modifiant le nb max séance prévu
+	 * @param maxSeances
+	 * @return
+	 */
+	public void setMaxSeances(int maxSeances){
+		this.maxSeances=maxSeances;
 	}
 	
 	/**

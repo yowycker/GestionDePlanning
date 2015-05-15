@@ -34,6 +34,8 @@ public class MainFrame extends JFrame implements ActionListener{
     private JButton manageHoliday = new JButton("Jours non-ouvré");
     private JButton manageSeances = new JButton("Séances");
     private JButton manageSeancesDragNDrop = new JButton("Drag'n Drop");
+    
+    private JDialogManage dm = new JDialogManage();
 
 // Lier le Modele, le controlleur et la vue ensemble
  		    //Instanciation de notre modèle
@@ -66,11 +68,11 @@ public class MainFrame extends JFrame implements ActionListener{
 		    toolbar.add(openFile);
 		    toolbar.add(saveFile);
 		    toolbar.addSeparator();
-		    toolbar.add(manageFormation);
-		    toolbar.add(manageModule);
+		    toolbar.add(manageHoliday);
+		    //toolbar.add(manageFormation);
 		    toolbar.add(manageTeacher);
 		    toolbar.addSeparator();
-		    toolbar.add(manageHoliday);
+		    toolbar.add(manageModule);
 		    toolbar.add(manageSeances);
 		    toolbar.add(manageSeancesDragNDrop);
 		    this.getContentPane().add(toolbar, BorderLayout.NORTH);
@@ -102,11 +104,11 @@ public class MainFrame extends JFrame implements ActionListener{
 
         if(e.getSource() == manageFormation){
         	manageFormationPanel.initListFormation();
-        	new JDialogManage(manageFormationPanel);
+        	dm.initialise(manageFormationPanel);;
         }
         if(e.getSource() == manageModule){
-        	manageModulePanel.initListFormation();
-        	new JDialogManage(manageModulePanel);
+        	manageModulePanel.initModules();
+        	dm.initialise(manageModulePanel);
         }
     }
 }

@@ -1,9 +1,13 @@
 package View.DialogMenu;
 
 
+import java.awt.event.ActionListener;
+
 import javax.swing.JPanel;
+import javax.swing.event.ListSelectionListener;
 
 import Controler.DaysAbstractControler;
+import Obs.DaysObserver;
 
 public class JPanelManage extends JPanel{
 

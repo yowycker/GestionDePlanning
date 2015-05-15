@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import Controler.DaysAbstractControler;
 import Model.CalendarObject.Day;
 import Model.CalendarObject.Formation;
+import Model.CalendarObject.Module;
 import Obs.DaysObserver;
 import View.Elements.DayPanel;
 import View.Elements.SLabel;
@@ -195,4 +196,9 @@ System.out.println(days.get(i).getName() + " " + days.get(i).getDate());
         	daysControler.afterWeek();
         } 
     }
+	@Override
+	public void update(Formation currentFormation, Module currentModule, boolean isInit) {
+		// TODO Auto-generated method stub
+		
+	}
 }

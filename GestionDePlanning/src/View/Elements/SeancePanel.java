@@ -27,7 +27,6 @@ public class SeancePanel extends JPanel{
 			color= seance.getModule().getColor();
 			
 			name.setText(seance.getModule().getName());
-			teacher.setText(seance.getModule().getTeacher());
 			numSeance.setText(Integer.toString(seance.getNumSeance()));
 			maxSeances.setText(Integer.toString(seance.getModule().getMaxSeances()));
 			

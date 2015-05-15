@@ -75,8 +75,8 @@ System.out.println("Index : " + index);
 			c.addFormation(f);
 			c.setCurrentFormation(f);
 			
-		    Module m1 = new Module("Anglais", "AN", Color.GREEN,"Champroux",12);
-		    Module m2 = new Module("Reseau", "RE", Color.RED,"Pl",10);
+		    Module m1 = new Module("Anglais", "AN", Color.GREEN,12);
+		    Module m2 = new Module("Reseau", "RE", Color.RED,10);
 		    
 		    f.addModule(m1);
 		    f.addModule(m2);
@@ -114,8 +114,8 @@ System.out.println("                                 NB H Formation : " + f.getH
 		}
 	}
 
-	// -------------- Gestion d'affichage des menus  --------------- //
-	// ------------------------------------------------------------- //
+	// -------------- Gestion du menu Formations  --------------- //
+	// ---------------------------------------------------------- //
 	
 	
 	public void initFormation(){
@@ -168,6 +168,42 @@ System.out.println("                                 NB H Formation : " + f.getH
 		return formationExist;
 	}
 
+	// -------------- Gestion du menu Modules  --------------- //
+	// ------------------------------------------------------- //
+	
+
+	public void initModules(){
+// supprimer erreur dans le cas ou aucun modules existe (entrer quand même dans la fenetre)
+		daysModel.initModules();
+	}
+	public void selectModule(String nameModule){
+// supprimer erreur dans le cas ou aucun modules existe (entrer quand même dans la fenetre)
+		daysModel.initModules(nameModule);
+	}
+	
+	public void addModule(String newName, String newAbbreviation, String newMaxSeances, Color newColor){
+// Tests
+		daysModel.addModule(new Module(newName,newAbbreviation,newColor,Integer.parseInt(newMaxSeances)));
+		daysModel.initModules(newName);
+	}
+	public void modifyModule(String nameModule, String newName, String newAbbreviation, String newMaxSeances, Color newColor){
+// Tests
+		daysModel.modifyModule(nameModule, new Module(newName,newAbbreviation,newColor,Integer.parseInt(newMaxSeances)));
+		daysModel.initModules(newName);
+	}
+	public void removeModule(String nameModule){
+// Tests
+		daysModel.deleteModule(nameModule);
+		daysModel.initModules();
+	}
+
+	
+// Fonction de controle des valeurs envoyées :
+	// - nbMax est un entier (pour tous)
+	// - Nom et Abb et couleur : si exist (spe à l'action)
+	// - nb Seances existantes : si exist / si < nbMax (spe à l'action)
+
+	
 	
 	// -------------- Fonctions de remplissage de la fenetre --------------- //
 	// --------------------------------------------------------------------- //

@@ -7,6 +7,7 @@ package Model.CalendarObject;
 public class Seance {
 	
 	private Module module;
+	private Teacher teacher;
 	private int numSeance;
 	
 	/**
@@ -14,8 +15,9 @@ public class Seance {
 	 * @param module
 	 * Chaque module est instancié dans la Seance
 	 */
-	public Seance(Module module){
+	public Seance(Module module){//, Teacher teacher){
 		this.module=module;
+		//this.teacher = teacher;
 		this.module.instantiateISeance();
 		this.numSeance = module.getISeance();
 	}
@@ -27,6 +29,15 @@ public class Seance {
 	 */
 	public Module getModule(){
 		return module;
+	}
+	
+	/**
+	 * Ascesseur retournant le formateur
+	 * @return
+	 * @param module
+	 */
+	public Teacher getTeacher(){
+		return teacher;
 	}
 	
 	/**
