@@ -10,6 +10,7 @@ import org.junit.runners.Suite.SuiteClasses;
 public class AllTests {
 	public static Test suite() {
 			TestSuite suite = new TestSuite("Tous les tests");
+			suite.addTestSuite(testDay.class);
 			suite.addTestSuite(testDayFormationSeances.class);
 			suite.addTestSuite(testDaysModel.class);
 			suite.addTestSuite(testCalendar.class);
@@ -17,6 +18,7 @@ public class AllTests {
 			suite.addTestSuite(testFormation.class);
 			suite.addTestSuite(testModule.class);
 			suite.addTestSuite(testSeances.class);
+			suite.addTestSuite(testTeacher.class);
 			return suite;
 		}
 	
