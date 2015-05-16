@@ -10,6 +10,7 @@ import org.junit.runners.Suite.SuiteClasses;
 public class AllTests {
 	public static Test suite() {
 			TestSuite suite = new TestSuite("Tous les tests");
+			suite.addTestSuite(testDayFormationSeances.class);
 			suite.addTestSuite(testDaysModel.class);
 			suite.addTestSuite(testCalendar.class);
 			suite.addTestSuite(testExceptionFunction.class);
