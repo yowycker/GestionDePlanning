@@ -1,8 +1,14 @@
 package test;
 
+import java.awt.Color;
+
 import Exceptions.dateException;
 import Model.CalendarObject.Calendar;
+import Model.CalendarObject.Day;
 import Model.CalendarObject.Formation;
+import Model.CalendarObject.Module;
+import Model.CalendarObject.Seance;
+import Model.CalendarObject.Teacher;
 import junit.framework.TestCase;
 
 public class testCalendar extends TestCase{
@@ -126,11 +132,24 @@ public class testCalendar extends TestCase{
 		assertEquals("",f,c.getFormation("L3"));
 	}
 	
-	public void testsetMorningSeance(){
+	/*public void testsetMorningSeance(){
+		Day d = new Day("Jeudi",4,1,1,2015,false);
+		Calendar c = getCalendar(1,1,2015,30,9,2015,true,false,true);
+		Formation f = new Formation("L3", 3.5);
+		Module n = new Module("Anglais", "AN", Color.white, 10 );
+		Teacher t = new Teacher("champroux@u-pec.fr","0620565485","CN","Champroux","Nathalie");
+		Seance s = new Seance(n,t);
+		c.addFormation(f);
+		s.setMorningSeance(1,n,t);
+	}*/
+	
+	public void testnumberDayMonth(){
 		Calendar c = getCalendar(1,1,2015,30,9,2015,true,false,true);
 		Formation f = new Formation("L3", 3.5);
 		c.addFormation(f);
-		
+		c.setCurrentFormation(f);
+		assertEquals("","Janvier",c.getMonthString(1));
+		assertEquals("",31,c.numberDayMonth(1,2015));
 	}
 	
 	private boolean isWeek(int nbDays){
