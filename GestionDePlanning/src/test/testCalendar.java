@@ -26,7 +26,7 @@ public class testCalendar extends TestCase{
 		Formation f = new Formation("L3", 3.5);
 		c.addFormation(f);
 		c.setCurrentFormation(f);
-		assertEquals("",1,c.getIWeek());
+		assertEquals("",2,c.getIWeek());
 	}
 	
 	public void testgetHoliday(){
@@ -42,7 +42,7 @@ public class testCalendar extends TestCase{
 		Formation f = new Formation("L3", 3.5);
 		c.addFormation(f);
 		c.setCurrentFormation(f);
-		assertEquals("",true,c.getSaturday());
+		assertEquals("",false,c.getSaturday());
 	}
 	
 	public void testgetSunday(){
@@ -54,6 +54,82 @@ public class testCalendar extends TestCase{
 	}
 	
 	public void testgetMonthString(){
+		Calendar c = getCalendar(1,1,2015,30,9,2015,true,false,true);
+		Formation f = new Formation("L3", 3.5);
+		c.addFormation(f);
+		c.setCurrentFormation(f);
+		assertEquals("","Janvier",c.getMonthString(1));
+	}
+	
+	public void testsetCurrentFormation(){
+		Calendar c = getCalendar(1,1,2015,30,9,2015,true,false,true);
+		Formation f = new Formation("L3", 3.5);
+		c.addFormation(f);
+		c.setCurrentFormation(f);
+		assertEquals("", "L3",c.getFormations());
+	}
+	
+	public void testgetCurrentFormation(){
+		Calendar c = getCalendar(1,1,2015,30,9,2015,true,false,true);
+		Formation f = new Formation("L3", 3.5);
+		c.addFormation(f);
+		c.setCurrentFormation(f);
+		assertEquals("",f,c.getFormation("L3"));
+	}
+	
+	public void testaddFormation(){
+		Calendar c = getCalendar(1,1,2015,30,9,2015,true,false,true);
+		Formation f = new Formation("L3", 3.5);
+		assertTrue("", c.getFormations().size()==0);
+		c.addFormation(f);
+		assertTrue("", c.getFormations().size()==1);
+	}
+	
+	public void testmodifyFormation(){
+		Calendar c = getCalendar(1,1,2015,30,9,2015,true,false,true);
+		Formation f = new Formation("L3", 3.5);
+		c.addFormation(f);
+		c.setCurrentFormation(f);
+		assertEquals("",f,c.getFormation("L3"));
+		c.modifyFormation("L3A",f);
+		assertEquals("",f,c.getFormation("L3A"));
+	}
+	
+	public void testremoveFormation(){
+		Calendar c = getCalendar(1,1,2015,30,9,2015,true,false,true);
+		Formation f = new Formation("L3", 3.5);
+		assertTrue("", c.getFormations().size()==0);
+		c.addFormation(f);
+		assertTrue("", c.getFormations().size()==1);
+		c.removeFormation(f);
+		assertTrue("", c.getFormations().size()==0);
+	}
+	
+	public void testgetFormations(){
+		Calendar c = getCalendar(1,1,2015,30,9,2015,true,false,true);
+		Formation f = new Formation("L3", 3.5);
+		Formation f1 = new Formation("L3A", 2);
+		assertTrue("", c.getFormations().size()==0);
+		c.addFormation(f);
+		assertTrue("", c.getFormations().size()==1);
+		c.addFormation(f1);
+		assertTrue("", c.getFormations().size()==2);
+		c.removeFormation(f);
+		c.removeFormation(f1);
+		assertTrue("", c.getFormations().size()==0);
+	}
+	
+	public void testgetFormation(){
+		Calendar c = getCalendar(1,1,2015,30,9,2015,true,false,true);
+		Formation f = new Formation("L3", 3.5);
+		c.addFormation(f);
+		assertEquals("",f,c.getFormation("L3"));
+	}
+	
+	public void testsetMorningSeance(){
+		Calendar c = getCalendar(1,1,2015,30,9,2015,true,false,true);
+		Formation f = new Formation("L3", 3.5);
+		c.addFormation(f);
 		
 	}
 	
