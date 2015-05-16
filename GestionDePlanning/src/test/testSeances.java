@@ -6,6 +6,7 @@ import java.awt.Color;
 
 import junit.framework.TestCase;
 import Model.CalendarObject.Module;
+import Model.CalendarObject.Seance;
 
 import org.junit.Test;
 
@@ -19,7 +20,7 @@ public class testSeances extends TestCase{
 		//assertTrue("Le module doit avoir un enseignant", n.getTeacher() == "Champroux" );
 		assertTrue("Le module doit avoir un nombre de seance max", n.getMaxSeances() == 10 );
 	}
-
+	
 	public void testgetNumSeance(){
 		Module n = new Module("Anglais", "AN", Color.white, 10 );
 		assertTrue("", n.getISeance() == 0);
