@@ -25,7 +25,7 @@ private Seance[] dayPlanning = new Seance[2];
 	public Day(String dayName, int numDay, int numWeek, int numMonth, int numYear, boolean holiday){
 		dayPlanning[0]=null;
 		dayPlanning[1]=null;
-		
+
 		this.dayName = dayName;
 		this.numDay = numDay;
 		this.numWeek = numWeek;
@@ -167,6 +167,14 @@ private Seance[] dayPlanning = new Seance[2];
 	 */
 	public int getYear(){
 		return numYear;
+	}
+	
+	/**
+	 * Mutateur modifiant le jour en ouvré/non ouvre
+	 * @param holiday
+	 */
+	public void setHoliday(boolean holiday){
+		this.holiday = holiday;
 	}
 	
 	

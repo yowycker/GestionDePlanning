@@ -172,4 +172,10 @@ private JButton delete = new JButton("Supprimer");
 		
 		this.updateUI();
 	}
+	@Override
+	public void update(ArrayList<Day> days, int firstDay, int lastDay,
+			int numWeeks, boolean after, boolean next, int month, int year, int numweeks){
+		// TODO Auto-generated method stub
+		
+	}
 }

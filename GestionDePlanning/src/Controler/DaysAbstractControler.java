@@ -5,12 +5,14 @@ import java.util.ArrayList;
 
 import Model.DaysAbstractModel;
 import Model.CalendarObject.Calendar;
+import Model.CalendarObject.Day;
 import Model.CalendarObject.Formation;
 import Model.CalendarObject.Module;
 
 public abstract class DaysAbstractControler {
 	  protected DaysAbstractModel daysModel;
 	  protected int index = 0;
+	  protected int indexMonthMenu = 0;
 	  protected boolean isInit = false;
 	  
 	  protected final int nbYearsList = 7;
@@ -105,4 +107,10 @@ public abstract class DaysAbstractControler {
 	   * Méthode permettant de supprimer un module et de mettre a jour l'affichage
 	   */
 	  public abstract void removeModule(String nameModule);
+	  
+	  
+	  public abstract void initDaysMonth();
+	  public abstract void afterDaysMonth();
+	  public abstract void nextDaysMonth();
+	  public abstract void modifyHoliday(boolean holiday, Day day);
 }

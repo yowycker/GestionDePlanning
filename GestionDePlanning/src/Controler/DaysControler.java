@@ -113,7 +113,70 @@ System.out.println("                                 NB H Formation : " + f.getH
 			//new JDialogNewPlanning(this);
 		}
 	}
+	
 
+	// -------------- Gestion de l'affichage par mois  --------------- //
+	// --------------------------------------------------------------- //
+	
+	
+	public void initDaysMonth(){
+		indexMonthMenu = 0;
+		getDaysMonth();
+	}
+	public void afterDaysMonth(){
+		indexMonthMenu --;
+		getDaysMonth();
+	}
+	public void nextDaysMonth(){
+		indexMonthMenu ++;
+		getDaysMonth();
+	}
+	
+	private void getDaysMonth(){
+		int numMonth = (daysModel.getIMonth() + indexMonthMenu) % 12;
+		if(numMonth == 0)
+			numMonth = 12;
+		int year = daysModel.getIYear() + (daysModel.getIMonth() + indexMonthMenu - numMonth)/12;
+		
+		int firstDayMonth;
+		if(indexMonthMenu == 0)
+			firstDayMonth = daysModel.getIDay();
+		else
+			firstDayMonth = 1;
+		
+		int lastDayMonth;
+		if(daysModel.getLastDay().getNumMonth() == numMonth && daysModel.getLastDay().getYear() == year)
+			lastDayMonth = daysModel.getLastDay().getNumDay();
+		else
+			lastDayMonth = daysModel.getNumDayMonth(numMonth,year);
+		
+		int posFirstDayMonth = daysModel.getPosDayWeek(1,numMonth,year);
+		int numweeks = 1;
+		int j = 7;
+		for(int i =  (8 - posFirstDayMonth); i <= lastDayMonth; i++){
+			if(j == 7){
+				j = 0;
+				numweeks++;
+			}
+			j++;
+		}
+		daysModel.getMonth(numMonth, year, firstDayMonth, lastDayMonth, posFirstDayMonth, numweeks);
+	}
+// ------- Gestion de l'affichage par mois ------- //
+	
+	public void modifyHoliday(boolean holiday, Day day){
+		daysModel.getDay(day).setHoliday(holiday);
+		getDaysMonth();
+	}
+	
+
+	
+// Fonctions de controle des valeurs envoyées :
+	// - Seances Existantes ? (test si passe en holiday)
+	// - Si Samedi/dimanche, modifier holiday Calendar : (tests spe à l'action : 2 cas)
+	
+	
+	
 	// -------------- Gestion du menu Formations  --------------- //
 	// ---------------------------------------------------------- //
 	
@@ -205,8 +268,9 @@ System.out.println("                                 NB H Formation : " + f.getH
 
 	
 	
-	// -------------- Fonctions de remplissage de la fenetre --------------- //
-	// --------------------------------------------------------------------- //
+	
+	// -------------- Fonctions de remplissage de liste --------------- //
+	// ---------------------------------------------------------------- //
 
 	
 	public ArrayList<String> getListYears(){

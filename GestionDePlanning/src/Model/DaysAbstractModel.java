@@ -36,6 +36,20 @@ public abstract class DaysAbstractModel implements DaysObservable{
 	public abstract int getFinalNumDaysWeek();
 	public abstract void setCalendar(Calendar c);
 	public abstract void setInit(boolean init);
+	
+// Affichage des jours par mois
+	public abstract void getMonth(int month, int year, int firstDay, int lastDay, int posFirstDay, int numweeks);
+	public abstract int getNumDayMonth(int month, int year);
+//	public abstract Day getLastDayWeek(Day day);
+//	public abstract Day getFirstDayWeek(Day day);
+	
+// gestion des jours -> controler
+	public abstract int getPosDayWeek(int day,int month, int year);
+	public abstract int getIDay();
+	public abstract int getIMonth();
+	public abstract int getIYear();
+	public abstract Day getDay(Day day);
+	public abstract Day getLastDay();
 	  
 // Affichage de menu de formations
 	public abstract void initFormations();
@@ -66,6 +80,10 @@ public abstract class DaysAbstractModel implements DaysObservable{
 	public void notifyObserver(Formation currentFormation, Module currentModule, boolean isInit){
 	    for(DaysObserver obs : listObserver)
 	      obs.update(currentFormation,currentModule, isInit);
+	}
+	public void notifyObserver(ArrayList<Day> days, int firstDay, int lastDay, int posFirstDay, boolean after, boolean next, int month, int year, int numweeks){
+	    for(DaysObserver obs : listObserver)
+	      obs.update(days,firstDay, lastDay,posFirstDay,after,next, month,  year, numweeks);
 	}
 	public void removeObserver() {
 	    listObserver = new ArrayList<DaysObserver>();

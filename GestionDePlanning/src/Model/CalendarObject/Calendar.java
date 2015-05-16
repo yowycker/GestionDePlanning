@@ -104,17 +104,16 @@ public class Calendar{
 	
 	/**
 	 * Ascesseur retournant la position du dimanche
-	 * @param sunday
-	 * @return
+	 * @return sunday
 	 */
 	public boolean getSunday(){
 		return sunday;
 	}
 	
 	/**
-	 * Retourne le mois
+	 * Retourne le nom du mois
 	 * @param i
-	 * @return
+	 * @return month
 	 */
 	public static String getMonthString(int i){ 
 		String month = new String(); 
@@ -225,7 +224,7 @@ public class Calendar{
 		}
 		return fe;
 	}
-	
+
 	
 	// --------------- Fonctions de Gestion des Seances ----------------- //
 	// ------------------------------------------------------------------ //
@@ -266,7 +265,7 @@ public class Calendar{
 	// ------------------------------------------------------------------ //
 	
 	/**
-	 * Méthode d'initialisation du jour, mois et de l'année
+	 * Méthode d'initialisation du premier jour, mois et de l'année afin de generer les jour en apportant à chaqu'un le numero de jour sur le mois et le numero de semaine sur l'année
 	 * @param firstDay
 	 * @param firstMonth
 	 * @param firstYear
@@ -350,13 +349,13 @@ public class Calendar{
 		}
 		
 		/**
-		 * retourne le numéro du jour
+		 * retourne le numéro du jour dans la semaine
 		 * @param day
 		 * @param month
 		 * @param year
 		 * @return
 		 */
-		private int day(int day, int month, int year){
+		public int day(int day, int month, int year){
 		    int retour = 0;
 		    for(int i=1900;i<year;i++)
 		        if(i%4 == 0)retour+=366;
@@ -376,7 +375,7 @@ public class Calendar{
 	 * @param year
 	 * @return
 	 */
-	private int numberDayMonth(int month,int year){
+	public int numberDayMonth(int month,int year){
 		    int retour = 0; 
 		     
 		    switch(month){ 

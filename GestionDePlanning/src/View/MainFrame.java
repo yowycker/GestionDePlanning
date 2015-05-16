@@ -17,6 +17,7 @@ import Model.DaysModel;
 import View.DialogMenu.JDialogManage;
 import View.DialogMenu.JDialogNewPlanning;
 import View.DialogMenu.JPanelManageFormation;
+import View.DialogMenu.JPanelManageHoliday;
 import View.DialogMenu.JPanelManageModule;
 
 public class MainFrame extends JFrame implements ActionListener{
@@ -46,6 +47,7 @@ public class MainFrame extends JFrame implements ActionListener{
     private PanelWeek planning = new PanelWeek(controler);
     private JPanelManageFormation manageFormationPanel = new JPanelManageFormation(controler);
     private JPanelManageModule manageModulePanel = new JPanelManageModule(controler);
+    private JPanelManageHoliday manageHolidayPanel = new JPanelManageHoliday(controler);
  		    
 	  public MainFrame(){
 		    this.setTitle("Planning");
@@ -57,6 +59,7 @@ public class MainFrame extends JFrame implements ActionListener{
  		    model.addObserver(planning);
  		    model.addObserver(manageFormationPanel);
  		    model.addObserver(manageModulePanel);
+ 		    model.addObserver(manageHolidayPanel);
 
 		    this.setLayout(new BorderLayout());
 		    this.getContentPane().add(planning, BorderLayout.CENTER);
@@ -80,6 +83,7 @@ public class MainFrame extends JFrame implements ActionListener{
 		    newFile.addActionListener(this); 
 		    openFile.addActionListener(this);
 		    
+		    manageHoliday.addActionListener(this);
 		    manageFormation.addActionListener(this);
 		    manageModule.addActionListener(this);
 		    
@@ -102,10 +106,15 @@ public class MainFrame extends JFrame implements ActionListener{
         }
         
 
+        if(e.getSource() == manageHoliday){
+        	manageHolidayPanel.initHolidays();
+        	dm.initialise(manageHolidayPanel);;
+        }
         if(e.getSource() == manageFormation){
         	manageFormationPanel.initListFormation();
         	dm.initialise(manageFormationPanel);;
         }
+        
         if(e.getSource() == manageModule){
         	manageModulePanel.initModules();
         	dm.initialise(manageModulePanel);

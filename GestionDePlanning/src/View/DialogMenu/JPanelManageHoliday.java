@@ -1,6 +1,7 @@
 package View.DialogMenu;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,141 +19,151 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import Controler.DaysAbstractControler;
+import Model.CalendarObject.Calendar;
 import Model.CalendarObject.Day;
 import Model.CalendarObject.Formation;
 import Model.CalendarObject.Module;
 import Obs.DaysObserver;
+import View.Elements.JButtonDay;
+import View.Elements.SLabel;
 
-public class JPanelManageHoliday extends JPanelManage implements DaysObserver, ActionListener, ListSelectionListener{
+public class JPanelManageHoliday extends JPanelManage implements DaysObserver, ActionListener{
+private SLabel monthYearLabel = new SLabel("");
+private JTextField messageTextField = new JTextField(40);
 
-private ArrayList<Formation> formations = new ArrayList<Formation>();
-private DefaultListModel dlm = new DefaultListModel();
-private JList listFormation = new JList(dlm);
 
-private JLabel titleLabel = new JLabel("Titre");
-private JLabel nbHoursLabel = new JLabel("Nombre d'heure par séance");
-private JTextField titleTextField = new JTextField(10);
-private JTextField nbHoursTextField = new JTextField(10);
+private SLabel monday = new SLabel("Lun"); 
+private SLabel tuesday = new SLabel("Mar"); 
+private SLabel wednesday = new SLabel("Mer"); 
+private SLabel thursday = new SLabel("Jeu"); 
+private SLabel friday = new SLabel("Ven"); 
+private SLabel saturday = new SLabel("Sam");
+private SLabel sunday = new SLabel("Dim");
+		
+private JButton after = new JButton("<<");
+private JButton next = new JButton(">>");
 
-private JButton add = new JButton("Ajouter");
-private JButton modify = new JButton("Modifier");
-private JButton delete = new JButton("Supprimer");
-//private JButton cancel = new JButton("Annuler");
-	
+	private JPanel northPanel = new JPanel();
 	private JPanel centerPanel = new JPanel();
-		private JPanel titlePanel = new JPanel();
-			private JPanel titleLabelPanel = new JPanel();
-			private JPanel titleTextFieldPanel = new JPanel();
-		private JPanel nbHoursPanel = new JPanel();
-			private JPanel nbHoursLabelPanel = new JPanel();
-			private JPanel nbHoursTextFieldPanel = new JPanel();
-	private JPanel westPanel = new JPanel();
-	private JPanel bottomPanel = new JPanel();
-	
+	    private JPanel headerPanel = new JPanel();
+	    	private JPanel monthYearPanel = new JPanel();
+	    private JPanel daysPanel = new JPanel();
+	    private JPanel messagePanel = new JPanel();
 
 	private BorderLayout mainLayout;
-		private GridLayout centerLayout;
-			private GridLayout titleLayout;
-			private GridLayout nbHoursLayout;
-		private Box bottomLayout;
-		
-		private GridLayout westLayout;
-
+		private BorderLayout northLayout;
+		private BorderLayout centerLayout;
+			private GridLayout headerLayout = new GridLayout(2,7);
+			private GridLayout daysLayout;
+		private GridLayout messageLayout = new GridLayout(1,1);
 	
 	 public JPanelManageHoliday(DaysAbstractControler daysControler){
-		 super(daysControler,"Gestion des formations");
+		 super(daysControler,"Gestion des jours non-ouvrés");
 		 
-		 westLayout = new GridLayout(1,2);
-		 westPanel.setLayout(westLayout);
-		 westPanel.add(listFormation);
-		 westPanel.add(new JScrollPane(listFormation));
-
-		    
-		 centerLayout = new GridLayout(2,1);
+		 northLayout = new BorderLayout();
+		 northPanel.setLayout(northLayout);
+		 northPanel.add(after, BorderLayout.WEST);
+		 northPanel.add(monthYearPanel, BorderLayout.CENTER);
+		 	monthYearPanel.add(monthYearLabel);
+		 northPanel.add(next, BorderLayout.EAST);
+			
+		 centerLayout = new BorderLayout();
 		 centerPanel.setLayout(centerLayout);
-		 centerPanel.add(titlePanel, 0);
-		 centerPanel.add(nbHoursPanel, 1);
+		 centerPanel.add(headerPanel, BorderLayout.NORTH);
+		 centerPanel.add(daysPanel, BorderLayout.CENTER);
+		 
+		 	headerPanel.setLayout(headerLayout);
+		 	headerPanel.add(new JPanel(), 0); 
+		 	headerPanel.add(new JPanel(), 1); 
+		 	headerPanel.add(new JPanel(), 2); 
+		 	headerPanel.add(new JPanel(), 3); 
+		 	headerPanel.add(new JPanel(), 4); 
+		 	headerPanel.add(new JPanel(), 5); 
+		 	headerPanel.add(new JPanel(), 6);
+		 	headerPanel.add(monday, 7); 
+		 	headerPanel.add(tuesday, 8); 
+		 	headerPanel.add(wednesday, 9); 
+		 	headerPanel.add(thursday, 10); 
+		 	headerPanel.add(friday, 11); 
+		 	headerPanel.add(saturday, 12); 
+		 	headerPanel.add(sunday, 13);
 
-			titleLayout = new GridLayout(1,2);
-			titlePanel.setLayout(titleLayout);
-			titleLabelPanel.add(titleLabel);
-			titlePanel.add(titleLabelPanel, 0);
-			titleTextFieldPanel.add(titleTextField);
-			titlePanel.add(titleTextFieldPanel, 1);
-
-			nbHoursLayout = new GridLayout(1,2);
-			nbHoursPanel.setLayout(nbHoursLayout);
-			nbHoursLabelPanel.add(nbHoursLabel);
-			nbHoursPanel.add(nbHoursLabelPanel, 0);
-			nbHoursTextFieldPanel.add(nbHoursTextField);
-			nbHoursPanel.add(nbHoursTextFieldPanel, 1);
-		   
-		bottomLayout = Box.createHorizontalBox();
-		bottomPanel.add(add,bottomLayout);
-		bottomPanel.add(modify,bottomLayout);
-		bottomPanel.add(delete,bottomLayout);
-
-		add.addActionListener(this);
-		modify.addActionListener(this);
-		delete.addActionListener(this);
-		listFormation.addListSelectionListener(this);
+			daysLayout = new GridLayout();
+			daysPanel.setLayout(daysLayout);
+		 
+		 messagePanel.setLayout(messageLayout);
+		 messageTextField.setEnabled(false);
+		 messagePanel.add(messageTextField);
 		 
 		 mainLayout = new BorderLayout();
 	     this.setLayout(mainLayout);
+	     this.add(northPanel, BorderLayout.NORTH);
 	     this.add(centerPanel, BorderLayout.CENTER);
-	     this.add(westPanel, BorderLayout.WEST);
-	     this.add(bottomPanel, BorderLayout.SOUTH);
+	     this.add(messagePanel, BorderLayout.SOUTH);
+	     
+	     
+	     after.addActionListener(this);
+		 next.addActionListener(this);
 	 }
-	 public void initListFormation(){
-	     daysControler.initFormation();
+	 public void initHolidays(){
+	     daysControler.initDaysMonth();
 	 }
 	 
 
 	public void actionPerformed(ActionEvent evt) {
-		if(evt.getSource() == add){
-			daysControler.addFormation(titleTextField.getText(), Double.parseDouble(nbHoursTextField.getText()));
+		if(evt.getSource() == after){
+			daysControler.afterDaysMonth();
 		}
-		else if(evt.getSource() == modify){
-// Pas encore fonctionnelle
-			for(int i = 0; i < this.formations.size(); i++){
-    			if(this.formations.get(i).getTitle().equals(listFormation.getSelectedValue())){
-    				daysControler.modifyFormation(this.formations.get(i).getTitle(),titleTextField.getText(), Double.parseDouble(nbHoursTextField.getText()));
-    			}
-    		}
+		if(evt.getSource() == next){
+			daysControler.nextDaysMonth();
 		}
-		else if(evt.getSource() == delete){
-			daysControler.deleteFormation(titleTextField.getText(), Double.parseDouble(nbHoursTextField.getText()));
-		}
-		// dispose
 	}
-    public void valueChanged(ListSelectionEvent evt) {
-    	if (!evt.getValueIsAdjusting()){
-    		for(int i = 0; i < this.formations.size(); i++){
-    			if(this.formations.get(i).getTitle() == listFormation.getSelectedValue()){
-    				titleTextField.setText(this.formations.get(i).getTitle());
-    				nbHoursTextField.setText(Double.toString(this.formations.get(i).getHoursSeances()));
-    			}
-    		}
-        }
-    }
 
-	public void update(ArrayList<Formation> formations,	Formation currentFormation) {
-		this.formations = formations;
+	public void update(ArrayList<Day> days, int firstDay, int lastDay, int posFirstDayWeek, boolean after, boolean next, int month, int year, int numweeks){
+		this.after.setEnabled(after);
+		this.next.setEnabled(next);
 		
-		dlm.removeAllElements();
-	System.out.println("lenth list : " + this.formations.size());
-		for(int i = 0; i < this.formations.size(); i++){
-			dlm.addElement(this.formations.get(i).getTitle());
+		monthYearLabel.setText(Calendar.getMonthString(month) + " " + Integer.toString(year));
+
+		daysPanel.removeAll();
+		daysLayout = new GridLayout(numweeks,7);
+		daysPanel.setLayout(daysLayout);
+		
+		for(int i = 0; i < (posFirstDayWeek-1); i++){
+			daysPanel.add(new JPanel(), i);
 		}
-		listFormation.setSelectedValue(currentFormation.getTitle(), true);
-		this.updateUI();
+		for(int j = 0; j < lastDay; j++){
+			if((j + 1) >= firstDay && (j + 1) <= lastDay){
+				JButtonDay btn = new JButtonDay("" + (j + 1), this.daysControler, days.get(j + 1 - firstDay));
+				btn.addActionListener(this);
+				btn.setToolTipText( "cliquez ici pour changer le jour en non-ouvré");
+				if(days.get(j + 1 - firstDay).getHoliday()){
+					btn.setToolTipText( "cliquez ici pour changer le jour en ouvré");
+					btn.setBackground(Color.BLACK);
+					btn.setForeground(Color.WHITE);
+				}
+				daysPanel.add(btn, j + posFirstDayWeek - 1);
+			}
+			else{
+				JPanel p = new JPanel();
+				p.setBackground(Color.WHITE);
+				p.add(new SLabel("" + (j + 1)));
+				p.setToolTipText( "Jour hors scope au calendrier de l'année scolaire");
+				daysPanel.add(p, j + posFirstDayWeek - 1);
+			}
+				
+		}
+		for(int i = (posFirstDayWeek + lastDay - 1); i < (numweeks * 7); i++){
+			daysPanel.add(new JPanel(), i);
+		}
 		
+		
+		this.updateUI();
+	}
+	public void update(ArrayList<Formation> formations,	Formation currentFormation) {
 	}
 	public void update(Formation currentFormation, boolean init, ArrayList<Day> days, int numDays, boolean after, boolean next) {
 	}
-	@Override
 	public void update(Formation currentFormation, Module currentModule, boolean isInit) {
-		// TODO Auto-generated method stub
-		
 	}
 }

@@ -13,12 +13,12 @@ import Model.CalendarObject.Module;
 public class testModule extends TestCase{
 
 	public void testgetName() {
-		Module n = new Module("Anglais", "AN", Color.white, "Champroux", 10 );
+		Module n = new Module("Anglais", "AN", Color.white, 10 );
 		assertTrue("Le module doit avoir un nom", n.getName() == "Anglais" );
 	}
 	
 	public void testgetAbbreviation() {
-		Module n = new Module("Anglais", "AN", Color.white, "Champroux", 10 );
+		Module n = new Module("Anglais", "AN", Color.white, 10 );
 		assertTrue("Le module doit avoir une abbreviation", n.getAbbreviation() == "AN" );
 	}
 
