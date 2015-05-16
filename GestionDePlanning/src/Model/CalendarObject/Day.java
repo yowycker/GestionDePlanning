@@ -58,8 +58,8 @@ private Seance[] dayPlanning = new Seance[2];
 	 * @param currentFormation
 	 * @param nameModule
 	 */
-	public void setMorning(Formation currentFormation, String nameModule){
-		this.getFormationSeances(currentFormation.getTitle()).setSeance(0, new Seance(currentFormation.getModule(nameModule)));
+	public void setMorning(Formation currentFormation, String nameModule, Teacher teacher){
+		this.getFormationSeances(currentFormation.getTitle()).setSeance(0, new Seance(currentFormation.getModule(nameModule), teacher));
 	}
 	
 	/**
@@ -67,8 +67,8 @@ private Seance[] dayPlanning = new Seance[2];
 	 * @param currentFormation
 	 * @param nameModule
 	 */
-	public void setAfternoon(Formation currentFormation, String nameModule){
-		this.getFormationSeances(currentFormation.getTitle()).setSeance(1, new Seance(currentFormation.getModule(nameModule)));
+	public void setAfternoon(Formation currentFormation, String nameModule, Teacher teacher){
+		this.getFormationSeances(currentFormation.getTitle()).setSeance(1, new Seance(currentFormation.getModule(nameModule), teacher));
 	}
 
 	/**

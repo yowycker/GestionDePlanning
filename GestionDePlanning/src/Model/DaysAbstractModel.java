@@ -6,11 +6,13 @@ import Model.CalendarObject.Calendar;
 import Model.CalendarObject.Day;
 import Model.CalendarObject.Formation;
 import Model.CalendarObject.Module;
+import Model.CalendarObject.Teacher;
 import Obs.DaysObservable;
 import Obs.DaysObserver;
 
 public abstract class DaysAbstractModel implements DaysObservable{
 	protected Calendar calendar;
+	protected ArrayList<Teacher> teachers = new ArrayList<Teacher>();
 	
 	protected boolean init;
 	protected ArrayList<Day> days;
@@ -50,7 +52,14 @@ public abstract class DaysAbstractModel implements DaysObservable{
 	public abstract int getIYear();
 	public abstract Day getDay(Day day);
 	public abstract Day getLastDay();
-	  
+
+// Gestion des Formateurs
+	public abstract void addTeacher(Teacher newTeacher);
+	public abstract void modifyTeacher(String email, Teacher newTeacher);
+	public abstract void removeTeacher(String email);
+	public abstract Teacher getTeacher(String email);
+	public abstract ArrayList<Teacher> getTeachers();
+	
 // Affichage de menu de formations
 	public abstract void initFormations();
 	public abstract void initFormations(String formation);
@@ -58,7 +67,7 @@ public abstract class DaysAbstractModel implements DaysObservable{
 	public abstract void modifyFormation(String formation, Formation newformation);
 	public abstract void deleteFormation(Formation formation);
 	public abstract ArrayList<Formation> getFormations();
-// Affichage de menu de formations
+// Affichage de menu des modules 
 	public abstract void initModules();
 	public abstract void initModules(String nameModule);
 	public abstract void addModule(Module newModule);

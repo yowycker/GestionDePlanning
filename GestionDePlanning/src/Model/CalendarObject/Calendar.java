@@ -234,12 +234,12 @@ public class Calendar{
 	 * @param day
 	 * @param module
 	 */
-	public void setMorningSeance(Day day, Module module){
+	public void setMorningSeance(Day day, Module module, Teacher teacher){
 		for(Day d : listDays){
 // modifier le rend des seances du meme module : matin et soir
 			if(d.equals(day)){
 				getCurrentFormation().addSeance(module.getName());
-				d.setMorning(getCurrentFormation(), module.getName());
+				d.setMorning(getCurrentFormation(), module.getName(), teacher);
 // modifier le rend de la seance
 			}
 		}
@@ -250,12 +250,12 @@ public class Calendar{
 	 * @param day
 	 * @param module
 	 */
-	public void setAfternoonSeance(Day day, Module module){
+	public void setAfternoonSeance(Day day, Module module, Teacher teacher){
 		for(Day d : listDays){
 // modifier le rend des seances du meme module : matin et soir
 			if(d.equals(day)){
 				getCurrentFormation().addSeance(module.getName());
-				d.setAfternoon(getCurrentFormation(), module.getName());
+				d.setAfternoon(getCurrentFormation(), module.getName(), teacher);
 // modifier le rend de la seance
 			}
 		}

@@ -12,6 +12,7 @@ import Model.CalendarObject.Calendar;
 import Model.CalendarObject.Day;
 import Model.CalendarObject.Formation;
 import Model.CalendarObject.Module;
+import Model.CalendarObject.Teacher;
 
 public class DaysControler extends DaysAbstractControler {
 	/**
@@ -78,20 +79,23 @@ System.out.println("Index : " + index);
 		    Module m1 = new Module("Anglais", "AN", Color.GREEN,12);
 		    Module m2 = new Module("Reseau", "RE", Color.RED,10);
 		    
+		    Teacher t1 = new Teacher("champ@u-pec.fr","0652315824", "CH", "Champroux", "");
+		    Teacher t2 = new Teacher("cham@u-pec.fr","0652315524", "CHo", "Champroux", "uy");
+		    
 		    f.addModule(m1);
 		    f.addModule(m2);
 		    
-		    c.setMorningSeance(c.getDays().get(2), m2);
-		    c.setAfternoonSeance(c.getDays().get(3), m1);
-		    c.setMorningSeance(c.getDays().get(4), m1);
-		    c.setMorningSeance(c.getDays().get(8), m1);
-		    c.setMorningSeance(c.getDays().get(9), m2);
+		    c.setMorningSeance(c.getDays().get(2), m2, t1);
+		    c.setAfternoonSeance(c.getDays().get(3), m1, t1);
+		    c.setMorningSeance(c.getDays().get(4), m1, t2);
+		    c.setMorningSeance(c.getDays().get(8), m1, t2);
+		    c.setMorningSeance(c.getDays().get(9), m2, t1);
 		    
-		    c.setMorningSeance(c.getDays().get(13), m1);
-		    c.setAfternoonSeance(c.getDays().get(13), m1);
-		    c.setMorningSeance(c.getDays().get(15), m2);
-		    c.setAfternoonSeance(c.getDays().get(24), m1);
-		    c.setAfternoonSeance(c.getDays().get(25), m1);
+		    c.setMorningSeance(c.getDays().get(13), m1, t1);
+		    c.setAfternoonSeance(c.getDays().get(13), m1, t2);
+		    c.setMorningSeance(c.getDays().get(15), m2, t1);
+		    c.setAfternoonSeance(c.getDays().get(24), m1, t2);
+		    c.setAfternoonSeance(c.getDays().get(25), m1, t1);
 
 System.out.println("                                 NB H Formation : " + f.getHoursFormation());
 		    
@@ -263,6 +267,7 @@ System.out.println("                                 NB H Formation : " + f.getH
 	
 // Fonction de controle des valeurs envoyées :
 	// - nbMax est un entier (pour tous)
+	// - nbMax <= 4
 	// - Nom et Abb et couleur : si exist (spe à l'action)
 	// - nb Seances existantes : si exist / si < nbMax (spe à l'action)
 

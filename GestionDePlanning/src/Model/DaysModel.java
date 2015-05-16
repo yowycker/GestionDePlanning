@@ -6,6 +6,7 @@ import Model.CalendarObject.Calendar;
 import Model.CalendarObject.Day;
 import Model.CalendarObject.Formation;
 import Model.CalendarObject.Module;
+import Model.CalendarObject.Teacher;
 
 public class DaysModel extends DaysAbstractModel{
 	
@@ -142,6 +143,37 @@ System.out.println("Date : " + calendar.getDays().get(0).getDate());
 		return calendar.getDays().get(calendar.getDays().size() - 1);
 	}	
 	
+	
+	// ------------- Gestion de la formation courante  --------------- //
+	// --------------------------------------------------------------- //
+
+	public void addTeacher(Teacher newTeacher) {
+		teachers.add(newTeacher);
+	}
+	public void modifyTeacher(String email, Teacher newTeacher) {
+		this.getTeacher(email).setAbbreviation(newTeacher.getAbbreviation());
+		this.getTeacher(email).setEmail(newTeacher.getEmail());
+		this.getTeacher(email).setFirstname(newTeacher.getFirstname());
+		this.getTeacher(email).setName(newTeacher.getName());
+		this.getTeacher(email).setPhone(newTeacher.getPhone());
+	}
+	public void removeTeacher(String email){
+		teachers.remove(this.getTeacher(email));
+	}
+	public Teacher getTeacher(String email) {
+		int posTeacher = -1;
+		for(Teacher t : teachers){
+			if(t.getEmail().equals(email))
+				posTeacher = teachers.indexOf(t);
+		}
+		if (posTeacher == -1)
+			return null;
+		else
+			return teachers.get(posTeacher);
+	}
+	public ArrayList<Teacher> getTeachers() {
+		return teachers;
+	}
 	
 	// ------------- Gestion de la formation courante  --------------- //
 	// --------------------------------------------------------------- //

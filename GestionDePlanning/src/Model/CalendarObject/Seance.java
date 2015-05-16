@@ -15,9 +15,9 @@ public class Seance {
 	 * @param module
 	 * Chaque module est instancié dans la Seance
 	 */
-	public Seance(Module module){//, Teacher teacher){
+	public Seance(Module module, Teacher teacher){
 		this.module=module;
-		//this.teacher = teacher;
+		this.teacher = teacher;
 		this.module.instantiateISeance();
 		this.numSeance = module.getISeance();
 	}
