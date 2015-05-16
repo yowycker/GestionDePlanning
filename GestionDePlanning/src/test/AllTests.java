@@ -11,8 +11,11 @@ public class AllTests {
 	public static Test suite() {
 			TestSuite suite = new TestSuite("Tous les tests");
 			suite.addTestSuite(testDaysModel.class);
-			suite.addTestSuite(testCalendarContent.class);
+			suite.addTestSuite(testCalendar.class);
 			suite.addTestSuite(testExceptionFunction.class);
+			suite.addTestSuite(testFormation.class);
+			suite.addTestSuite(testModule.class);
+			suite.addTestSuite(testSeances.class);
 			return suite;
 		}
 	
