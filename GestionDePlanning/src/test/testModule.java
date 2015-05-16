@@ -22,4 +22,5 @@ public class testModule extends TestCase{
 		assertTrue("Le module doit avoir une abbreviation", n.getAbbreviation() == "AN" );
 	}
 
+	
 }
