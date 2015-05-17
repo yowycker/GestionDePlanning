@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import Model.CalendarObject.Day;
 import Model.CalendarObject.Formation;
 import Model.CalendarObject.Module;
+import Model.CalendarObject.Teacher;
 
 public interface DaysObservable {
 	  public void addObserver(DaysObserver obs);
@@ -13,4 +14,5 @@ public interface DaysObservable {
 	  public void notifyObserver(ArrayList<Formation> formations, Formation currentFormation);
 	  public void notifyObserver(Formation currentFormation, Module currentModule, boolean isInit);
 	  public void notifyObserver(ArrayList<Day> days, int firstDay, int lastDay, int posFirstDay, boolean after, boolean next, int month, int year, int numweeks);
+	  public void notifyObserver(ArrayList<Teacher> teachers, Teacher currentTeacher);
 }

@@ -1,5 +1,6 @@
 package Model.CalendarObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -8,7 +9,7 @@ import java.util.ArrayList;
  * @param nbHours, @param nbHoursSeances
  * @param modules //Liste des modules de la formation
  */
-public class Formation{
+public class Formation implements Serializable{
 	
 	private String title;
 	
@@ -93,12 +94,6 @@ public class Formation{
 	 * @param module
 	 */
 	public void addModule(Module module){
-// tester si le module existe deja dans la formation (nom, couleur ... etc)
-		/*
-		for(Module m : modules){
-			if(m.equals(module))
-				//Exception
-		}*/
 		this.modules.add(module);
 	}
 	
@@ -106,7 +101,6 @@ public class Formation{
 	 * Méthode pour soustraire un module
 	 * @param module
 	 */
-// Exception : Si seance existe, ne pas supprimer module ? ou alors supprimer tous les modules ?
 	public void removeModule(Module module){
 		modules.remove(module);
 	}
@@ -139,9 +133,7 @@ public class Formation{
 	 * @param nameModule
 	 */
 	public void addSeance(String nameModule){
-// Tester si le module existe
-// Tester si le nombre de modules max n'est pas déja à son max : ici ou dans module ?
-		getModule(nameModule).instantiateISeance();
+		this.getModule(nameModule).instantiateISeance();
 		this.instantiateNbHours();
 	}
 	
@@ -150,9 +142,7 @@ public class Formation{
 	 * @param nameModule
 	 */
 	public void removeSeance(String nameModule){
-// Tester si le module existe
-// Tester si le nombre de modules max n'est pas déja à son max : ici ou dans module ?
-		getModule(nameModule).dropInstantiateISeance();
+		this.getModule(nameModule).dropInstantiateISeance();
 		this.dropInstantiateNbHours();
 	}
 	
@@ -172,7 +162,6 @@ public class Formation{
 	 * Méthode permettant d'instantier le nombre d'heures
 	 * suppression d'une journée
 	 */
-// exception si le nombre d'heure et de jours < 0
 	private void dropInstantiateNbHours(){
 		nbHours-=nbHoursSeances;
 		if(nbHours < 0){

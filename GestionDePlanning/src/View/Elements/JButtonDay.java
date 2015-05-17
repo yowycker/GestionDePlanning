@@ -23,7 +23,7 @@ public class JButtonDay extends JButton implements ActionListener{
     }
 
 	public void actionPerformed(ActionEvent even) {
-		if(this.getBackground() == Color.BLACK)
+		if(this.day.getHoliday())
 			daysControler.modifyHoliday(false, day);
 		else
 			daysControler.modifyHoliday(true, day);

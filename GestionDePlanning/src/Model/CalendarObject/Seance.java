@@ -1,10 +1,12 @@
 package Model.CalendarObject;
 
+import java.io.Serializable;
+
 /**
  *	Classe permettant de définir une Seance
  * @param module, @param numSeance
  */
-public class Seance {
+public class Seance implements Serializable{
 	
 	private Module module;
 	private Teacher teacher;
@@ -18,7 +20,6 @@ public class Seance {
 	public Seance(Module module, Teacher teacher){
 		this.module=module;
 		this.teacher = teacher;
-		this.module.instantiateISeance();
 		this.numSeance = module.getISeance();
 	}
 	

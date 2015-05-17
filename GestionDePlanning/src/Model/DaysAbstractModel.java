@@ -54,11 +54,12 @@ public abstract class DaysAbstractModel implements DaysObservable{
 	public abstract Day getLastDay();
 
 // Gestion des Formateurs
-	public abstract void addTeacher(Teacher newTeacher);
-	public abstract void modifyTeacher(String email, Teacher newTeacher);
+	public abstract void addTeacher(String name, String firstname, String abbreviation, String email, String phone);
+	public abstract void modifyTeacher(String oldEmail, String name, String firstname, String abbreviation, String email, String phone);
 	public abstract void removeTeacher(String email);
 	public abstract Teacher getTeacher(String email);
-	public abstract ArrayList<Teacher> getTeachers();
+	public abstract void initTeacher();
+	public abstract void selectTeacher(String email);
 	
 // Affichage de menu de formations
 	public abstract void initFormations();
@@ -73,6 +74,9 @@ public abstract class DaysAbstractModel implements DaysObservable{
 	public abstract void addModule(Module newModule);
 	public abstract void modifyModule(String nameModule, Module newModule);
 	public abstract void deleteModule(String nameModule);
+	
+// serialiser
+	public abstract void serializeCalendar(String file);
 	
 // Fonctions Observable
 	public void addObserver(DaysObserver obs) {
@@ -94,7 +98,11 @@ public abstract class DaysAbstractModel implements DaysObservable{
 	    for(DaysObserver obs : listObserver)
 	      obs.update(days,firstDay, lastDay,posFirstDay,after,next, month,  year, numweeks);
 	}
+	public void notifyObserver(ArrayList<Teacher> teachers, Teacher currentTeacher){
+	    for(DaysObserver obs : listObserver)
+	      obs.update(teachers,currentTeacher);
+	}
 	public void removeObserver() {
 	    listObserver = new ArrayList<DaysObserver>();
-	} 
+	}
 }

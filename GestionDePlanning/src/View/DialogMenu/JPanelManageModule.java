@@ -22,6 +22,7 @@ import Controler.DaysAbstractControler;
 import Model.CalendarObject.Day;
 import Model.CalendarObject.Formation;
 import Model.CalendarObject.Module;
+import Model.CalendarObject.Teacher;
 import Obs.DaysObserver;
 import View.Elements.JButtonColors;
 
@@ -134,12 +135,6 @@ private JButton delete = new JButton("Supprimer");
 	}
     public void valueChanged(ListSelectionEvent evt) {
     	if (!evt.getValueIsAdjusting()){
-    		/*for(int i = 0; i < this.formations.size(); i++){
-    			if(this.formations.get(i).getTitle() == listFormation.getSelectedValue()){
-    				titleTextField.setText(this.formations.get(i).getTitle());
-    				nbHoursTextField.setText(Double.toString(this.formations.get(i).getHoursSeances()));
-    			}
-    		}*/
     		
     		if(listModule.getSelectedValue() != null){
     			daysControler.selectModule((String) listModule.getSelectedValue());
@@ -175,6 +170,11 @@ private JButton delete = new JButton("Supprimer");
 	@Override
 	public void update(ArrayList<Day> days, int firstDay, int lastDay,
 			int numWeeks, boolean after, boolean next, int month, int year, int numweeks){
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void update(ArrayList<Teacher> teachers, Teacher currentTeacher) {
 		// TODO Auto-generated method stub
 		
 	}

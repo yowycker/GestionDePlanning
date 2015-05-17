@@ -6,7 +6,9 @@ import Model.CalendarObject.Calendar;
 import Model.CalendarObject.Day;
 import Model.CalendarObject.Formation;
 import Model.CalendarObject.Module;
+import Model.CalendarObject.Seance;
 import Model.CalendarObject.Teacher;
+import Serialized.SerializeObjects;
 
 public class DaysModel extends DaysAbstractModel{
 	
@@ -147,32 +149,38 @@ System.out.println("Date : " + calendar.getDays().get(0).getDate());
 	// ------------- Gestion de la formation courante  --------------- //
 	// --------------------------------------------------------------- //
 
-	public void addTeacher(Teacher newTeacher) {
-		teachers.add(newTeacher);
+	public void addTeacher(String name, String firstname, String abbreviation, String email, String phone) {
+		teachers.add(new Teacher(email,phone, abbreviation,name,firstname));
 	}
-	public void modifyTeacher(String email, Teacher newTeacher) {
-		this.getTeacher(email).setAbbreviation(newTeacher.getAbbreviation());
-		this.getTeacher(email).setEmail(newTeacher.getEmail());
-		this.getTeacher(email).setFirstname(newTeacher.getFirstname());
-		this.getTeacher(email).setName(newTeacher.getName());
-		this.getTeacher(email).setPhone(newTeacher.getPhone());
+	public void modifyTeacher(String oldEmail, String name, String firstname, String abbreviation, String email, String phone) {
+		this.getTeacher(email).setAbbreviation(abbreviation);
+		this.getTeacher(email).setEmail(email);
+		this.getTeacher(email).setFirstname(firstname);
+		this.getTeacher(email).setName(name);
+		this.getTeacher(email).setPhone(phone);
 	}
 	public void removeTeacher(String email){
 		teachers.remove(this.getTeacher(email));
 	}
 	public Teacher getTeacher(String email) {
-		int posTeacher = -1;
-		for(Teacher t : teachers){
-			if(t.getEmail().equals(email))
-				posTeacher = teachers.indexOf(t);
-		}
-		if (posTeacher == -1)
-			return null;
-		else
-			return teachers.get(posTeacher);
+		Teacher te = null;
+		if(teachers.size() != 0)
+			for(Teacher t : teachers){
+				System.out.println("test Boucle : "+t.getName());
+				if(t.getEmail() == email)
+					{te = t;System.out.println("Equals !!");}
+			}
+		return te;
 	}
-	public ArrayList<Teacher> getTeachers() {
-		return teachers;
+	public void initTeacher() {
+		if(teachers.size() != 0)
+			notifyObserver(this.teachers, teachers.get(0));
+	}
+	public void selectTeacher(String email) {
+		System.out.println( "test 1 : " + email);
+		System.out.println( "test 2 : " + this.teachers.size());
+		System.out.println( "test 3 : " + getTeacher(email).getEmail());
+			notifyObserver(this.teachers, (Teacher)this.getTeacher(email));
 	}
 	
 	// ------------- Gestion de la formation courante  --------------- //
@@ -232,6 +240,30 @@ System.out.println("Date : " + calendar.getDays().get(0).getDate());
 	}
 	public void deleteModule(String nameModule){
 		this.calendar.getCurrentFormation().removeModule(calendar.getCurrentFormation().getModule(nameModule));
+	}
+
+	
+	// -------------- Fonctions de Gestion des Séances --------------- //
+	// --------------------------------------------------------------- //
+	
+	public void removeSeance(Module module, Day day, int positon){
+		this.getDay(day).getFormationSeances(this.calendar.getCurrentFormation().toString()).setSeance(positon, null);
+		this.calendar.inNumSeances(null, module);
+		this.calendar.resetSeance(module);
+	}
+	public void addSeances(Module module, Teacher teacher, Day day, int positon){
+		this.getDay(day).getFormationSeances(this.calendar.getCurrentFormation().toString()).setSeance(positon, new Seance(module,teacher));
+		this.calendar.inNumSeances(new Seance(module,teacher), module);
+		this.calendar.resetSeance(module);
+	}
+	
+	
+	
+	// -------------- Fonctions de serialisation --------------- //
+	// --------------------------------------------------------- //
+	
+	public void serializeCalendar(String file){
+		SerializeObjects.serialiseObject(file, this.calendar);
 	}
 	
 }

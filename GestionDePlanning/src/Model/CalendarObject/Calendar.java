@@ -1,5 +1,6 @@
 package Model.CalendarObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import Exceptions.FunctionException;
@@ -11,7 +12,9 @@ import Exceptions.dateException;
  * @param formations //Liste des formations
  * @param listDays //Liste des jours
  */
-public class Calendar{
+public class Calendar implements Serializable{
+	
+	static private final long serialVersionUID = 7L;
 	
 	private String currentFormation;
 
@@ -152,13 +155,13 @@ public class Calendar{
 	 * @return
 	 */
 	public Formation getCurrentFormation(){
-		Formation cformation = null;
+		int pos = -1;
 		for(Formation f : formations){
 			if(f.getTitle().equals(currentFormation)){
-				cformation=f;
+				pos = formations.indexOf(f);
 			}
 		}
-		return cformation;
+		return formations.get(pos);
 	}
 	
 	/**
@@ -230,35 +233,30 @@ public class Calendar{
 	// ------------------------------------------------------------------ //
 	
 	/**
-	 * Méthode permettant de fixer un cours à la matinée du jour en cours
-	 * @param day
+	 * Méthode permettant de recalculer tous les rang des seances de ce modules
 	 * @param module
 	 */
-	public void setMorningSeance(Day day, Module module, Teacher teacher){
+	public void resetSeance(Module module){
+		int i = 0;
 		for(Day d : listDays){
-// modifier le rend des seances du meme module : matin et soir
-			if(d.equals(day)){
-				getCurrentFormation().addSeance(module.getName());
-				d.setMorning(getCurrentFormation(), module.getName(), teacher);
-// modifier le rend de la seance
-			}
+				if(d.getMorning(getCurrentFormation()) != null && d.getMorning(getCurrentFormation()).getModule().equals(module)){
+					d.getMorning(getCurrentFormation()).setNumSeance(i++);
+				}
+				if(d.getAfternoon(getCurrentFormation()) != null && d.getAfternoon(getCurrentFormation()).getModule().equals(module)){
+					d.getAfternoon(getCurrentFormation()).setNumSeance(i++);
+				}
 		}
 	}
-	
+
 	/**
-	 * Méthode permettant de fixer un cours à l'après-midi du jour en cours
-	 * @param day
+	 * Méthode permettant d'incrementer ou de decrementer suivant le cas le numbre de seance programmer pour le module
 	 * @param module
 	 */
-	public void setAfternoonSeance(Day day, Module module, Teacher teacher){
-		for(Day d : listDays){
-// modifier le rend des seances du meme module : matin et soir
-			if(d.equals(day)){
-				getCurrentFormation().addSeance(module.getName());
-				d.setAfternoon(getCurrentFormation(), module.getName(), teacher);
-// modifier le rend de la seance
-			}
-		}
+	public void inNumSeances(Seance seance, Module module){
+		if(seance == null)
+			getCurrentFormation().removeSeance(module.getName());
+		else
+			getCurrentFormation().addSeance(module.getName());
 	}
 	
 	// ---------------- Fonctions de Calcule des Jours ------------------ //

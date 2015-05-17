@@ -23,6 +23,7 @@ import Model.CalendarObject.Calendar;
 import Model.CalendarObject.Day;
 import Model.CalendarObject.Formation;
 import Model.CalendarObject.Module;
+import Model.CalendarObject.Teacher;
 import Obs.DaysObserver;
 import View.Elements.JButtonDay;
 import View.Elements.SLabel;
@@ -106,6 +107,7 @@ private JButton next = new JButton(">>");
 		 next.addActionListener(this);
 	 }
 	 public void initHolidays(){
+	     daysControler.initModules();
 	     daysControler.initDaysMonth();
 	 }
 	 
@@ -135,7 +137,6 @@ private JButton next = new JButton(">>");
 		for(int j = 0; j < lastDay; j++){
 			if((j + 1) >= firstDay && (j + 1) <= lastDay){
 				JButtonDay btn = new JButtonDay("" + (j + 1), this.daysControler, days.get(j + 1 - firstDay));
-				btn.addActionListener(this);
 				btn.setToolTipText( "cliquez ici pour changer le jour en non-ouvré");
 				if(days.get(j + 1 - firstDay).getHoliday()){
 					btn.setToolTipText( "cliquez ici pour changer le jour en ouvré");
@@ -165,5 +166,10 @@ private JButton next = new JButton(">>");
 	public void update(Formation currentFormation, boolean init, ArrayList<Day> days, int numDays, boolean after, boolean next) {
 	}
 	public void update(Formation currentFormation, Module currentModule, boolean isInit) {
+	}
+	@Override
+	public void update(ArrayList<Teacher> teachers, Teacher currentTeacher) {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -1,10 +1,12 @@
 package Model.CalendarObject;
 
+import java.io.Serializable;
+
 /**
  * Classe défissant les séances du jour
  * @param formation, @param seances
  */
-public class DayFormationSeances {
+public class DayFormationSeances implements Serializable{
 	
 	private String formation;
 	//Nb séance --> 2 par jour

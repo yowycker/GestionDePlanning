@@ -12,6 +12,7 @@ import Model.CalendarObject.Calendar;
 import Model.CalendarObject.Day;
 import Model.CalendarObject.Formation;
 import Model.CalendarObject.Module;
+import Model.CalendarObject.Seance;
 import Model.CalendarObject.Teacher;
 
 public class DaysControler extends DaysAbstractControler {
@@ -82,20 +83,31 @@ System.out.println("Index : " + index);
 		    Teacher t1 = new Teacher("champ@u-pec.fr","0652315824", "CH", "Champroux", "");
 		    Teacher t2 = new Teacher("cham@u-pec.fr","0652315524", "CHo", "Champroux", "uy");
 		    
-		    f.addModule(m1);
-		    f.addModule(m2);
-		    
-		    c.setMorningSeance(c.getDays().get(2), m2, t1);
-		    c.setAfternoonSeance(c.getDays().get(3), m1, t1);
-		    c.setMorningSeance(c.getDays().get(4), m1, t2);
-		    c.setMorningSeance(c.getDays().get(8), m1, t2);
-		    c.setMorningSeance(c.getDays().get(9), m2, t1);
-		    
-		    c.setMorningSeance(c.getDays().get(13), m1, t1);
-		    c.setAfternoonSeance(c.getDays().get(13), m1, t2);
-		    c.setMorningSeance(c.getDays().get(15), m2, t1);
-		    c.setAfternoonSeance(c.getDays().get(24), m1, t2);
-		    c.setAfternoonSeance(c.getDays().get(25), m1, t1);
+		    c.getCurrentFormation().addModule(m1);
+		    c.getCurrentFormation().addModule(m2);
+
+		    c.getDays().get(2).getFormationSeances(c.getCurrentFormation().getTitle()).setSeance(0, new Seance(c.getCurrentFormation().getModule(m2.getName()),t1));
+			c.inNumSeances(new Seance(m2,t1), m2);
+		    c.getDays().get(3).getFormationSeances(c.getCurrentFormation().getTitle()).setSeance(1, new Seance(c.getCurrentFormation().getModule(m1.getName()),t1));
+			c.inNumSeances(new Seance(m1,t1), m1);
+		    c.getDays().get(4).getFormationSeances(c.getCurrentFormation().getTitle()).setSeance(0, new Seance(c.getCurrentFormation().getModule(m1.getName()),t2));
+			c.inNumSeances(new Seance(m1,t2), m1);
+		    c.getDays().get(8).getFormationSeances(c.getCurrentFormation().getTitle()).setSeance(0, new Seance(c.getCurrentFormation().getModule(m1.getName()),t2));
+			c.inNumSeances(new Seance(m1,t2), m1);
+		    c.getDays().get(9).getFormationSeances(c.getCurrentFormation().getTitle()).setSeance(0, new Seance(c.getCurrentFormation().getModule(m2.getName()),t1));
+			c.inNumSeances(new Seance(m2,t1), m2);
+		    c.getDays().get(13).getFormationSeances(c.getCurrentFormation().getTitle()).setSeance(0, new Seance(c.getCurrentFormation().getModule(m1.getName()),t1));
+			c.inNumSeances(new Seance(m1,t1), m1);
+		    c.getDays().get(13).getFormationSeances(c.getCurrentFormation().getTitle()).setSeance(0, new Seance(c.getCurrentFormation().getModule(m1.getName()),t2));
+			c.inNumSeances(new Seance(m1,t2), m1);
+		    c.getDays().get(15).getFormationSeances(c.getCurrentFormation().getTitle()).setSeance(0, new Seance(c.getCurrentFormation().getModule(m2.getName()),t1));
+			c.inNumSeances(new Seance(m2,t1), m2);
+		    c.getDays().get(24).getFormationSeances(c.getCurrentFormation().getTitle()).setSeance(0, new Seance(c.getCurrentFormation().getModule(m1.getName()),t2));
+			c.inNumSeances(new Seance(m1,t2), m1);
+		    c.getDays().get(25).getFormationSeances(c.getCurrentFormation().getTitle()).setSeance(0, new Seance(c.getCurrentFormation().getModule(m1.getName()),t1));
+			c.inNumSeances(new Seance(m1,t1), m1);
+			c.resetSeance(c.getCurrentFormation().getModule(m1.getName()));
+			c.resetSeance(c.getCurrentFormation().getModule(m2.getName()));
 
 System.out.println("                                 NB H Formation : " + f.getHoursFormation());
 		    
@@ -136,7 +148,7 @@ System.out.println("                                 NB H Formation : " + f.getH
 		getDaysMonth();
 	}
 	
-	private void getDaysMonth(){
+	public void getDaysMonth(){
 		int numMonth = (daysModel.getIMonth() + indexMonthMenu) % 12;
 		if(numMonth == 0)
 			numMonth = 12;
@@ -165,6 +177,7 @@ System.out.println("                                 NB H Formation : " + f.getH
 			j++;
 		}
 		daysModel.getMonth(numMonth, year, firstDayMonth, lastDayMonth, posFirstDayMonth, numweeks);
+		daysModel.getWeek(index);
 	}
 // ------- Gestion de l'affichage par mois ------- //
 	
@@ -234,7 +247,39 @@ System.out.println("                                 NB H Formation : " + f.getH
 		}
 		return formationExist;
 	}
+	
 
+	// -------------- Gestion du menu Formateurs  --------------- //
+	// ---------------------------------------------------------- //
+	
+	public void addTeacher(String name, String firstname, String abbreviation, String email, String phone) {
+		daysModel.addTeacher(name, firstname, abbreviation, email, phone);
+		daysModel.selectTeacher(email);
+	}
+	public void modifyTeacher(String oldEmail, String name, String firstname, String abbreviation, String email, String phone) {
+		daysModel.modifyTeacher(oldEmail,name, firstname, abbreviation, email, phone);
+		daysModel.selectTeacher(email);
+	}
+	public void removeTeacher(String email){
+		daysModel.removeTeacher(email);
+		daysModel.initTeacher();
+	}
+	public void initTeacher(){
+		daysModel.initTeacher();
+	}
+	public void selectTeacher(String email){
+		daysModel.selectTeacher(email);
+	}
+
+	
+	
+	// Fonction de controle des valeurs envoyées :
+		// - que des valeurs uniques - > verifier que le formateur exit (suivant l'action)
+		// - gere action si pas de formateur existant (modifier/supprimer)
+		// - suppression interdite si deja assigné utilisé dans une seance
+	
+	
+	
 	// -------------- Gestion du menu Modules  --------------- //
 	// ------------------------------------------------------- //
 	
@@ -290,5 +335,12 @@ System.out.println("                                 NB H Formation : " + f.getH
 		}
 		return listYears;
 	}
-
+	
+	
+	// -------------- Fonctions de serialisation --------------- //
+	// --------------------------------------------------------- //
+	
+	public void serializeCalendar(){
+		daysModel.serializeCalendar(daysModel.getIYear() + " " + (daysModel.getIYear() + 1) + "Calendar");
+	}
 }

@@ -1,8 +1,9 @@
 package Model.CalendarObject;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Day {
+public class Day implements Serializable{
 // A supprimer
 private Seance[] dayPlanning = new Seance[2];
 
@@ -95,13 +96,13 @@ private Seance[] dayPlanning = new Seance[2];
 	 * @return
 	 */
 	public DayFormationSeances getFormationSeances(String formation){
-		DayFormationSeances fSeances = null;
+		DayFormationSeances dfSeance = null;
 		for(DayFormationSeances s : formationsSeances){
 			if(s.getFormation().equals(formation)){
-				fSeances=s;
+				dfSeance = s;
 			}
 		}
-		return fSeances;
+		return dfSeance;
 	}
 	
 	/**
@@ -109,7 +110,6 @@ private Seance[] dayPlanning = new Seance[2];
 	 * @param formation
 	 */
 	public void addFormationSeances(String formation){
-		if(this.getFormationSeances(formation) == null)
 			formationsSeances.add(new DayFormationSeances(formation));
 	}
 	

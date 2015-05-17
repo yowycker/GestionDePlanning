@@ -14,6 +14,7 @@ import Controler.DaysAbstractControler;
 import Model.CalendarObject.Day;
 import Model.CalendarObject.Formation;
 import Model.CalendarObject.Module;
+import Model.CalendarObject.Teacher;
 import Obs.DaysObserver;
 import View.Elements.DayPanel;
 import View.Elements.SLabel;
@@ -204,6 +205,11 @@ System.out.println(days.get(i).getName() + " " + days.get(i).getDate());
 	@Override
 	public void update(ArrayList<Day> days, int firstDay, int lastDay,
 			int posFirstDay, boolean after, boolean next, int month, int year, int numweeks){
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void update(ArrayList<Teacher> teachers, Teacher currentTeacher) {
 		// TODO Auto-generated method stub
 		
 	}

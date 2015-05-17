@@ -1,13 +1,14 @@
 package Model.CalendarObject;
 
 import java.awt.Color;
+import java.io.Serializable;
 
 /**
  * Classe permettant de définir un module
  * @param maxSeances, @param name, @param abbreviation
  * @param color, @param teacher, @param iSeance
  */
-public class Module {
+public class Module implements Serializable{
 	
 	private int iSeance = 0;
 	private int maxSeances; // peut-être modifié ?

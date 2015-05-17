@@ -110,7 +110,17 @@ public abstract class DaysAbstractControler {
 	  
 	  
 	  public abstract void initDaysMonth();
+	  public abstract void getDaysMonth();
 	  public abstract void afterDaysMonth();
 	  public abstract void nextDaysMonth();
 	  public abstract void modifyHoliday(boolean holiday, Day day);
+	  
+	  public abstract void addTeacher(String name, String firstname, String abbreviation, String email, String phone);
+	  public abstract void modifyTeacher(String oldEmail, String name, String firstname, String abbreviation, String email, String phone);
+	  public abstract void removeTeacher(String email);
+	  public abstract void initTeacher();
+	  public abstract void selectTeacher(String email);
+	  
+	  
+	  public abstract void serializeCalendar();
 }
