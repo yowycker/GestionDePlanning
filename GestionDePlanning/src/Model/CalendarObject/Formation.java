@@ -113,7 +113,7 @@ public class Formation implements Serializable{
 	public Module getModule(String nameModule){
 		Module module = null;
 		for(Module m : modules){
-			if(m.getName() == nameModule)
+			if(m.getName().equals(nameModule))
 				module = m;
 		}
 		return module;

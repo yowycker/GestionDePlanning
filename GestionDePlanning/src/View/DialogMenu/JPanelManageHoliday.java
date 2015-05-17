@@ -107,7 +107,8 @@ private JButton next = new JButton(">>");
 		 next.addActionListener(this);
 	 }
 	 public void initHolidays(){
-	     daysControler.initModules();
+		 daysControler.initTeacher(true, true);
+	     daysControler.initModules(true);
 	     daysControler.initDaysMonth();
 	 }
 	 
@@ -165,10 +166,10 @@ private JButton next = new JButton(">>");
 	}
 	public void update(Formation currentFormation, boolean init, ArrayList<Day> days, int numDays, boolean after, boolean next) {
 	}
-	public void update(Formation currentFormation, Module currentModule, boolean isInit) {
+	public void update(Formation currentFormation, Module currentModule, boolean isInit, boolean initSeances) {
 	}
 	@Override
-	public void update(ArrayList<Teacher> teachers, Teacher currentTeacher) {
+	public void update(ArrayList<Teacher> teachers, Teacher currentTeacher, boolean isInit, boolean inCalendar, boolean initSeances) {
 		// TODO Auto-generated method stub
 		
 	}

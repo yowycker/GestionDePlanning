@@ -152,7 +152,7 @@ private JButton delete = new JButton("Supprimer");
 	public void update(Formation currentFormation, boolean init, ArrayList<Day> days, int numDays, boolean after, boolean next) {
 	}
 	@Override
-	public void update(Formation currentFormation, Module currentModule, boolean isInit) {
+	public void update(Formation currentFormation, Module currentModule, boolean isInit, boolean initSeances) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -163,7 +163,7 @@ private JButton delete = new JButton("Supprimer");
 		
 	}
 	@Override
-	public void update(ArrayList<Teacher> teachers, Teacher currentTeacher) {
+	public void update(ArrayList<Teacher> teachers, Teacher currentTeacher, boolean isInit, boolean inCalendar, boolean initSeances) {
 		// TODO Auto-generated method stub
 		
 	}

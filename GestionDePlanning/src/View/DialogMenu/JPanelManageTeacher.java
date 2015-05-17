@@ -147,7 +147,7 @@ private JButton delete = new JButton("Supprimer");
 	     this.add(bottomPanel, BorderLayout.SOUTH);
 	 }
 	 public void initListTeacher(){
-	     daysControler.initTeacher();
+	     daysControler.initTeacher(false,true);
 	 }
 	 
 
@@ -164,9 +164,8 @@ private JButton delete = new JButton("Supprimer");
 	}
     public void valueChanged(ListSelectionEvent evt) {
     	if (!evt.getValueIsAdjusting()){
-    		System.out.println(evt.getSource().toString());
-    		if(evt.getSource() == listTeacher)
-    			daysControler.selectTeacher((String) listTeacher.getSelectedValue());
+    		if(listTeacher.getSelectedValue() != null)
+    			daysControler.selectTeacher((String) listTeacher.getSelectedValue(), false, true);
         }
     }
 
@@ -174,23 +173,25 @@ private JButton delete = new JButton("Supprimer");
 	}
 	public void update(Formation currentFormation, boolean init, ArrayList<Day> days, int numDays, boolean after, boolean next) {
 	}
-	public void update(Formation currentFormation, Module currentModule, boolean isInit) {
+	public void update(Formation currentFormation, Module currentModule, boolean isInit, boolean initSeances) {
 	}
 	public void update(ArrayList<Day> days, int firstDay, int lastDay,int posFirstDay, boolean after, boolean next, int month, int year, int numweeks){
 	}
-	public void update(ArrayList<Teacher> teachers, Teacher currentTeacher) {
+	public void update(ArrayList<Teacher> teachers, Teacher currentTeacher, boolean isInit, boolean inCalendar, boolean initSeances) {
 		this.currentTeacher = currentTeacher;
 		dlm.removeAllElements();
 		for(Teacher t : teachers){
-			System.out.println("test boucle panel : "+t.getEmail());
 			dlm.addElement((t.getEmail()));
 		}
-		System.out.println("test boucle panel elements : "+dlm.getSize());
-		nameTextField.setText(currentTeacher.getName());
-		firstnameTextField.setText(currentTeacher.getFirstname());
-		abbTextField.setText(currentTeacher.getAbbreviation());
-		emailTextField.setText(currentTeacher.getEmail());
-		phoneTextField.setText(currentTeacher.getPhone());
+		if(isInit)
+			listTeacher.setSelectedValue(currentTeacher.getEmail(), true);
+		else{
+			nameTextField.setText(currentTeacher.getName());
+			firstnameTextField.setText(currentTeacher.getFirstname());
+			abbTextField.setText(currentTeacher.getAbbreviation());
+			emailTextField.setText(currentTeacher.getEmail());
+			phoneTextField.setText(currentTeacher.getPhone());
+		}
 		this.updateUI();
 	}
 }

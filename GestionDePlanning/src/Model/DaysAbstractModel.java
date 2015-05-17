@@ -60,8 +60,8 @@ public abstract class DaysAbstractModel implements DaysObservable{
 	public abstract void modifyTeacher(String oldEmail, String name, String firstname, String abbreviation, String email, String phone);
 	public abstract void removeTeacher(String email);
 	public abstract Teacher getTeacher(String email);
-	public abstract void initTeacher();
-	public abstract void selectTeacher(String email);
+	public abstract void initTeacher(boolean inCalendar, boolean initSeances);
+	public abstract void selectTeacher(String email,boolean inCalendar, boolean initSeances);
 	
 // Affichage de menu de formations
 	public abstract void initFormations();
@@ -70,12 +70,17 @@ public abstract class DaysAbstractModel implements DaysObservable{
 	public abstract void modifyFormation(String formation, Formation newformation);
 	public abstract void deleteFormation(Formation formation);
 	public abstract ArrayList<Formation> getFormations();
+	
 // Affichage de menu des modules 
-	public abstract void initModules();
-	public abstract void initModules(String nameModule);
+	public abstract void initModules(boolean initSeances);
+	public abstract void initModules(String nameModule, boolean initSeances);
 	public abstract void addModule(Module newModule);
 	public abstract void modifyModule(String nameModule, Module newModule);
 	public abstract void deleteModule(String nameModule);
+	
+// controle Seance
+	public abstract void removeSeance(Module module, Day day, int positon);
+	public abstract void addSeances(Module module, Teacher teacher, Day day, int positon);
 	
 // serialiser
 	public abstract void serializeCalendar(String file);
@@ -94,17 +99,17 @@ public abstract class DaysAbstractModel implements DaysObservable{
 	    for(DaysObserver obs : listObserver)
 	      obs.update(formations, currentFormation);
 	}
-	public void notifyObserver(Formation currentFormation, Module currentModule, boolean isInit){
+	public void notifyObserver(Formation currentFormation, Module currentModule, boolean isInit, boolean initSeances){
 	    for(DaysObserver obs : listObserver)
-	      obs.update(currentFormation,currentModule, isInit);
+	      obs.update(currentFormation,currentModule, isInit, initSeances);
 	}
 	public void notifyObserver(ArrayList<Day> days, int firstDay, int lastDay, int posFirstDay, boolean after, boolean next, int month, int year, int numweeks){
 	    for(DaysObserver obs : listObserver)
 	      obs.update(days,firstDay, lastDay,posFirstDay,after,next, month,  year, numweeks);
 	}
-	public void notifyObserver(ArrayList<Teacher> teachers, Teacher currentTeacher){
+	public void notifyObserver(ArrayList<Teacher> teachers, Teacher currentTeacher, boolean isInit, boolean inCalendar, boolean initSeances){
 	    for(DaysObserver obs : listObserver)
-	      obs.update(teachers,currentTeacher);
+	      obs.update(teachers,currentTeacher,isInit, inCalendar,initSeances);
 	}
 	public void removeObserver() {
 	    listObserver = new ArrayList<DaysObserver>();

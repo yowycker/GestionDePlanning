@@ -156,11 +156,11 @@ System.out.println("Date : " + calendar.getDays().get(0).getDate());
 		teachers.add(new Teacher(email,phone, abbreviation,name,firstname));
 	}
 	public void modifyTeacher(String oldEmail, String name, String firstname, String abbreviation, String email, String phone) {
-		this.getTeacher(email).setAbbreviation(abbreviation);
-		this.getTeacher(email).setEmail(email);
-		this.getTeacher(email).setFirstname(firstname);
-		this.getTeacher(email).setName(name);
-		this.getTeacher(email).setPhone(phone);
+		this.getTeacher(oldEmail).setAbbreviation(abbreviation);
+		this.getTeacher(oldEmail).setFirstname(firstname);
+		this.getTeacher(oldEmail).setName(name);
+		this.getTeacher(oldEmail).setPhone(phone);
+		this.getTeacher(oldEmail).setEmail(email);
 	}
 	public void removeTeacher(String email){
 		teachers.remove(this.getTeacher(email));
@@ -169,21 +169,17 @@ System.out.println("Date : " + calendar.getDays().get(0).getDate());
 		Teacher te = null;
 		if(teachers.size() != 0)
 			for(Teacher t : teachers){
-				System.out.println("test Boucle : "+t.getName());
 				if(t.getEmail() == email)
-					{te = t;System.out.println("Equals !!");}
+					te = t;
 			}
 		return te;
 	}
-	public void initTeacher() {
+	public void initTeacher(boolean inCalendar, boolean initSeances) {
 		if(teachers.size() != 0)
-			notifyObserver(this.teachers, teachers.get(0));
+			notifyObserver(this.teachers, teachers.get(0),true,inCalendar, initSeances);
 	}
-	public void selectTeacher(String email) {
-		System.out.println( "test 1 : " + email);
-		System.out.println( "test 2 : " + this.teachers.size());
-		System.out.println( "test 3 : " + getTeacher(email).getEmail());
-			notifyObserver(this.teachers, (Teacher)this.getTeacher(email));
+	public void selectTeacher(String email, boolean inCalendar, boolean initSeances) {
+			notifyObserver(this.teachers, (Teacher)this.getTeacher(email),false, inCalendar, initSeances);
 	}
 	
 	// ------------- Gestion de la formation courante  --------------- //
@@ -226,20 +222,22 @@ System.out.println("Date : " + calendar.getDays().get(0).getDate());
 	// -------------- Fonctions de Gestion des Modules --------------- //
 	// --------------------------------------------------------------- //
 	
-	public void initModules(){
-		notifyObserver(calendar.getCurrentFormation(), calendar.getCurrentFormation().getModules().get(0),true);
+	public void initModules(boolean initSeances){
+		notifyObserver(calendar.getCurrentFormation(), calendar.getCurrentFormation().getModules().get(0),true,initSeances);
+    	notifyObserver(calendar.getCurrentFormation() ,init, days, getNumDaysWeek(),after,next);
 	}
-	public void initModules(String nameModule){
-		notifyObserver(calendar.getCurrentFormation(), calendar.getCurrentFormation().getModule(nameModule),false);
+	public void initModules(String nameModule, boolean initSeances){
+		notifyObserver(calendar.getCurrentFormation(), calendar.getCurrentFormation().getModule(nameModule),false, initSeances);
+    	notifyObserver(calendar.getCurrentFormation() ,init, days, getNumDaysWeek(),after,next);
 	}
 	public void addModule(Module newModule){
 		this.calendar.getCurrentFormation().addModule(newModule);
 	}
 	public void modifyModule(String nameModule, Module newModule){
 		this.calendar.getCurrentFormation().getModule(nameModule).setAbbreviation(newModule.getAbbreviation());
-		this.calendar.getCurrentFormation().getModule(nameModule).setName(newModule.getName());
 		this.calendar.getCurrentFormation().getModule(nameModule).setColor(newModule.getColor());
 		this.calendar.getCurrentFormation().getModule(nameModule).setMaxSeances(newModule.getMaxSeances());
+		this.calendar.getCurrentFormation().getModule(nameModule).setName(newModule.getName());
 	}
 	public void deleteModule(String nameModule){
 		this.calendar.getCurrentFormation().removeModule(calendar.getCurrentFormation().getModule(nameModule));
@@ -250,12 +248,12 @@ System.out.println("Date : " + calendar.getDays().get(0).getDate());
 	// --------------------------------------------------------------- //
 	
 	public void removeSeance(Module module, Day day, int positon){
-		this.getDay(day).getFormationSeances(this.calendar.getCurrentFormation().toString()).setSeance(positon, null);
+		this.getDay(day).getFormationSeances(this.calendar.getCurrentFormation().getTitle()).setSeance(positon, null);
 		this.calendar.inNumSeances(null, module);
 		this.calendar.resetSeance(module);
 	}
-	public void addSeances(Module module, Teacher teacher, Day day, int positon){
-		this.getDay(day).getFormationSeances(this.calendar.getCurrentFormation().toString()).setSeance(positon, new Seance(module,teacher));
+	public void addSeances(Module module, Teacher teacher, Day day, int positon){		
+		this.getDay(day).getFormationSeances(this.calendar.getCurrentFormation().getTitle()).setSeance(positon, new Seance(this.calendar.getCurrentFormation().getModule(module.getName()),teacher));
 		this.calendar.inNumSeances(new Seance(module,teacher), module);
 		this.calendar.resetSeance(module);
 	}

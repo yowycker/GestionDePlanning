@@ -35,6 +35,9 @@ public class JPanelManageSeance extends JPanelManage implements DaysObserver, Ac
 
 	private Formation currentFormation;
 	private Module currentModule;
+	private Teacher currentTeacher;
+	private boolean initModule;
+	private boolean initTeacher;
 	
 	private DefaultListModel dlm = new DefaultListModel();
 	private JList listModule = new JList(dlm);
@@ -235,10 +238,13 @@ public class JPanelManageSeance extends JPanelManage implements DaysObserver, Ac
 		     after2.addActionListener(this);
 			 next2.addActionListener(this);
 			 
+			 teacherCombo.addActionListener(this);
+			 
 			 listModule.addListSelectionListener(this);
 		 }
 		 public void initSeances(){
-		     daysControler.initModules();
+		     daysControler.initTeacher(true,true);
+		     daysControler.initModules(true);
 		     daysControler.initDaysMonth();
 		 }
 		 
@@ -246,15 +252,36 @@ public class JPanelManageSeance extends JPanelManage implements DaysObserver, Ac
 		public void actionPerformed(ActionEvent evt) {
 			if(evt.getSource() == after || evt.getSource() == after2){
 				daysControler.afterDaysMonth();
-				//daysControler.selectModule((String) listModule.getSelectedValue());
 			}
 			if(evt.getSource() == next || evt.getSource() == next2){
 				daysControler.nextDaysMonth();
-				//daysControler.selectModule((String) listModule.getSelectedValue());
 			}
+			if(evt.getSource() == teacherCombo){
+				if(teacherCombo.getSelectedItem() != null){
+	    			if(!initTeacher){
+	    				daysControler.selectTeacher((String) teacherCombo.getSelectedItem(), true, false);
+	    				daysControler.initDaysMonth();
+	    			}
+				}
+			}
+		}
+		public void valueChanged(ListSelectionEvent evt) {
+	    	if (!evt.getValueIsAdjusting()){
+	    		if(listModule.getSelectedValue() != null){
+	    			if(!initModule){
+	   		     		daysControler.selectModule((String) listModule.getSelectedValue(),false);
+	   		     		daysControler.getDaysMonth();
+	    			}
+	    		}
+	    	}
+			
 		}
 
 		public void update(ArrayList<Day> days, int firstDay, int lastDay, int posFirstDayWeek, boolean after, boolean next, int month, int year, int numweeks){
+
+			this.initModule = false;
+			this.initTeacher = false;
+			
 			this.after.setEnabled(after);
 			this.next.setEnabled(next);
 			this.after2.setEnabled(after);
@@ -277,9 +304,11 @@ public class JPanelManageSeance extends JPanelManage implements DaysObserver, Ac
 			}
 			for(int j = 0; j < lastDay; j++){
 				if((j + 1) >= firstDay && (j + 1) <= lastDay){
-					System.out.println((String) listModule.getSelectedValue());
-					JButtonSeances btn = new JButtonSeances("" + (j + 1), this.daysControler,currentFormation,currentModule.getName(), days.get(j + 1 - firstDay), 0);
-					JButtonSeances btn2 = new JButtonSeances("" + (j + 1), this.daysControler,currentFormation,currentModule.getName(), days.get(j + 1 - firstDay), 1);
+					System.out.println(currentTeacher);
+					System.out.println(currentTeacher.getEmail());
+					System.out.println((String) teacherCombo.getSelectedItem());
+					JButtonSeances btn = new JButtonSeances("" + (j + 1), this.daysControler,currentFormation,currentModule.getName(),currentTeacher.getEmail(), days.get(j + 1 - firstDay), 0);
+					JButtonSeances btn2 = new JButtonSeances("" + (j + 1), this.daysControler,currentFormation,currentModule.getName(),currentTeacher.getEmail() , days.get(j + 1 - firstDay), 1);
 					
 					btn.setToolTipText( "cliquez ici pour programmée la séance du matin");
 					if(days.get(j + 1 - firstDay).getHoliday()){
@@ -326,9 +355,10 @@ public class JPanelManageSeance extends JPanelManage implements DaysObserver, Ac
 		
 		public void update(Formation currentFormation, boolean init, ArrayList<Day> days, int numDays, boolean after, boolean next) {
 		}
-		public void update(Formation currentFormation, Module currentModule, boolean isInit) {
+		public void update(Formation currentFormation, Module currentModule, boolean isInit, boolean initSeances) {
 			this.currentFormation = currentFormation;
 			this.currentModule = currentModule;
+			this.initModule = initSeances;
 			
 			this.setTitle(titleLabel + " " + currentFormation.getTitle());
 			
@@ -346,21 +376,21 @@ public class JPanelManageSeance extends JPanelManage implements DaysObserver, Ac
 			}
 			
 			
+			
 			this.updateUI();
 		}
-		@Override
-		public void valueChanged(ListSelectionEvent evt) {
-	    	if (!evt.getValueIsAdjusting()){
-	    		if(listModule.getSelectedValue() != null){
-	   		     	daysControler.getDaysMonth();
-	    			daysControler.selectModule((String) listModule.getSelectedValue());
-	    		}
-	    	}
-			
-		}
-		@Override
-		public void update(ArrayList<Teacher> teachers, Teacher currentTeacher) {
-			// TODO Auto-generated method stub
-			
+		public void update(ArrayList<Teacher> teachers, Teacher currentTeacher, boolean isInit, boolean inCalendar, boolean initSeances) {
+			if(inCalendar){
+				this.currentTeacher = currentTeacher;
+				this.initTeacher = initSeances;
+				teacherCombo.removeAllItems();
+				for(Teacher t : teachers){
+					teacherCombo.addItem((t.getEmail()));
+				}
+				if(isInit)
+					teacherCombo.setSelectedItem(currentTeacher.getEmail());				
+				
+				this.updateUI();
+			}
 		}
 	}

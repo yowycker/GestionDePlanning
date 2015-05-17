@@ -155,13 +155,13 @@ public class Calendar implements Serializable{
 	 * @return
 	 */
 	public Formation getCurrentFormation(){
-		int pos = -1;
+		Formation fe = null;
 		for(Formation f : formations){
 			if(f.getTitle().equals(currentFormation)){
-				pos = formations.indexOf(f);
+				fe = f;
 			}
 		}
-		return formations.get(pos);
+		return fe;
 	}
 	
 	/**

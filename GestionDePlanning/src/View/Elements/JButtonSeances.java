@@ -13,13 +13,20 @@ import Model.CalendarObject.Module;
 
 public class JButtonSeances extends JButton implements ActionListener{
 	private DaysAbstractControler daysControler;
+	private Formation currentFormation;
+	private String currentModule;
+	private String emailTeacher;
+	private int position;
 	private Day day;
 
-    public JButtonSeances(String text, DaysAbstractControler daysControler,Formation currentFormation, String currentModule, Day day, int position){
+    public JButtonSeances(String text, DaysAbstractControler daysControler,Formation currentFormation, String currentModule, String emailTeacher, Day day, int position){
     	this.setText(text);
     	this.daysControler = daysControler;
+    	this.currentFormation = currentFormation;
+    	this.currentModule = currentModule;
+    	this.emailTeacher = emailTeacher;
+    	this.position = position;
     	this.day = day;
-    	System.out.println(currentModule);
     	if(day.getFormationSeances(currentFormation.getTitle()).getSeance(position) == null){
     		
     	}
@@ -28,17 +35,17 @@ public class JButtonSeances extends JButton implements ActionListener{
     		this.setBackground(day.getFormationSeances(currentFormation.getTitle()).getSeance(position).getModule().getColor());
     	}
     	else{
-    		this.setForeground(day.getFormationSeances(currentFormation.getTitle()).getSeance(position).getModule().getColor());
-    		this.setEnabled(true);
+    		this.setEnabled(false);
+    		this.setBackground(day.getFormationSeances(currentFormation.getTitle()).getSeance(position).getModule().getColor());
     	}
     	this.addActionListener(this);
     }
 
 	public void actionPerformed(ActionEvent even) {
-		if(this.day.getHoliday())
-			daysControler.modifyHoliday(false, day);
+		if(day.getFormationSeances(currentFormation.getTitle()).getSeance(position) == null)
+			daysControler.addSeances(currentFormation.getModule(currentModule), emailTeacher, day, position);
 		else
-			daysControler.modifyHoliday(true, day);
+			daysControler.removeSeance(currentFormation.getModule(currentModule), day, position);
 	}
 	
 }

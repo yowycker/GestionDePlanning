@@ -28,6 +28,8 @@ import View.Elements.JButtonColors;
 
 public class JPanelManageModule extends JPanelManage implements DaysObserver, ActionListener, ListSelectionListener{
 
+	private Module currentModule;
+	
 private DefaultListModel dlm = new DefaultListModel();
 private JList listModule = new JList(dlm);
 
@@ -118,7 +120,7 @@ private JButton delete = new JButton("Supprimer");
 	     this.add(bottomPanel, BorderLayout.SOUTH);
 	 }
 	 public void initModules(){
-	     daysControler.initModules();
+	     daysControler.initModules(true);
 	 }
 	 
 
@@ -127,17 +129,17 @@ private JButton delete = new JButton("Supprimer");
 			daysControler.addModule(nameTextField.getText(), abbreviationTextField.getText(), maxSeancesTextField.getText(), colorButton.getBackground());
 		}
 		else if(evt.getSource() == modify){
-			daysControler.modifyModule((String) listModule.getSelectedValue() ,nameTextField.getText(), abbreviationTextField.getText(), maxSeancesTextField.getText(), colorButton.getBackground());
+			daysControler.modifyModule(currentModule.getName() ,nameTextField.getText(), abbreviationTextField.getText(), maxSeancesTextField.getText(), colorButton.getBackground());
 		}
 		else if(evt.getSource() == delete){
-			daysControler.removeModule((String) listModule.getSelectedValue());
+			daysControler.removeModule(currentModule.getName());
 		}
 	}
-    public void valueChanged(ListSelectionEvent evt) {
+    public void valueChanged(ListSelectionEvent evt){
     	if (!evt.getValueIsAdjusting()){
     		
     		if(listModule.getSelectedValue() != null){
-    			daysControler.selectModule((String) listModule.getSelectedValue());
+    			daysControler.selectModule((String) listModule.getSelectedValue(), true);
     		}
         }
     }
@@ -149,7 +151,8 @@ private JButton delete = new JButton("Supprimer");
 	
 	public void update(ArrayList<Formation> formations,	Formation currentFormation){
 	}
-	public void update(Formation currentFormation, Module currentModule, boolean isInit){
+	public void update(Formation currentFormation, Module currentModule, boolean isInit, boolean initSeances){
+		this.currentModule = currentModule;
 		
 		dlm.removeAllElements();
 		for(Module m :currentFormation.getModules()){
@@ -170,12 +173,9 @@ private JButton delete = new JButton("Supprimer");
 	@Override
 	public void update(ArrayList<Day> days, int firstDay, int lastDay,
 			int numWeeks, boolean after, boolean next, int month, int year, int numweeks){
-		// TODO Auto-generated method stub
-		
 	}
 	@Override
-	public void update(ArrayList<Teacher> teachers, Teacher currentTeacher) {
-		// TODO Auto-generated method stub
+	public void update(ArrayList<Teacher> teachers, Teacher currentTeacher, boolean isInit, boolean inCalendar, boolean initSeances) {
 		
 	}
 }

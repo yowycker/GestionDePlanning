@@ -255,23 +255,23 @@ System.out.println("                                 NB H Formation : " + f.getH
 	public void addTeacher(String name, String firstname, String abbreviation, String email, String phone) {
 		daysModel.addTeacher(name, firstname, abbreviation, email, phone);
 		daysModel.serializeTeachers();
-		daysModel.selectTeacher(email);
+		daysModel.selectTeacher(email, false, false);
 	}
 	public void modifyTeacher(String oldEmail, String name, String firstname, String abbreviation, String email, String phone) {
 		daysModel.modifyTeacher(oldEmail,name, firstname, abbreviation, email, phone);
 		daysModel.serializeTeachers();
-		daysModel.selectTeacher(email);
+		daysModel.selectTeacher(email, false, false);
 	}
 	public void removeTeacher(String email){
 		daysModel.removeTeacher(email);
 		daysModel.serializeTeachers();
-		daysModel.initTeacher();
+		daysModel.initTeacher(false, false);
 	}
-	public void initTeacher(){
-		daysModel.initTeacher();
+	public void initTeacher(boolean inCalendar, boolean initSeances){
+		daysModel.initTeacher(inCalendar, initSeances);
 	}
-	public void selectTeacher(String email){
-		daysModel.selectTeacher(email);
+	public void selectTeacher(String email,boolean inCalendar, boolean initSeances){
+		daysModel.selectTeacher(email, inCalendar,initSeances);
 	}
 
 	
@@ -287,29 +287,29 @@ System.out.println("                                 NB H Formation : " + f.getH
 	// ------------------------------------------------------- //
 	
 
-	public void initModules(){
+	public void initModules(boolean initSeances){
 // supprimer erreur dans le cas ou aucun modules existe (entrer quand même dans la fenetre)
-		daysModel.initModules();
+		daysModel.initModules(initSeances);
 	}
-	public void selectModule(String nameModule){
+	public void selectModule(String nameModule, boolean initSeances){
 // supprimer erreur dans le cas ou aucun modules existe (entrer quand même dans la fenetre)
-		daysModel.initModules(nameModule);
+		daysModel.initModules(nameModule,initSeances);
 	}
 	
 	public void addModule(String newName, String newAbbreviation, String newMaxSeances, Color newColor){
 // Tests
 		daysModel.addModule(new Module(newName,newAbbreviation,newColor,Integer.parseInt(newMaxSeances)));
-		daysModel.initModules(newName);
+		daysModel.initModules(newName,false);
 	}
 	public void modifyModule(String nameModule, String newName, String newAbbreviation, String newMaxSeances, Color newColor){
 // Tests
 		daysModel.modifyModule(nameModule, new Module(newName,newAbbreviation,newColor,Integer.parseInt(newMaxSeances)));
-		daysModel.initModules(newName);
+		daysModel.initModules(newName,false);
 	}
 	public void removeModule(String nameModule){
 // Tests
 		daysModel.deleteModule(nameModule);
-		daysModel.initModules();
+		daysModel.initModules(false);
 	}
 
 	
@@ -320,6 +320,18 @@ System.out.println("                                 NB H Formation : " + f.getH
 	// - nb Seances existantes : si exist / si < nbMax (spe à l'action)
 
 	
+
+	// -------------- Fonctions de Gestion des Séances --------------- //
+	// --------------------------------------------------------------- //
+	
+	public void removeSeance(Module module, Day day, int position){
+		daysModel.removeSeance(module, day, position);
+		this.getDaysMonth();
+	}
+	public void addSeances(Module module, String emailTeacher, Day day, int position){
+		daysModel.addSeances(module, daysModel.getTeacher(emailTeacher), day, position);
+		this.getDaysMonth();
+	}
 	
 	
 	// -------------- Fonctions de remplissage de liste --------------- //

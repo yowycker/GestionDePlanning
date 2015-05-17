@@ -198,7 +198,7 @@ System.out.println(days.get(i).getName() + " " + days.get(i).getDate());
         } 
     }
 	@Override
-	public void update(Formation currentFormation, Module currentModule, boolean isInit) {
+	public void update(Formation currentFormation, Module currentModule, boolean isInit, boolean initSeances) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -209,7 +209,7 @@ System.out.println(days.get(i).getName() + " " + days.get(i).getDate());
 		
 	}
 	@Override
-	public void update(ArrayList<Teacher> teachers, Teacher currentTeacher) {
+	public void update(ArrayList<Teacher> teachers, Teacher currentTeacher, boolean isInit, boolean inCalendar, boolean initSeances) {
 		// TODO Auto-generated method stub
 		
 	}

@@ -8,6 +8,7 @@ import Model.CalendarObject.Calendar;
 import Model.CalendarObject.Day;
 import Model.CalendarObject.Formation;
 import Model.CalendarObject.Module;
+import Model.CalendarObject.Teacher;
 
 public abstract class DaysAbstractControler {
 	  protected DaysAbstractModel daysModel;
@@ -90,11 +91,11 @@ public abstract class DaysAbstractControler {
 	  /**
 	   * Méthode d'initialisation de l'affichage des modules
 	   */
-	  public abstract void initModules();
+	  public abstract void initModules(boolean initSeances);
 	  /**
 	   * Méthode d'initialisation de l'affichage des modules lors d'un selection
 	   */
-	  public abstract void selectModule(String nameModule);
+	  public abstract void selectModule(String nameModule, boolean initSeances);
 	  /**
 	   * Méthode permettant d'ajouter un module et de mettre a jour l'affichage
 	   */
@@ -118,8 +119,11 @@ public abstract class DaysAbstractControler {
 	  public abstract void addTeacher(String name, String firstname, String abbreviation, String email, String phone);
 	  public abstract void modifyTeacher(String oldEmail, String name, String firstname, String abbreviation, String email, String phone);
 	  public abstract void removeTeacher(String email);
-	  public abstract void initTeacher();
-	  public abstract void selectTeacher(String email);
+	  public abstract void initTeacher(boolean inCalendar, boolean initSeances);
+	  public abstract void selectTeacher(String email,boolean inCalendar, boolean initSeances);
+	  
+	  public abstract void removeSeance(Module module, Day day, int position);
+	  public abstract void addSeances(Module module, String emailTeacher, Day day, int position);
 	  
 	  
 	  public abstract void serializeCalendar();
