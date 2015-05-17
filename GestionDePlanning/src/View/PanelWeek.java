@@ -2,6 +2,8 @@ package View;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.ComponentOrientation;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,6 +19,7 @@ import Model.CalendarObject.Module;
 import Model.CalendarObject.Teacher;
 import Obs.DaysObserver;
 import View.Elements.DayPanel;
+import View.Elements.JButtonFormation;
 import View.Elements.SLabel;
 
 public class PanelWeek extends JPanel implements DaysObserver, ActionListener{
@@ -31,6 +34,8 @@ public class PanelWeek extends JPanel implements DaysObserver, ActionListener{
     private SLabel saturday = new SLabel("Samedi");
     private SLabel sunday = new SLabel("Dimanche");
 
+    private SLabel formation = new SLabel("");
+
     private SLabel morning = new SLabel("9h00");
     private SLabel noon = new SLabel("12h00 - 14h00");
     private SLabel evening = new SLabel("18h00");
@@ -42,6 +47,8 @@ public class PanelWeek extends JPanel implements DaysObserver, ActionListener{
 // receptacles :
     // panneau contenant au moin le titre du planning
     private JPanel headerInfo = new JPanel();
+    	private JPanel formationsPanel = new JPanel();
+    	private JPanel infoPanel = new JPanel();
     // panneau d'edition du planning : inserer seances ...
     private JPanel modulesTab = new JPanel();
     // panneau recevant : les entetes, les horaires, les Cours ET la barre
@@ -120,6 +127,13 @@ public class PanelWeek extends JPanel implements DaysObserver, ActionListener{
         planning.add(table, BorderLayout.CENTER); 
         planning.add(timeTable, BorderLayout.WEST);   
         planning.add(actionBar, BorderLayout.SOUTH);
+        
+        headerInfo.setLayout(new BorderLayout());
+        headerInfo.add(formationsPanel, BorderLayout.NORTH);
+        headerInfo.add(infoPanel, BorderLayout.CENTER);
+        infoPanel.setBackground(Color.DARK_GRAY);
+        infoPanel.add(formation);
+        formation.setForeground(Color.WHITE);
 
 // le tout
         panelWeekLayout = new BorderLayout();
@@ -145,6 +159,13 @@ public class PanelWeek extends JPanel implements DaysObserver, ActionListener{
 		this.updateUI();
 	}
 	public void update(ArrayList<Formation> formations,	Formation currentFormation, boolean isInit) {
+		formationsPanel = new JPanel();
+		formationsPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		for(Formation f : formations){
+			formationsPanel.add(new JButtonFormation(f.getTitle(), this.daysControler));
+		}
+		formation.setText(currentFormation.getTitle());
+		this.updateUI();
 	}
     private void showWeek(Formation formation,ArrayList<Day> days, int numDays){
     	loadPlanningLayout(numDays);

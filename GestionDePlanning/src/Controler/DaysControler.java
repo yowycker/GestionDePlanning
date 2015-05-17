@@ -60,22 +60,22 @@ System.out.println("Index : " + index);
 		else
 			daysModel.setInit(false);
 		daysModel.setCalendar(c);
+		daysModel.initFormations();//c.getCurrentFormation().getTitle()
 		daysModel.getWeek(index);
 	}
 	
 	/**
 	 * Méthode d'affichage du nouveau calendrier
 	 */
-	public void newCalendar(String years, boolean holiday, boolean saturday, boolean sunday){
+	public void newCalendar(String years, String titreFormation, String formationHSeances, boolean saturday, boolean sunday){
 		int firstYear = Integer.parseInt(years.substring(0, 4));
 		int lastYear = Integer.parseInt(years.substring(5, 9));
 
 		try{
-			Calendar c = new Calendar(28,12,firstYear,18,2,lastYear,holiday,saturday,sunday);
-			Formation f = new Formation("L3 2/3 A", 3.5);
+			Calendar c = new Calendar(28,12,firstYear,18,2,lastYear,false,saturday,sunday);
 			
-			c.addFormation(f);
-			c.setCurrentFormation(f);
+			c.addFormation(new Formation(titreFormation,Double.parseDouble(formationHSeances)));
+			c.setCurrentFormation(new Formation(titreFormation,Double.parseDouble(formationHSeances)));
 			
 		    Module m1 = new Module("Anglais", "AN", Color.GREEN,12);
 		    Module m2 = new Module("Reseau", "RE", Color.RED,10);
@@ -108,8 +108,6 @@ System.out.println("Index : " + index);
 			c.inNumSeances(new Seance(m1,t1), m1);
 			c.resetSeance(c.getCurrentFormation().getModule(m1.getName()));
 			c.resetSeance(c.getCurrentFormation().getModule(m2.getName()));
-
-System.out.println("                                 NB H Formation : " + f.getHoursFormation());
 		    
 		    for(Day d : c.getDays()){
 		    	System.out.println(d.getDate());
@@ -202,10 +200,13 @@ System.out.println("                                 NB H Formation : " + f.getH
 		daysModel.initFormations();
 	}
 	public void selectFormation(String title){
+		daysModel.setCurrentFormation(new Formation(title,0));
+		daysModel.getWeek(index);
 		daysModel.initFormations(title);
 	}
 	public void addFormation(String title, String newNbHoursSeances){
 		daysModel.addFormation(title, Double.parseDouble(newNbHoursSeances));
+		selectFormation(title);
 		daysModel.initFormations(title);
 	} 
 	public void modifyFormation(String title, String newtitle, String newNbHoursSeances){
@@ -216,6 +217,7 @@ System.out.println("                                 NB H Formation : " + f.getH
 				daysModel.modifyFormation(title, newtitle, Double.parseDouble(newNbHoursSeances));
 			}
 		}
+		selectFormation(newtitle);
 		daysModel.initFormations(newtitle);
 	}
 	public void deleteFormation(String title){

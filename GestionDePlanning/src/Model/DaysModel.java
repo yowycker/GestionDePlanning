@@ -21,9 +21,6 @@ public class DaysModel extends DaysAbstractModel{
 	
 	public void getWeek(int index){
 		days = new ArrayList<Day>();
-System.out.println("IDay : " + calendar.getIDay());
-System.out.println("getNumDaysWeek : " + getNumDaysWeek());
-System.out.println("Date : " + calendar.getDays().get(0).getDate());
 		int j = 0;
 		if(index == 0)
 			firstDaysLoad=0;
@@ -52,7 +49,6 @@ System.out.println("Date : " + calendar.getDays().get(0).getDate());
     	
     	if((index + getNumDaysWeek() - firstDaysLoad) > calendar.getDays().size() ) next = false;
     	else next = true;
-    	
     	notifyObserver(calendar.getCurrentFormation() ,init, days, getNumDaysWeek(),after,next);
 	}
 	public int getNumDaysWeek(){
@@ -189,7 +185,7 @@ System.out.println("Date : " + calendar.getDays().get(0).getDate());
 		return calendar.getCurrentFormation();
 	}
 	public void setCurrentFormation(Formation formation){
-		this.calendar.setCurrentFormation(formation);
+		this.calendar.setCurrentFormation(calendar.getFormation(formation.getTitle()));
 	}
 	
 	

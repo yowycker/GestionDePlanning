@@ -2,14 +2,19 @@ package View;
 
 
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
+import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 import javax.swing.JToolBar;
 
 import test.AllTests;
@@ -17,6 +22,11 @@ import Controler.DaysAbstractControler;
 import Controler.DaysControler;
 import Model.DaysAbstractModel;
 import Model.DaysModel;
+import Model.CalendarObject.Day;
+import Model.CalendarObject.Formation;
+import Model.CalendarObject.Module;
+import Model.CalendarObject.Teacher;
+import Obs.DaysObserver;
 import Serialized.SerializeObjects;
 import View.DialogMenu.JDialogManage;
 import View.DialogMenu.JDialogNewPlanning;
@@ -26,9 +36,10 @@ import View.DialogMenu.JPanelManageModule;
 import View.DialogMenu.JPanelManageSeance;
 import View.DialogMenu.JPanelManageTeacher;
 import View.DialogMenu.OpenFiles;
+import View.Elements.SLabel;
 
 public class MainFrame extends JFrame implements ActionListener{
-
+	
     private JButton newFile = new JButton("Nouveau");
     private JButton openFile = new JButton("Ouvrir");
     private JButton saveFile = new JButton("Sauvegarder");
@@ -45,8 +56,9 @@ public class MainFrame extends JFrame implements ActionListener{
     
     private JDialogManage dm = new JDialogManage();
 
-// Lier le Modele, le controlleur et la vue ensemble
- 		    //Instanciation de notre modèle
+
+	// Lier le Modele, le controlleur et la vue ensemble
+	 		    //Instanciation de notre modèle
     private DaysAbstractModel model = new DaysModel();
  		    //Création du contrôleur
     private DaysAbstractControler controler = new DaysControler(model);
@@ -59,21 +71,20 @@ public class MainFrame extends JFrame implements ActionListener{
     private JPanelManageTeacher manageTeacherPanel = new JPanelManageTeacher(controler);
  		    
 	  public MainFrame(){
-		    this.setTitle("Planning");
-		    this.setSize(1200, 800);
-		    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		    this.setLocationRelativeTo(null);
+		  
 
 // Recupperer données des Formateurs :
 		    model.deserializeTeachers();
 //Ajout de la fenêtre comme observer de notre modèle
- 		    model.addObserver(planning);
+		    model.addObserver(planning);
  		    model.addObserver(manageFormationPanel);
  		    model.addObserver(manageModulePanel);
  		    model.addObserver(manageHolidayPanel);
  		    model.addObserver(manageSeancePanel);
  		    model.addObserver(manageTeacherPanel);
 
+ 		    
+// Elements
 		    this.setLayout(new BorderLayout());
 		    this.getContentPane().add(planning, BorderLayout.CENTER);
 		    
@@ -102,14 +113,16 @@ public class MainFrame extends JFrame implements ActionListener{
 		    manageModule.addActionListener(this);
 		    manageSeances.addActionListener(this);
 		    manageTeacher.addActionListener(this);
+
+			  
+			  
+		    this.setTitle("Planning");
+		    this.setSize(1200, 800);
+		    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		    this.setLocationRelativeTo(null);
 		    
 		    this.setVisible(true);
 	  }
-	public static void main(String[] args){
-		junit.textui.TestRunner.run(AllTests.suite());
-		new MainFrame();
-	}
-	
 
 	/**
 	 * Nouveau Calendrier
@@ -129,8 +142,6 @@ public class MainFrame extends JFrame implements ActionListener{
 				e1.printStackTrace();
 			}
         }
-        
-
         if(e.getSource() == manageHoliday){
         	manageHolidayPanel.initHolidays();
         	dm.initialise(manageHolidayPanel);;

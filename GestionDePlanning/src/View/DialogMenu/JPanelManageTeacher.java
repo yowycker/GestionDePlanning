@@ -39,7 +39,7 @@ private JLabel phoneLabel = new JLabel("Téléphone ");
 private JTextField nameTextField = new JTextField(10);
 private JTextField firstnameTextField = new JTextField(10);
 private JTextField abbTextField = new JTextField(10);
-private JTextField emailTextField = new JTextField(10);
+private JTextField emailTextField = new JTextField(20);
 private JTextField phoneTextField = new JTextField(10);
 
 private JButton add = new JButton("Ajouter");

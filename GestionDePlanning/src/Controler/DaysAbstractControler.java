@@ -40,11 +40,11 @@ public abstract class DaysAbstractControler {
 	  /**
 	   * Méthode Nouveau Calendar
 	   * @param Years
-	   * @param holiday
+	   * @param Formation
 	   * @param saturday
 	   * @param sunday
 	   */
-	  public abstract void newCalendar(String Years, boolean holiday, boolean saturday, boolean sunday);
+	  public abstract void newCalendar(String years, String titreFormation, String formationHSeances, boolean saturday, boolean sunday);
 
 	  /**
 	   * Méthode d'initialisation des données
