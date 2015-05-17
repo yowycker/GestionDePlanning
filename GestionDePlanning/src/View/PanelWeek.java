@@ -144,7 +144,7 @@ public class PanelWeek extends JPanel implements DaysObserver, ActionListener{
 		this.showWeek(currentFormation,days,numDays);
 		this.updateUI();
 	}
-	public void update(ArrayList<Formation> formations,	Formation currentFormation) {
+	public void update(ArrayList<Formation> formations,	Formation currentFormation, boolean isInit) {
 	}
     private void showWeek(Formation formation,ArrayList<Day> days, int numDays){
     	loadPlanningLayout(numDays);

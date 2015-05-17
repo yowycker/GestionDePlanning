@@ -85,7 +85,7 @@ public class MainFrame extends JFrame implements ActionListener{
 		    toolbar.add(saveFile);
 		    toolbar.addSeparator();
 		    toolbar.add(manageHoliday);
-		    //toolbar.add(manageFormation);
+		    toolbar.add(manageFormation);
 		    toolbar.add(manageTeacher);
 		    toolbar.addSeparator();
 		    toolbar.add(manageModule);

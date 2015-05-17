@@ -26,7 +26,9 @@ import Obs.DaysObserver;
 
 public class JPanelManageFormation extends JPanelManage implements DaysObserver, ActionListener, ListSelectionListener{
 
-private ArrayList<Formation> formations = new ArrayList<Formation>();
+private Formation currentFormation;
+
+
 private DefaultListModel dlm = new DefaultListModel();
 private JList listFormation = new JList(dlm);
 
@@ -111,41 +113,38 @@ private JButton delete = new JButton("Supprimer");
 
 	public void actionPerformed(ActionEvent evt) {
 		if(evt.getSource() == add){
-			daysControler.addFormation(titleTextField.getText(), Double.parseDouble(nbHoursTextField.getText()));
+			daysControler.addFormation(titleTextField.getText(), nbHoursTextField.getText());
 		}
-		else if(evt.getSource() == modify){
-// Pas encore fonctionnelle
-			for(int i = 0; i < this.formations.size(); i++){
-    			if(this.formations.get(i).getTitle().equals(listFormation.getSelectedValue())){
-    				daysControler.modifyFormation(this.formations.get(i).getTitle(),titleTextField.getText(), Double.parseDouble(nbHoursTextField.getText()));
-    			}
-    		}
+		if(evt.getSource() == modify){
+    		daysControler.modifyFormation(currentFormation.getTitle(),titleTextField.getText(), nbHoursTextField.getText());
 		}
-		else if(evt.getSource() == delete){
-			daysControler.deleteFormation(titleTextField.getText(), Double.parseDouble(nbHoursTextField.getText()));
+		if(evt.getSource() == delete){
+			daysControler.deleteFormation(currentFormation.getTitle());
 		}
-		// dispose
 	}
     public void valueChanged(ListSelectionEvent evt) {
     	if (!evt.getValueIsAdjusting()){
-    		for(int i = 0; i < this.formations.size(); i++){
-    			if(this.formations.get(i).getTitle() == listFormation.getSelectedValue()){
-    				titleTextField.setText(this.formations.get(i).getTitle());
-    				nbHoursTextField.setText(Double.toString(this.formations.get(i).getHoursSeances()));
+    			if(listFormation.getSelectedValue() != null){
+    				daysControler.selectFormation((String) listFormation.getSelectedValue());
     			}
-    		}
         }
     }
 
-	public void update(ArrayList<Formation> formations,	Formation currentFormation) {
-		this.formations = formations;
+	public void update(ArrayList<Formation> formations,	Formation currentFormation, boolean isInit) {
+		this.currentFormation = currentFormation;
 		
 		dlm.removeAllElements();
-	System.out.println("lenth list : " + this.formations.size());
-		for(int i = 0; i < this.formations.size(); i++){
-			dlm.addElement(this.formations.get(i).getTitle());
+		for(Formation f : formations){
+			dlm.addElement(f.getTitle());
 		}
-		listFormation.setSelectedValue(currentFormation.getTitle(), true);
+
+		if(isInit)
+			listFormation.setSelectedValue(currentFormation.getTitle(), true);
+		else{
+			titleTextField.setText(currentFormation.getTitle());
+			nbHoursTextField.setText(Double.toString(currentFormation.getHoursSeances()));
+		}
+		
 		this.updateUI();
 		
 	}

@@ -149,8 +149,8 @@ System.out.println("Date : " + calendar.getDays().get(0).getDate());
 	}	
 	
 	
-	// ------------- Gestion de la formation courante  --------------- //
-	// --------------------------------------------------------------- //
+	// ------------- Gestion du formateur  --------------- //
+	// --------------------------------------------------- //
 
 	public void addTeacher(String name, String firstname, String abbreviation, String email, String phone) {
 		teachers.add(new Teacher(email,phone, abbreviation,name,firstname));
@@ -198,21 +198,21 @@ System.out.println("Date : " + calendar.getDays().get(0).getDate());
 	
 	public void initFormations(){
 // Exception : cas ou aucune formation existe (entrer quand même dans la fenetre)
-		notifyObserver(calendar.getFormations(), calendar.getCurrentFormation());
+		notifyObserver(calendar.getFormations(), calendar.getCurrentFormation(), true);
 	}
 	public void initFormations(String formation){
-		notifyObserver(calendar.getFormations(), calendar.getFormation(formation));
+		notifyObserver(calendar.getFormations(), calendar.getFormation(formation), false);
 	}
 	
-	public void addFormation(Formation formation){
-		this.calendar.addFormation(formation);
+	public void addFormation(String newtitle, Double newHourSeances){
+		this.calendar.addFormation(new Formation(newtitle,newHourSeances));
 	}
-	public void modifyFormation(String formation, Formation newformation){
+	public void modifyFormation(String title, String newtitle, Double newHourSeances){
 // Pas encore fonctionnelle
-		this.calendar.modifyFormation(formation,newformation);
+		this.calendar.modifyFormation(title,new Formation(newtitle,newHourSeances));
 	}
-	public void deleteFormation(Formation formation){
-		this.calendar.removeFormation(formation);
+	public void deleteFormation(String title){
+		this.calendar.removeFormation(title);
 	}
 	public ArrayList<Formation> getFormations(){
 		return calendar.getFormations();

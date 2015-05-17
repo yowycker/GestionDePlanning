@@ -59,14 +59,14 @@ public abstract class DaysAbstractControler {
 	   * @param title
 	   * @param nbHoursSeances
 	   */
-	  public abstract void addFormation(String title, double nbHoursSeances);
+	  public abstract void addFormation(String title, String nbHoursSeances);
 
 	  /**
 	   * Méthode de modification d'une formation
 	   * @param title
 	   * @param nbHoursSeances
 	   */
-	  public abstract void modifyFormation(String title, String newtitle, double newNbHoursSeances);
+	  public abstract void modifyFormation(String title, String newtitle, String newNbHoursSeances);
 
 
 	  /**
@@ -74,7 +74,7 @@ public abstract class DaysAbstractControler {
 	   * @param title
 	   * @param nbHoursSeances
 	   */
-	  public abstract void deleteFormation(String title, double nbHoursSeances);
+	  public abstract void deleteFormation(String title);
 	  
 	  /**
 	   * Méthode d'initialisation de l'affichage des formations
@@ -125,6 +125,8 @@ public abstract class DaysAbstractControler {
 	  public abstract void removeSeance(Module module, Day day, int position);
 	  public abstract void addSeances(Module module, String emailTeacher, Day day, int position);
 	  
+	  
+	  public abstract void selectFormation(String title);
 	  
 	  public abstract void serializeCalendar();
 }

@@ -66,9 +66,9 @@ public abstract class DaysAbstractModel implements DaysObservable{
 // Affichage de menu de formations
 	public abstract void initFormations();
 	public abstract void initFormations(String formation);
-	public abstract void addFormation(Formation formation);
-	public abstract void modifyFormation(String formation, Formation newformation);
-	public abstract void deleteFormation(Formation formation);
+	public abstract void addFormation(String newtitle, Double newHourSeances);
+	public abstract void modifyFormation(String title, String newtitle, Double newHourSeances);
+	public abstract void deleteFormation(String title);
 	public abstract ArrayList<Formation> getFormations();
 	
 // Affichage de menu des modules 
@@ -95,9 +95,9 @@ public abstract class DaysAbstractModel implements DaysObservable{
 	    for(DaysObserver obs : listObserver)
 	      obs.update(currentFormation, init, days, numDays, after, next);
 	}
-	public void notifyObserver(ArrayList<Formation> formations, Formation currentFormation){
+	public void notifyObserver(ArrayList<Formation> formations, Formation currentFormation, boolean isInit){
 	    for(DaysObserver obs : listObserver)
-	      obs.update(formations, currentFormation);
+	      obs.update(formations, currentFormation, isInit);
 	}
 	public void notifyObserver(Formation currentFormation, Module currentModule, boolean isInit, boolean initSeances){
 	    for(DaysObserver obs : listObserver)

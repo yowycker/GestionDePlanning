@@ -149,7 +149,7 @@ private JButton delete = new JButton("Supprimer");
 	public void update(Formation currentFormation, boolean init,ArrayList<Day> days, int numDays, boolean after, boolean next) {
 	}
 	
-	public void update(ArrayList<Formation> formations,	Formation currentFormation){
+	public void update(ArrayList<Formation> formations,	Formation currentFormation, boolean isInit){
 	}
 	public void update(Formation currentFormation, Module currentModule, boolean isInit, boolean initSeances){
 		this.currentModule = currentModule;

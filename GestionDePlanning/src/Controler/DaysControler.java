@@ -201,40 +201,25 @@ System.out.println("                                 NB H Formation : " + f.getH
 	public void initFormation(){
 		daysModel.initFormations();
 	}
-	public void addFormation(String title, double nbHoursSeances){
-		if(formationExist(new Formation(title, nbHoursSeances))){
-// Exception : Exist
-		}
-		else{
-// Controle si title et nbHoursSeances sont dans la norme ...
-			daysModel.addFormation(new Formation(title, nbHoursSeances));
-		}
-		daysModel.initFormations(title);
-	} 
-	public void modifyFormation(String title, String newtitle, double newNbHoursSeances){
-// Pas encore fonctionnelle
-		boolean formationExist = false;
-		for(Formation f : daysModel.getFormations()){
-			if(f.equals(new Formation(title, 0)))
-			{
-				formationExist = true;
-				daysModel.modifyFormation(title, new Formation(newtitle, newNbHoursSeances));
-			}
-			else
-			{
-// Exception : N'existe pas
-			}
-		}
+	public void selectFormation(String title){
 		daysModel.initFormations(title);
 	}
-	public void deleteFormation(String title, double nbHoursSeances){
-		if(formationExist(new Formation(title, nbHoursSeances))){
-// Controle quel formation on supprime (si il existe plus de formation, faire... sinon faire ...
-			daysModel.deleteFormation(new Formation(title, nbHoursSeances));
+	public void addFormation(String title, String newNbHoursSeances){
+		daysModel.addFormation(title, Double.parseDouble(newNbHoursSeances));
+		daysModel.initFormations(title);
+	} 
+	public void modifyFormation(String title, String newtitle, String newNbHoursSeances){
+		boolean formationExist = false;
+		for(Formation f : daysModel.getFormations()){
+			if(f.getTitle().equals(title))
+			{
+				daysModel.modifyFormation(title, newtitle, Double.parseDouble(newNbHoursSeances));
+			}
 		}
-		else{
-// Exception : N'existe pas
-		}
+		daysModel.initFormations(newtitle);
+	}
+	public void deleteFormation(String title){
+		daysModel.deleteFormation(title);
 		this.initFormation();
 	}
 	private boolean formationExist(Formation fe){

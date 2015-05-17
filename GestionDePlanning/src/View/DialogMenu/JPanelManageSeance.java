@@ -348,7 +348,7 @@ public class JPanelManageSeance extends JPanelManage implements DaysObserver, Ac
 			
 			this.updateUI();
 		}
-		public void update(ArrayList<Formation> formations,	Formation currentFormation) {
+		public void update(ArrayList<Formation> formations,	Formation currentFormation, boolean isInit) {
 		}
 		
 		

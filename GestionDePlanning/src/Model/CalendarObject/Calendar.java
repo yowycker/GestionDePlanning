@@ -189,9 +189,6 @@ public class Calendar implements Serializable{
 			if(f.equals(new Formation(formation,0))){
 				f.setTitle(newformation.getTitle());
 				f.setNbHoursSeances(newformation.getHoursSeances());
-
-				System.out.println(newformation.getTitle());
-				System.out.println(newformation.getHoursSeances());
 			}
 		}
 	}
@@ -200,11 +197,11 @@ public class Calendar implements Serializable{
 	 * Méthode permettant de supprimer une formation du calendrier
 	 * @param formation
 	 */
-	public void removeFormation(Formation formation){
+	public void removeFormation(String title){
 		for(Day d : listDays){
-			d.removeFormationSeances(formation.getTitle());
+			d.removeFormationSeances(title);
 		}
-		formations.remove(formation);
+		formations.remove(getFormation(title));
 	}
 	
 	/**
