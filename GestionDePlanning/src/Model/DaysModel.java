@@ -184,8 +184,8 @@ public class DaysModel extends DaysAbstractModel{
 	public Formation getCurrentFormation(){
 		return calendar.getCurrentFormation();
 	}
-	public void setCurrentFormation(Formation formation){
-		this.calendar.setCurrentFormation(calendar.getFormation(formation.getTitle()));
+	public void setCurrentFormation(String formation){
+		this.calendar.setCurrentFormation(calendar.getFormation(formation));
 	}
 	
 	

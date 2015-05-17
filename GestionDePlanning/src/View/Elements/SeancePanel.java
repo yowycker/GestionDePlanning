@@ -16,7 +16,6 @@ public class SeancePanel extends JPanel{
 	JLabel name = new JLabel();
 	JLabel teacher = new JLabel();
 	JLabel numSeance = new JLabel();
-	JLabel maxSeances = new JLabel();
 
 	public SeancePanel(){
         //this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -27,15 +26,14 @@ public class SeancePanel extends JPanel{
 			color= seance.getModule().getColor();
 			
 			name.setText(seance.getModule().getName());
-			numSeance.setText(Integer.toString(seance.getNumSeance()));
-			maxSeances.setText(Integer.toString(seance.getModule().getMaxSeances()));
+			numSeance.setText("Rang de la seance : " + Integer.toString(seance.getNumSeance() + 1) + " / " + Integer.toString(seance.getModule().getMaxSeances()));
+			teacher.setText("Formateur : " + seance.getTeacher().getName());
 			
 	        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 			
 			this.add(name);
 			this.add(teacher);
 			this.add(numSeance);
-			this.add(maxSeances);
 		}
 	}
 

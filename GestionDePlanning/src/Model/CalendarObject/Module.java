@@ -10,6 +10,8 @@ import java.io.Serializable;
  */
 public class Module implements Serializable{
 	
+	private Formation f;
+	
 	private int iSeance = 0;
 	private int maxSeances; // peut-être modifié ?
 	
@@ -17,6 +19,10 @@ public class Module implements Serializable{
 	private String name;
 	
 	private Color color;
+	
+	public double getModuleHour(){
+		return (f.getHoursSeances() * iSeance+1);
+	}
 	
 	/**
 	 * Constructeur de la classe Module
@@ -26,11 +32,12 @@ public class Module implements Serializable{
 	 * @param teacher
 	 * @param maxSeances
 	 */
-	public Module(String name, String abbreviation,Color color,int maxSeances){
+	public Module(String name, String abbreviation,Color color,int maxSeances, Formation f){
 		this.name=name;
 		this.abbreviation = abbreviation;
 		this.color=color;
 		this.maxSeances=maxSeances;
+		this.f = f;
 	}
 
 //Exceptions ici (si numCours depasse max ...)

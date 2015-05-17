@@ -33,6 +33,13 @@ public class PanelWeek extends JPanel implements DaysObserver, ActionListener{
     private SLabel friday = new SLabel("Vendredi");
     private SLabel saturday = new SLabel("Samedi");
     private SLabel sunday = new SLabel("Dimanche");
+    private SLabel mondayd = new SLabel("");
+    private SLabel tuesdayd = new SLabel("");
+    private SLabel wednesdayd = new SLabel("");
+    private SLabel thursdayd = new SLabel("");
+    private SLabel fridayd = new SLabel("");
+    private SLabel saturdayd = new SLabel("");
+    private SLabel sundayd = new SLabel("");
 
     private SLabel formation = new SLabel("");
 
@@ -56,6 +63,8 @@ public class PanelWeek extends JPanel implements DaysObserver, ActionListener{
 	    // panneau recevant : les entetes, les horaires, les Cours ET la barre
 	    private JPanel table = new JPanel();
 		    private JPanel headers = new JPanel();
+		    	private JPanel header1 = new JPanel();
+		    	private JPanel header2 = new JPanel();
 		    private JPanel seances = new JPanel();
 	    // panneau recevant les horaires d'une journée
 	    private JPanel timeTable = new JPanel();
@@ -65,6 +74,8 @@ public class PanelWeek extends JPanel implements DaysObserver, ActionListener{
 
 // Layout
     private GridLayout headersLayout;
+    	private GridLayout header1Layout;
+    	private GridLayout header2Layout;
     private GridLayout seancesLayout;
     private BorderLayout timeTableLayout;
     private GridLayout actionChangeLayout;
@@ -81,10 +92,18 @@ public class PanelWeek extends JPanel implements DaysObserver, ActionListener{
     }
     private void initPlanning(){    	
         // Entete
-    	headersLayout = new GridLayout(1, 1);
-    	headersLayout.setHgap(5); //Cinq pixels d'espace entre les colonnes (H comme Horizontal)
-    	headersLayout.setVgap(5); //Cinq pixels d'espace entre les lignes (V comme Vertical)
+    	headersLayout = new GridLayout(2, 1);
         headers.setLayout(headersLayout);
+        headers.add(header1, 0);
+        headers.add(header2, 1);
+        header1Layout = new GridLayout(1, 1);
+    	header1Layout.setHgap(5); //Cinq pixels d'espace entre les colonnes (H comme Horizontal)
+    	header1Layout.setVgap(5); //Cinq pixels d'espace entre les lignes (V comme Vertical)
+        header1.setLayout(header1Layout);
+        header2Layout = new GridLayout(1, 1);
+    	header2Layout.setHgap(5); //Cinq pixels d'espace entre les colonnes (H comme Horizontal)
+    	header2Layout.setVgap(5); //Cinq pixels d'espace entre les lignes (V comme Vertical)
+        header2.setLayout(header2Layout);
         
         // Seances : 2 par journee
         seancesLayout = new GridLayout(1, 1);
@@ -164,7 +183,7 @@ public class PanelWeek extends JPanel implements DaysObserver, ActionListener{
 		for(Formation f : formations){
 			formationsPanel.add(new JButtonFormation(f.getTitle(), this.daysControler));
 		}
-		formation.setText(currentFormation.getTitle());
+		formation.setText(currentFormation.getTitle() +"    -     "+ currentFormation.getNbHours()+" H  -  "+ currentFormation.getNbDays() +" J  -  " +currentFormation.getHoursFormation() + "H Total");
 		this.updateUI();
 	}
     private void showWeek(Formation formation,ArrayList<Day> days, int numDays){
@@ -175,9 +194,9 @@ public class PanelWeek extends JPanel implements DaysObserver, ActionListener{
     		if(days.get(i) == null)
     			seances.add(new JPanel(),(i));
     		else{
+        		loadDateDay(i, days.get(i).getDate());
     	    	seances.add(new DayPanel(days.get(i),5,5,formation),i);
-System.out.println(days.get(i).getName() + " " + days.get(i).getDate());
-    		    }
+    		}
     	}
     }
 /*    private void showMonth(Formation formation,ArrayList<Day> days, int numDays){
@@ -193,19 +212,41 @@ System.out.println(days.get(i).getName() + " " + days.get(i).getDate());
     	}
     }
 */
-    
+    private void loadDateDay(int i, String date){
+    	switch(i){
+    	case 0 : mondayd.setText(date);break;
+    	case 1 : tuesdayd.setText(date);break;
+    	case 2 : wednesdayd.setText(date);break;
+    	case 3 : thursdayd.setText(date);break;
+    	case 4 : fridayd.setText(date);break;
+    	case 5 : saturdayd.setText(date);break;
+    	case 6 : sundayd.setText(date);break;
+    	}
+    }
     private void loadPlanningLayout(int numDays){
-    	headersLayout = new GridLayout(1, numDays);
-        headers.removeAll();
-        headers.add(monday);
-        headers.add(tuesday);
-        headers.add(wednesday);
-        headers.add(thursday);
-        headers.add(friday);
+    	header1Layout = new GridLayout(1, numDays);
+    	header2Layout = new GridLayout(1, numDays);
+        header1.removeAll();
+        header2.removeAll();
+        
+        header1.add(monday);
+        header1.add(tuesday);
+        header1.add(wednesday);
+        header1.add(thursday);
+        header1.add(friday);
+        header2.add(mondayd);
+        header2.add(tuesdayd);
+        header2.add(wednesdayd);
+        header2.add(thursdayd);
+        header2.add(fridayd);
         if(numDays >= 6)
-        	headers.add(saturday);
+        	header1.add(saturday);
+    		header2.add(saturdayd);
         if(numDays == 7)
-        	headers.add(sunday);
+        	header1.add(sunday);
+    		header2.add(sundayd);
+    	
+    	
     }
     
     

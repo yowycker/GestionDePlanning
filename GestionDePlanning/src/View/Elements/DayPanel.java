@@ -25,7 +25,7 @@ public class DayPanel extends JPanel{
 			for(int i = 0; i < 2; i++){
 	    		if(day.getHoliday())
 	    			this.add(new JPanel(),i);
-	    		else if(this.getSeance(day, i,formation) == null)
+	    		else if(day.getFormationSeances(formation.getTitle()).getSeance(i) == null)
 	    			this.add(new SeancePanel(),i);
 	    		else
 	    			this.add(new SeancePanel(this.getSeance(day,i,formation)),i);

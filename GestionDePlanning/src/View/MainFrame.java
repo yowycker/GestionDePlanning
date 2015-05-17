@@ -144,7 +144,7 @@ public class MainFrame extends JFrame implements ActionListener{
         }
         if(e.getSource() == manageHoliday){
         	manageHolidayPanel.initHolidays();
-        	dm.initialise(manageHolidayPanel);;
+        	dm.initialise(manageHolidayPanel);
         }
         if(e.getSource() == manageTeacher){
         	manageTeacherPanel.initListTeacher();

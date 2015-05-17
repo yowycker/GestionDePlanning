@@ -60,7 +60,7 @@ System.out.println("Index : " + index);
 		else
 			daysModel.setInit(false);
 		daysModel.setCalendar(c);
-		daysModel.initFormations();//c.getCurrentFormation().getTitle()
+		daysModel.initFormations(c.getCurrentFormation().getTitle());//c.getCurrentFormation().getTitle()
 		daysModel.getWeek(index);
 	}
 	
@@ -72,54 +72,47 @@ System.out.println("Index : " + index);
 		int lastYear = Integer.parseInt(years.substring(5, 9));
 
 		try{
-			Calendar c = new Calendar(28,12,firstYear,18,2,lastYear,false,saturday,sunday);
+			Calendar c = new Calendar(1,9,firstYear,31,8,lastYear,false,saturday,sunday);
 			
-			c.addFormation(new Formation(titreFormation,Double.parseDouble(formationHSeances)));
-			c.setCurrentFormation(new Formation(titreFormation,Double.parseDouble(formationHSeances)));
+			Formation f = new Formation(titreFormation,Double.parseDouble(formationHSeances));
 			
-		    Module m1 = new Module("Anglais", "AN", Color.GREEN,12);
-		    Module m2 = new Module("Reseau", "RE", Color.RED,10);
-		    
-		    Teacher t1 = new Teacher("champ@u-pec.fr","0652315824", "CH", "Champroux", "");
-		    Teacher t2 = new Teacher("cham@u-pec.fr","0652315524", "CHo", "Champroux", "uy");
-		    
-		    c.getCurrentFormation().addModule(m1);
-		    c.getCurrentFormation().addModule(m2);
+			c.addFormation(f);
+			c.setCurrentFormation(c.getFormations().get(0));
+			   
+			      Module m1 = new Module("Anglais", "AN", Color.GREEN,12, f);
+			      Module m2 = new Module("Reseau", "RE", Color.RED,10, f);
+			      
+			      Teacher t1 = new Teacher("champ@u-pec.fr","0652315824", "CH", "Champroux", "");
+			      Teacher t2 = new Teacher("cham@u-pec.fr","0652315524", "CHo", "Champroux", "uy");
+			      
+			      c.getCurrentFormation().addModule(m1);
+			      c.getCurrentFormation().addModule(m2);
 
-		    c.getDays().get(2).getFormationSeances(c.getCurrentFormation().getTitle()).setSeance(0, new Seance(c.getCurrentFormation().getModule(m2.getName()),t1));
-			c.inNumSeances(new Seance(m2,t1), m2);
-		    c.getDays().get(3).getFormationSeances(c.getCurrentFormation().getTitle()).setSeance(1, new Seance(c.getCurrentFormation().getModule(m1.getName()),t1));
-			c.inNumSeances(new Seance(m1,t1), m1);
-		    c.getDays().get(4).getFormationSeances(c.getCurrentFormation().getTitle()).setSeance(0, new Seance(c.getCurrentFormation().getModule(m1.getName()),t2));
-			c.inNumSeances(new Seance(m1,t2), m1);
-		    c.getDays().get(8).getFormationSeances(c.getCurrentFormation().getTitle()).setSeance(0, new Seance(c.getCurrentFormation().getModule(m1.getName()),t2));
-			c.inNumSeances(new Seance(m1,t2), m1);
-		    c.getDays().get(9).getFormationSeances(c.getCurrentFormation().getTitle()).setSeance(0, new Seance(c.getCurrentFormation().getModule(m2.getName()),t1));
-			c.inNumSeances(new Seance(m2,t1), m2);
-		    c.getDays().get(13).getFormationSeances(c.getCurrentFormation().getTitle()).setSeance(0, new Seance(c.getCurrentFormation().getModule(m1.getName()),t1));
-			c.inNumSeances(new Seance(m1,t1), m1);
-		    c.getDays().get(13).getFormationSeances(c.getCurrentFormation().getTitle()).setSeance(0, new Seance(c.getCurrentFormation().getModule(m1.getName()),t2));
-			c.inNumSeances(new Seance(m1,t2), m1);
-		    c.getDays().get(15).getFormationSeances(c.getCurrentFormation().getTitle()).setSeance(0, new Seance(c.getCurrentFormation().getModule(m2.getName()),t1));
-			c.inNumSeances(new Seance(m2,t1), m2);
-		    c.getDays().get(24).getFormationSeances(c.getCurrentFormation().getTitle()).setSeance(0, new Seance(c.getCurrentFormation().getModule(m1.getName()),t2));
-			c.inNumSeances(new Seance(m1,t2), m1);
-		    c.getDays().get(25).getFormationSeances(c.getCurrentFormation().getTitle()).setSeance(0, new Seance(c.getCurrentFormation().getModule(m1.getName()),t1));
-			c.inNumSeances(new Seance(m1,t1), m1);
-			c.resetSeance(c.getCurrentFormation().getModule(m1.getName()));
-			c.resetSeance(c.getCurrentFormation().getModule(m2.getName()));
-		    
-		    for(Day d : c.getDays()){
-		    	System.out.println(d.getDate());
-		    	if(d.getMorning(c.getCurrentFormation()) != null)
-		    		System.out.println("    Module Matin : " + d.getMorning(c.getCurrentFormation()).getModule().getName());
-		    	else
-		    		System.out.println("    Module Matin : NULL");
-		    	if(d.getAfternoon(c.getCurrentFormation()) != null)
-		    		System.out.println("    Module Aprem : " + d.getAfternoon(c.getCurrentFormation()).getModule().getName());
-		    	else
-		    		System.out.println("    Module Aprem : NULL");
-		    }
+			      c.getDays().get(2).getFormationSeances(c.getCurrentFormation().getTitle()).setSeance(0, new Seance(c.getCurrentFormation().getModule(m2.getName()),t1));
+			   c.inNumSeances(new Seance(m2,t1), m2);
+			      c.getDays().get(3).getFormationSeances(c.getCurrentFormation().getTitle()).setSeance(1, new Seance(c.getCurrentFormation().getModule(m1.getName()),t1));
+			   c.inNumSeances(new Seance(m1,t1), m1);
+			      c.getDays().get(4).getFormationSeances(c.getCurrentFormation().getTitle()).setSeance(0, new Seance(c.getCurrentFormation().getModule(m1.getName()),t2));
+			   c.inNumSeances(new Seance(m1,t2), m1);
+			      c.getDays().get(8).getFormationSeances(c.getCurrentFormation().getTitle()).setSeance(0, new Seance(c.getCurrentFormation().getModule(m1.getName()),t2));
+			   c.inNumSeances(new Seance(m1,t2), m1);
+			      c.getDays().get(9).getFormationSeances(c.getCurrentFormation().getTitle()).setSeance(0, new Seance(c.getCurrentFormation().getModule(m2.getName()),t1));
+			   c.inNumSeances(new Seance(m2,t1), m2);
+			      c.getDays().get(13).getFormationSeances(c.getCurrentFormation().getTitle()).setSeance(0, new Seance(c.getCurrentFormation().getModule(m1.getName()),t1));
+			   c.inNumSeances(new Seance(m1,t1), m1);
+			      c.getDays().get(13).getFormationSeances(c.getCurrentFormation().getTitle()).setSeance(0, new Seance(c.getCurrentFormation().getModule(m1.getName()),t2));
+			   c.inNumSeances(new Seance(m1,t2), m1);
+			      c.getDays().get(15).getFormationSeances(c.getCurrentFormation().getTitle()).setSeance(0, new Seance(c.getCurrentFormation().getModule(m2.getName()),t1));
+			   c.inNumSeances(new Seance(m2,t1), m2);
+			      c.getDays().get(24).getFormationSeances(c.getCurrentFormation().getTitle()).setSeance(0, new Seance(c.getCurrentFormation().getModule(m1.getName()),t2));
+			   c.inNumSeances(new Seance(m1,t2), m1);
+			      c.getDays().get(25).getFormationSeances(c.getCurrentFormation().getTitle()).setSeance(0, new Seance(c.getCurrentFormation().getModule(m1.getName()),t1));
+			   c.inNumSeances(new Seance(m1,t1), m1);
+			   c.resetSeance(c.getCurrentFormation().getModule(m1.getName()));
+			   c.resetSeance(c.getCurrentFormation().getModule(m2.getName()));
+
+			System.out.println("                                 NB H Formation : " + f.getHoursFormation());
+			   
 		    initData(c);
 		}
 		catch(dateException e){
@@ -197,10 +190,11 @@ System.out.println("Index : " + index);
 	
 	
 	public void initFormation(){
+		daysModel.getWeek(index);
 		daysModel.initFormations();
 	}
 	public void selectFormation(String title){
-		daysModel.setCurrentFormation(new Formation(title,0));
+		daysModel.setCurrentFormation(title);
 		daysModel.getWeek(index);
 		daysModel.initFormations(title);
 	}
@@ -285,12 +279,12 @@ System.out.println("Index : " + index);
 	
 	public void addModule(String newName, String newAbbreviation, String newMaxSeances, Color newColor){
 // Tests
-		daysModel.addModule(new Module(newName,newAbbreviation,newColor,Integer.parseInt(newMaxSeances)));
+		daysModel.addModule(new Module(newName,newAbbreviation,newColor,Integer.parseInt(newMaxSeances), daysModel.getCurrentFormation()));
 		daysModel.initModules(newName,false);
 	}
 	public void modifyModule(String nameModule, String newName, String newAbbreviation, String newMaxSeances, Color newColor){
 // Tests
-		daysModel.modifyModule(nameModule, new Module(newName,newAbbreviation,newColor,Integer.parseInt(newMaxSeances)));
+		daysModel.modifyModule(nameModule, new Module(newName,newAbbreviation,newColor,Integer.parseInt(newMaxSeances), daysModel.getCurrentFormation()));
 		daysModel.initModules(newName,false);
 	}
 	public void removeModule(String nameModule){

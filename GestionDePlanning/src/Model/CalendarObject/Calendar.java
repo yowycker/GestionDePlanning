@@ -147,6 +147,7 @@ public class Calendar implements Serializable{
 	 * @param formation
 	 */
 	public void setCurrentFormation(Formation formation){
+		System.out.println(formation.getTitle());
 		this.currentFormation = formation.getTitle();
 	}
 	

@@ -70,7 +70,8 @@ public abstract class DaysAbstractModel implements DaysObservable{
 	public abstract void modifyFormation(String title, String newtitle, Double newHourSeances);
 	public abstract void deleteFormation(String title);
 	public abstract ArrayList<Formation> getFormations();
-	public abstract void setCurrentFormation(Formation formation);
+	public abstract void setCurrentFormation(String formation);
+	public abstract Formation getCurrentFormation();
 	
 // Affichage de menu des modules 
 	public abstract void initModules(boolean initSeances);
@@ -97,8 +98,6 @@ public abstract class DaysAbstractModel implements DaysObservable{
 	      obs.update(currentFormation, init, days, numDays, after, next);
 	}
 	public void notifyObserver(ArrayList<Formation> formations, Formation currentFormation, boolean isInit){
-		System.out.println(formations.size());
-		System.out.println(currentFormation.getTitle());
 	    for(DaysObserver obs : listObserver)
 	      obs.update(formations, currentFormation, isInit);
 	}

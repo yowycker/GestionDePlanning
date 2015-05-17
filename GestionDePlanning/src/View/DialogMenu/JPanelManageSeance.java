@@ -55,6 +55,7 @@ public class JPanelManageSeance extends JPanelManage implements DaysObserver, Ac
 	private SLabel moduleName = new SLabel(""); 
 	private SLabel moduleAbb = new SLabel("");  
 	private SLabel moduleNumbers = new SLabel("");
+	private SLabel moduleNumH = new SLabel("");
 	private JComboBox teacherCombo = new JComboBox(); 
 
 	
@@ -213,6 +214,7 @@ public class JPanelManageSeance extends JPanelManage implements DaysObserver, Ac
 	
 				 infoSeancePanel.setLayout(infoSeanceLayout);
 				 infoSeancePanel.add(colorPanel , 0);
+				 colorPanel.add(moduleNumH);
 				 infoSeancePanel.add(namePanel, 1);
 				 	namePanel.add(moduleName,0);
 				 infoSeancePanel.add(abbPanel, 2);
@@ -252,9 +254,11 @@ public class JPanelManageSeance extends JPanelManage implements DaysObserver, Ac
 		public void actionPerformed(ActionEvent evt) {
 			if(evt.getSource() == after || evt.getSource() == after2){
 				daysControler.afterDaysMonth();
+				daysControler.initModules(true);
 			}
 			if(evt.getSource() == next || evt.getSource() == next2){
 				daysControler.nextDaysMonth();
+				daysControler.initModules(true);
 			}
 			if(evt.getSource() == teacherCombo){
 				if(teacherCombo.getSelectedItem() != null){
@@ -304,9 +308,6 @@ public class JPanelManageSeance extends JPanelManage implements DaysObserver, Ac
 			}
 			for(int j = 0; j < lastDay; j++){
 				if((j + 1) >= firstDay && (j + 1) <= lastDay){
-					System.out.println(currentTeacher);
-					System.out.println(currentTeacher.getEmail());
-					System.out.println((String) teacherCombo.getSelectedItem());
 					JButtonSeances btn = new JButtonSeances("" + (j + 1), this.daysControler,currentFormation,currentModule.getName(),currentTeacher.getEmail(), days.get(j + 1 - firstDay), 0);
 					JButtonSeances btn2 = new JButtonSeances("" + (j + 1), this.daysControler,currentFormation,currentModule.getName(),currentTeacher.getEmail() , days.get(j + 1 - firstDay), 1);
 					
@@ -362,6 +363,16 @@ public class JPanelManageSeance extends JPanelManage implements DaysObserver, Ac
 			
 			this.setTitle(titleLabel + " " + currentFormation.getTitle());
 			
+			if(currentModule.getISeance() >= currentModule.getMaxSeances()){
+				messageTextField.setText("Ce module à était programmé de trop nombreuses fois, veuillez enlever des séances");
+				 messageTextField.setBackground(Color.RED);
+				 messageTextField.setForeground(Color.WHITE);
+			}
+			else{
+				messageTextField.setText("");
+				 messageTextField.setBackground(Color.WHITE);
+			}
+			
 			dlm.removeAllElements();
 			for(Module m :currentFormation.getModules()){
 				dlm.addElement(m.getName());
@@ -370,6 +381,7 @@ public class JPanelManageSeance extends JPanelManage implements DaysObserver, Ac
 				listModule.setSelectedValue(currentModule.getName(), true);
 			else{
 				colorPanel.setBackground(currentModule.getColor());
+				moduleNumH.setText(currentModule.getModuleHour() + " H");
 				moduleName.setText(currentModule.getName());
 				moduleAbb.setText(currentModule.getAbbreviation());  
 				moduleNumbers.setText(currentModule.getISeance() + " / " + currentModule.getMaxSeances());
