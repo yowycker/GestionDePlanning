@@ -8,7 +8,7 @@ public class SerializeObjects {
 	public static void serialiseObject(String file, Object object){
 		try {
 				// ouverture d'un flux de sortie vers le fichier "personne.serial"
-				FileOutputStream fos = new FileOutputStream(file + ".serial");
+				FileOutputStream fos = new FileOutputStream(file);
 	
 				// création d'un "flux objet" avec le flux fichier
 				ObjectOutputStream oos= new ObjectOutputStream(fos);

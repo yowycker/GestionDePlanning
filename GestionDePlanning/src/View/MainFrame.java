@@ -64,6 +64,8 @@ public class MainFrame extends JFrame implements ActionListener{
 		    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		    this.setLocationRelativeTo(null);
 
+// Recupperer données des Formateurs :
+		    model.deserializeTeachers();
 //Ajout de la fenêtre comme observer de notre modèle
  		    model.addObserver(planning);
  		    model.addObserver(manageFormationPanel);

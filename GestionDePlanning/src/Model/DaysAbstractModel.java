@@ -9,6 +9,8 @@ import Model.CalendarObject.Module;
 import Model.CalendarObject.Teacher;
 import Obs.DaysObservable;
 import Obs.DaysObserver;
+import Serialized.SerializeObjects;
+import Serialized.Teachers;
 
 public abstract class DaysAbstractModel implements DaysObservable{
 	protected Calendar calendar;
@@ -77,6 +79,8 @@ public abstract class DaysAbstractModel implements DaysObservable{
 	
 // serialiser
 	public abstract void serializeCalendar(String file);
+	public abstract void serializeTeachers();
+	public abstract void deserializeTeachers();
 	
 // Fonctions Observable
 	public void addObserver(DaysObserver obs) {

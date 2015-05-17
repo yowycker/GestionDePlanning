@@ -254,14 +254,17 @@ System.out.println("                                 NB H Formation : " + f.getH
 	
 	public void addTeacher(String name, String firstname, String abbreviation, String email, String phone) {
 		daysModel.addTeacher(name, firstname, abbreviation, email, phone);
+		daysModel.serializeTeachers();
 		daysModel.selectTeacher(email);
 	}
 	public void modifyTeacher(String oldEmail, String name, String firstname, String abbreviation, String email, String phone) {
 		daysModel.modifyTeacher(oldEmail,name, firstname, abbreviation, email, phone);
+		daysModel.serializeTeachers();
 		daysModel.selectTeacher(email);
 	}
 	public void removeTeacher(String email){
 		daysModel.removeTeacher(email);
+		daysModel.serializeTeachers();
 		daysModel.initTeacher();
 	}
 	public void initTeacher(){
@@ -341,6 +344,6 @@ System.out.println("                                 NB H Formation : " + f.getH
 	// --------------------------------------------------------- //
 	
 	public void serializeCalendar(){
-		daysModel.serializeCalendar(daysModel.getIYear() + " " + (daysModel.getIYear() + 1) + "Calendar");
+		daysModel.serializeCalendar(daysModel.getIYear() + " " + (daysModel.getIYear() + 1) + "Calendar.serial");
 	}
 }

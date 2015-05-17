@@ -1,5 +1,6 @@
 package Model;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import Model.CalendarObject.Calendar;
@@ -8,7 +9,9 @@ import Model.CalendarObject.Formation;
 import Model.CalendarObject.Module;
 import Model.CalendarObject.Seance;
 import Model.CalendarObject.Teacher;
+import Serialized.DeserializeObject;
 import Serialized.SerializeObjects;
+import Serialized.Teachers;
 
 public class DaysModel extends DaysAbstractModel{
 	
@@ -264,6 +267,16 @@ System.out.println("Date : " + calendar.getDays().get(0).getDate());
 	
 	public void serializeCalendar(String file){
 		SerializeObjects.serialiseObject(file, this.calendar);
+	}
+	public void serializeTeachers(){
+		SerializeObjects.serialiseObject("Teachers.load", new Teachers(this.teachers));
+	}
+	public void deserializeTeachers(){
+		File f = new File("Teachers.load");
+		if(f.exists()){
+			DeserializeObject.deserialiseTeachers(f);
+			this.teachers = DeserializeObject.getTeachers();
+		}
 	}
 	
 }
